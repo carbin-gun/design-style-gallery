@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro-Futurism | 复古未来主义</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-blue: #0080FF;
+            --neon-pink: #FF006E;
+            --neon-cyan: #00FFFF;
+            --chrome: #C0C0C0;
+            --gold: #FFD700;
+            --bg-dark: #1A1A2E;
+            --bg-darker: #0f0f1a;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Retro Grid Background */
+        .retro-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .grid-floor {
+            position: absolute;
+            bottom: 0;
+            left: -50%;
+            right: -50%;
+            height: 50%;
+            background:
+                linear-gradient(90deg, rgba(0, 128, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(rgba(0, 128, 255, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center top;
+        }
+
+        .sun {
+            position: absolute;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(180deg, #FF006E 0%, #FF6B00 50%, #FFD700 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 100px rgba(255, 0, 110, 0.5);
+        }
+
+        .sun-lines {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .sun-lines::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 8px,
+                var(--bg-dark) 8px,
+                var(--bg-dark) 16px
+            );
+        }
+
+        .stars {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, white, transparent),
+                radial-gradient(2px 2px at 40px 70px, white, transparent),
+                radial-gradient(1px 1px at 90px 40px, white, transparent),
+                radial-gradient(2px 2px at 130px 80px, white, transparent),
+                radial-gradient(1px 1px at 160px 120px, white, transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Neon Text Effect */
+        .neon-text {
+            text-shadow:
+                0 0 10px currentColor,
+                0 0 20px currentColor,
+                0 0 40px currentColor;
+        }
+
+        .chrome-text {
+            background: linear-gradient(180deg, #FFFFFF 0%, #C0C0C0 50%, #808080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: rgba(15, 15, 26, 0.9);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3), inset 0 0 20px rgba(255, 0, 110, 0.1);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .nav-back:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 10px 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 180px 0 120px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero h1 .line1 {
+            color: var(--neon-cyan);
+            display: block;
+        }
+
+        .hero h1 .line2 {
+            color: var(--neon-pink);
+            display: block;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-neon {
+            background: transparent;
+            color: var(--neon-pink);
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3), inset 0 0 20px rgba(255, 0, 110, 0.1);
+        }
+
+        .btn-neon:hover {
+            background: var(--neon-pink);
+            color: var(--bg-dark);
+            box-shadow: 0 0 40px rgba(255, 0, 110, 0.6);
+        }
+
+        .btn-chrome {
+            background: linear-gradient(180deg, #FFFFFF 0%, #C0C0C0 50%, #808080 100%);
+            color: var(--bg-dark);
+            border: none;
+        }
+
+        .btn-chrome:hover {
+            box-shadow: 0 0 30px rgba(192, 192, 192, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--neon-cyan);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: rgba(15, 15, 26, 0.8);
+            border: 2px solid var(--neon-blue);
+            padding: 36px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 40px rgba(0, 128, 255, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.5;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neon-pink);
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Synthwave Showcase */
+        .showcase {
+            padding: 100px 0;
+        }
+
+        .showcase-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .synth-visual {
+            height: 400px;
+            position: relative;
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.3);
+            overflow: hidden;
+        }
+
+        .synth-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(0, 128, 255, 0.2) 1px, transparent 1px),
+                linear-gradient(rgba(0, 128, 255, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .synth-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow:
+                0 0 10px var(--neon-cyan),
+                0 0 20px var(--neon-cyan),
+                0 0 40px var(--neon-cyan);
+            animation: flicker 3s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.8; }
+            94% { opacity: 1; }
+            96% { opacity: 0.9; }
+            97% { opacity: 1; }
+        }
+
+        .showcase-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: var(--neon-pink);
+        }
+
+        .showcase-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .color-card {
+            background: rgba(15, 15, 26, 0.8);
+            border: 2px solid var(--neon-blue);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .color-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 30px rgba(0, 128, 255, 0.3);
+        }
+
+        .color-preview {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+        }
+
+        .color-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .color-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 100px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .component-card {
+            background: rgba(15, 15, 26, 0.9);
+            border: 2px solid var(--neon-pink);
+            padding: 36px;
+        }
+
+        .component-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--neon-cyan);
+        }
+
+        .retro-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--neon-blue);
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+
+        .retro-input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .retro-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .stat-display {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .stat-item {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--neon-blue);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-value.cyan { color: var(--neon-cyan); text-shadow: 0 0 20px var(--neon-cyan); }
+        .stat-value.pink { color: var(--neon-pink); text-shadow: 0 0 20px var(--neon-pink); }
+        .stat-value.gold { color: var(--gold); text-shadow: 0 0 20px var(--gold); }
+        .stat-value.blue { color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue); }
+
+        .stat-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 36px;
+            background: rgba(15, 15, 26, 0.9);
+            border: 2px solid var(--neon-pink);
+        }
+
+        .footer-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+        }
+
+        .footer-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--neon-pink);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .showcase-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 42px;
+            }
+            .features-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="retro-bg">
+        <div class="stars"></div>
+        <div class="sun">
+            <div class="sun-lines"></div>
+        </div>
+        <div class="grid-floor"></div>
+    </div>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">Retro Future</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#showcase" class="nav-link">Showcase</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>
+                    <span class="line1 neon-text">Retro-Futurism</span>
+                    <span class="line2 neon-text">复古未来主义</span>
+                </h1>
+                <p>融合80年代复古美学与未来科幻元素，霓虹灯光、网格地面、落日余晖，打造独特的Synthwave视觉体验。</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-neon">Enter the Grid</button>
+                    <button class="btn btn-chrome">View Components</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="neon-text">Core Principles / 核心原则</h2>
+                    <p>Where the past meets the future</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128161;</div>
+                        <h3>Neon Glow</h3>
+                        <p>霓虹灯光效果是复古未来主义的标志，粉色、青色的发光文字和边框。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9618;</div>
+                        <h3>Grid Perspective</h3>
+                        <p>透视网格地面营造无限延伸的空间感，是80年代科幻的经典元素。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127773;</div>
+                        <h3>Sunset Horizon</h3>
+                        <p>渐变落日是Synthwave美学的核心视觉元素，橙色到粉色的过渡。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#10024;</div>
+                        <h3>Chrome Metal</h3>
+                        <p>金属质感的文字和元素，反映80年代对未来科技的想象。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127897;</div>
+                        <h3>Synthwave Vibes</h3>
+                        <p>整体氛围灵感来源于合成器音乐和复古科幻电影美学。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9734;</div>
+                        <h3>Starfield</h3>
+                        <p>点缀的星空背景增加深邃感，营造宇宙空间的氛围。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase" id="showcase">
+            <div class="container">
+                <div class="showcase-container">
+                    <div class="synth-visual">
+                        <div class="synth-text">1985</div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Synthwave Aesthetic</h3>
+                        <p>复古未来主义将我们带回80年代对未来的想象——那是一个霓虹灯闪烁、合成器音乐弥漫的世界。</p>
+                        <p>这种风格非常适合音乐、游戏、娱乐类应用，能够唤起人们对复古科幻的美好回忆。</p>
+                        <button class="btn btn-neon">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="neon-text">Color Palette / 色彩方案</h2>
+                    <p>Neon lights in the digital night</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue);"></div>
+                        <div class="color-name">Neon Blue</div>
+                        <div class="color-value">#0080FF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--neon-pink); box-shadow: 0 0 30px var(--neon-pink);"></div>
+                        <div class="color-name">Neon Pink</div>
+                        <div class="color-value">#FF006E</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--neon-cyan); box-shadow: 0 0 30px var(--neon-cyan);"></div>
+                        <div class="color-name">Neon Cyan</div>
+                        <div class="color-value">#00FFFF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: linear-gradient(180deg, #FFFFFF, #C0C0C0, #808080);"></div>
+                        <div class="color-name">Chrome</div>
+                        <div class="color-value">#C0C0C0</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--gold); box-shadow: 0 0 30px var(--gold);"></div>
+                        <div class="color-name">Gold</div>
+                        <div class="color-value">#FFD700</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="neon-text">Component Examples / 组件示例</h2>
+                    <p>Retro-styled UI elements</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h4>Input Elements</h4>
+                        <input type="text" class="retro-input" placeholder="ENTER USERNAME">
+                        <input type="password" class="retro-input" placeholder="ENTER PASSWORD">
+                        <button class="btn btn-neon" style="width: 100%;">ACCESS SYSTEM</button>
+                    </div>
+                    <div class="component-card">
+                        <h4>Statistics Display</h4>
+                        <div class="stat-display">
+                            <div class="stat-item">
+                                <div class="stat-value cyan">99.9%</div>
+                                <div class="stat-label">System</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value pink">12.5K</div>
+                                <div class="stat-label">Users</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value gold">$48.2K</div>
+                                <div class="stat-label">Credits</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value blue">847</div>
+                                <div class="stat-label">Missions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand neon-text">Retro-Futurism</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">1980s Retro</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium-High</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Music, Games</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">Good</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

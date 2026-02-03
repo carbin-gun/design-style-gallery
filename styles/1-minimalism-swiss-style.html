@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalism & Swiss Style | 极简主义与瑞士风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --grey-100: #F5F5F5;
+            --grey-200: #E5E5E5;
+            --grey-300: #D4D4D4;
+            --grey-500: #737373;
+            --grey-700: #404040;
+            --accent: #FF0000;
+            --font-primary: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --grid-gap: 24px;
+            --container-max: 1200px;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--grid-gap);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--grey-200);
+            z-index: 100;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-logo {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .nav-back:hover {
+            opacity: 0.6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--grey-500);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--black);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--grey-500);
+            max-width: 400px;
+            margin-bottom: 40px;
+        }
+
+        .hero-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .hero-block {
+            aspect-ratio: 1;
+            background: var(--grey-100);
+        }
+
+        .hero-block--accent {
+            background: var(--black);
+        }
+
+        .hero-block--large {
+            grid-column: span 2;
+            aspect-ratio: 2/1;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--grey-700);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 1px solid var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 120px 0;
+            border-top: 1px solid var(--grey-200);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--grey-500);
+        }
+
+        .section-heading {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            max-width: 600px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .feature-card {
+            padding: 40px 0;
+            border-top: 1px solid var(--black);
+        }
+
+        .feature-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--grey-500);
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: var(--grey-500);
+            line-height: 1.6;
+        }
+
+        /* Typography Section */
+        .typography {
+            padding: 120px 0;
+            background: var(--grey-100);
+        }
+
+        .type-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 64px;
+        }
+
+        .type-sample {
+            font-size: 120px;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+
+        .type-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .type-spec {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--grey-300);
+        }
+
+        .type-spec-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--grey-500);
+            margin-bottom: 8px;
+        }
+
+        .type-spec-value {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Color Palette */
+        .colors {
+            padding: 120px 0;
+            border-top: 1px solid var(--grey-200);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            margin-top: 64px;
+        }
+
+        .color-swatch {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            padding: 16px;
+        }
+
+        .color-swatch--black {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .color-swatch--white {
+            background: var(--white);
+            border: 1px solid var(--grey-200);
+        }
+
+        .color-swatch--grey {
+            background: var(--grey-100);
+        }
+
+        .color-swatch--accent {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .color-swatch--neutral {
+            background: #B38B6D;
+            color: var(--white);
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            opacity: 0.7;
+            font-family: monospace;
+        }
+
+        /* Grid System */
+        .grid-system {
+            padding: 120px 0;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .grid-demo {
+            margin-top: 64px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+
+        .grid-col {
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .grid-col--span-4 {
+            grid-column: span 4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .grid-col--span-6 {
+            grid-column: span 6;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .grid-col--span-8 {
+            grid-column: span 8;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Components */
+        .components {
+            padding: 120px 0;
+        }
+
+        .component-row {
+            display: flex;
+            gap: 24px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            padding: 16px 20px;
+            font-size: 14px;
+            border: 1px solid var(--grey-300);
+            font-family: var(--font-primary);
+            min-width: 280px;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--black);
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--grey-200);
+            padding: 32px;
+            max-width: 320px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: var(--grey-500);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 0;
+            border-top: 1px solid var(--grey-200);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 64px;
+        }
+
+        .footer-brand {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .footer-desc {
+            font-size: 14px;
+            color: var(--grey-500);
+            max-width: 280px;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: var(--grey-500);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--black);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero-content h1 {
+                font-size: 48px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .type-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .type-sample {
+                font-size: 80px;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .grid-demo {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .grid-col--span-4,
+            .grid-col--span-6,
+            .grid-col--span-8 {
+                grid-column: span 2;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .section-heading {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-back">
+                ← Back to Gallery
+            </a>
+            <span class="nav-logo">Swiss Style</span>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#typography" class="nav-link">Typography</a>
+                <a href="#colors" class="nav-link">Colors</a>
+                <a href="#components" class="nav-link">Components</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container" style="display: contents;">
+                <div class="hero-content">
+                    <h1>Minimalism & Swiss Style</h1>
+                    <p>极简主义与瑞士风格 — 源自1950年代的国际主义设计运动，强调清晰、客观与功能性。</p>
+                    <div style="display: flex; gap: 16px;">
+                        <a href="#features" class="btn btn-primary">Explore →</a>
+                        <a href="#" class="btn btn-outline">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-block"></div>
+                    <div class="hero-block hero-block--accent"></div>
+                    <div class="hero-block hero-block--large"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-title">Core Principles / 核心原则</span>
+                    <h2 class="section-heading">Form follows function, less is more.</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-number">01</span>
+                        <h3 class="feature-title">Grid System</h3>
+                        <p class="feature-desc">基于数学比例的网格系统，确保视觉元素的精确对齐与和谐比例。</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-number">02</span>
+                        <h3 class="feature-title">Sans-Serif Typography</h3>
+                        <p class="feature-desc">使用无衬线字体，如Helvetica，追求清晰易读的排版效果。</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-number">03</span>
+                        <h3 class="feature-title">White Space</h3>
+                        <p class="feature-desc">大量留白创造呼吸感，让内容自然突出，避免视觉干扰。</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-number">04</span>
+                        <h3 class="feature-title">Objective Photography</h3>
+                        <p class="feature-desc">客观的摄影风格，避免过度修饰，展现真实与本质。</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-number">05</span>
+                        <h3 class="feature-title">Geometric Shapes</h3>
+                        <p class="feature-desc">运用简洁的几何图形，创造有序且平衡的视觉结构。</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-number">06</span>
+                        <h3 class="feature-title">Limited Color Palette</h3>
+                        <p class="feature-desc">克制的色彩运用，通常以黑白为主，辅以单一强调色。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="typography" id="typography">
+            <div class="container">
+                <span class="section-title">Typography / 字体排印</span>
+                <div class="type-showcase">
+                    <div class="type-sample">Aa</div>
+                    <div class="type-details">
+                        <div class="type-spec">
+                            <div class="type-spec-label">Font Family</div>
+                            <div class="type-spec-value">Inter / Helvetica Neue</div>
+                        </div>
+                        <div class="type-spec">
+                            <div class="type-spec-label">Weights</div>
+                            <div class="type-spec-value">300 Light · 400 Regular · 500 Medium · 700 Bold</div>
+                        </div>
+                        <div class="type-spec">
+                            <div class="type-spec-label">Line Height</div>
+                            <div class="type-spec-value">1.5 for body text, 1.1 for headings</div>
+                        </div>
+                        <div class="type-spec">
+                            <div class="type-spec-label">Letter Spacing</div>
+                            <div class="type-spec-value">-0.02em to -0.03em for headlines</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <span class="section-title">Color Palette / 色彩方案</span>
+                <h2 class="section-heading">Monochromatic with purposeful accents.</h2>
+                <div class="color-grid">
+                    <div class="color-swatch color-swatch--black">
+                        <span class="color-name">Black</span>
+                        <span class="color-hex">#000000</span>
+                    </div>
+                    <div class="color-swatch color-swatch--white">
+                        <span class="color-name">White</span>
+                        <span class="color-hex">#FFFFFF</span>
+                    </div>
+                    <div class="color-swatch color-swatch--grey">
+                        <span class="color-name">Grey</span>
+                        <span class="color-hex">#F5F5F5</span>
+                    </div>
+                    <div class="color-swatch color-swatch--accent">
+                        <span class="color-name">Accent</span>
+                        <span class="color-hex">#FF0000</span>
+                    </div>
+                    <div class="color-swatch color-swatch--neutral">
+                        <span class="color-name">Taupe</span>
+                        <span class="color-hex">#B38B6D</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-system">
+            <div class="container">
+                <span class="section-title" style="color: rgba(255,255,255,0.5);">Grid System / 网格系统</span>
+                <h2 class="section-heading" style="color: #fff; margin-top: 16px;">12-Column Grid</h2>
+                <div class="grid-demo">
+                    <div class="grid-col grid-col--span-4">4 cols</div>
+                    <div class="grid-col grid-col--span-4">4 cols</div>
+                    <div class="grid-col grid-col--span-4">4 cols</div>
+                    <div class="grid-col grid-col--span-6">6 cols</div>
+                    <div class="grid-col grid-col--span-6">6 cols</div>
+                    <div class="grid-col grid-col--span-8">8 cols</div>
+                    <div class="grid-col grid-col--span-4">4 cols</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <span class="section-title">Components / 组件</span>
+                <h2 class="section-heading">Clean, functional UI elements.</h2>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin-top: 64px; margin-bottom: 24px;">Buttons</h3>
+                <div class="component-row">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-outline">Outline Button</button>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin-top: 48px; margin-bottom: 24px;">Input Fields</h3>
+                <div class="component-row">
+                    <input type="text" class="input-field" placeholder="Enter your email">
+                    <input type="text" class="input-field" placeholder="Search...">
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 600; margin-top: 48px; margin-bottom: 24px;">Cards</h3>
+                <div class="component-row">
+                    <div class="card">
+                        <h4 class="card-title">Card Title</h4>
+                        <p class="card-text">简洁的卡片设计，使用边框而非阴影，保持极简美学。</p>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-title">Another Card</h4>
+                        <p class="card-text">Cards use borders instead of shadows to maintain the minimalist aesthetic.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">Swiss Style</div>
+                    <p class="footer-desc">A demonstration of Minimalism & Swiss Style design principles applied to modern web interfaces.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Style Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Era: 1950s Swiss</a></li>
+                        <li><a href="#">Complexity: Low</a></li>
+                        <li><a href="#">Best For: Enterprise</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Framework</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Tailwind: 10/10</a></li>
+                        <li><a href="#">Bootstrap: 9/10</a></li>
+                        <li><a href="#">MUI: 9/10</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Accessibility</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">WCAG AAA ✓</a></li>
+                        <li><a href="#">Light Mode ✓</a></li>
+                        <li><a href="#">Dark Mode ✓</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

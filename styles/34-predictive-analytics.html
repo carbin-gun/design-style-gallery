@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Analytics Dashboard - Style 34</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0A0E1A;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1F2937;
+            --bg-elevated: #252F3F;
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+            --border-color: #374151;
+            --accent-primary: #8B5CF6;
+            --accent-primary-dim: rgba(139, 92, 246, 0.2);
+            --accent-secondary: #06B6D4;
+            --accent-secondary-dim: rgba(6, 182, 212, 0.2);
+            --forecast-gradient-start: #8B5CF6;
+            --forecast-gradient-end: #06B6D4;
+            --confidence-high: rgba(139, 92, 246, 0.3);
+            --confidence-medium: rgba(139, 92, 246, 0.15);
+            --confidence-low: rgba(139, 92, 246, 0.05);
+            --positive: #10B981;
+            --negative: #EF4444;
+            --warning: #F59E0B;
+            --glow: 0 0 40px rgba(139, 92, 246, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow);
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-item.active {
+            color: var(--text-primary);
+            background: var(--accent-primary-dim);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .model-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--positive);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: var(--glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+        }
+
+        /* Summary Stats */
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-forecast {
+            background: var(--accent-primary-dim);
+            color: var(--accent-primary);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-forecast {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .forecast-arrow {
+            width: 20px;
+            height: 20px;
+        }
+
+        .forecast-arrow.up {
+            color: var(--positive);
+        }
+
+        .forecast-arrow.down {
+            color: var(--negative);
+        }
+
+        .forecast-value {
+            font-weight: 600;
+        }
+
+        .forecast-value.positive {
+            color: var(--positive);
+        }
+
+        .forecast-value.negative {
+            color: var(--negative);
+        }
+
+        .forecast-period {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Main Chart Section */
+        .chart-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            background: var(--bg-tertiary);
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+        }
+
+        .action-btn.active {
+            background: var(--accent-primary-dim);
+            color: var(--accent-primary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Forecast Chart */
+        .forecast-chart {
+            height: 350px;
+            position: relative;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-line {
+            width: 24px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .legend-line.actual {
+            background: var(--accent-secondary);
+        }
+
+        .legend-line.forecast {
+            background: linear-gradient(90deg, var(--accent-primary), transparent);
+            border: 1px dashed var(--accent-primary);
+            height: 0;
+        }
+
+        .legend-area {
+            width: 24px;
+            height: 12px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, var(--confidence-high), transparent);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 280px;
+        }
+
+        .chart-grid {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 0;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-line {
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .grid-label {
+            position: absolute;
+            left: -50px;
+            top: -8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-svg {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 0;
+            bottom: 30px;
+        }
+
+        .confidence-band {
+            fill: url(#confidenceGradient);
+        }
+
+        .actual-line {
+            fill: none;
+            stroke: var(--accent-secondary);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+        }
+
+        .forecast-line {
+            fill: none;
+            stroke: var(--accent-primary);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-dasharray: 8 4;
+        }
+
+        .divider-line {
+            stroke: var(--text-muted);
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+        }
+
+        .divider-label {
+            fill: var(--text-muted);
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-x-axis {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .x-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Confidence Intervals */
+        .confidence-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .confidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .confidence-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .confidence-levels {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .confidence-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .level-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .level-95 {
+            background: var(--confidence-high);
+        }
+
+        .level-80 {
+            background: var(--confidence-medium);
+        }
+
+        .level-50 {
+            background: var(--confidence-low);
+        }
+
+        .prediction-table {
+            width: 100%;
+        }
+
+        .prediction-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 80px 80px 80px;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .prediction-row:last-child {
+            border-bottom: none;
+        }
+
+        .prediction-period {
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .prediction-bar {
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .prediction-range {
+            position: absolute;
+            height: 100%;
+            background: var(--accent-primary-dim);
+            border-radius: 4px;
+        }
+
+        .prediction-point {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        .prediction-value {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        .prediction-low, .prediction-high {
+            text-align: right;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Model Performance */
+        .model-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-card .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-accuracy {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .accuracy-ring {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .accuracy-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .accuracy-bg {
+            fill: none;
+            stroke: var(--bg-tertiary);
+            stroke-width: 10;
+        }
+
+        .accuracy-fill {
+            fill: none;
+            stroke: url(#accuracyGradient);
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 377;
+            stroke-dashoffset: 45;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .accuracy-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .accuracy-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .model-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .metric-value.good {
+            color: var(--positive);
+        }
+
+        .metric-value.warning {
+            color: var(--warning);
+        }
+
+        /* Bottom Section */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Scenario Analysis */
+        .scenario-card .card-body {
+            padding: 0;
+        }
+
+        .scenario-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: none;
+        }
+
+        .scenario-tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .scenario-tab.active {
+            color: var(--accent-primary);
+            background: var(--accent-primary-dim);
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .scenario-content {
+            padding: 1.5rem;
+        }
+
+        .scenario-result {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scenario-outcome {
+            text-align: center;
+        }
+
+        .outcome-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .outcome-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .outcome-value.positive {
+            color: var(--positive);
+        }
+
+        .outcome-value.negative {
+            color: var(--negative);
+        }
+
+        .scenario-breakdown {
+            flex: 1;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+
+        .breakdown-label {
+            color: var(--text-secondary);
+        }
+
+        .breakdown-value {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .scenario-factors {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .factors-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .factor-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .factor-chip {
+            padding: 0.375rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .factor-chip.positive {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--positive);
+        }
+
+        .factor-chip.negative {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--negative);
+        }
+
+        /* Anomaly Detection */
+        .anomaly-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .anomaly-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            border-left: 3px solid;
+        }
+
+        .anomaly-item.warning {
+            border-color: var(--warning);
+        }
+
+        .anomaly-item.critical {
+            border-color: var(--negative);
+        }
+
+        .anomaly-item.info {
+            border-color: var(--accent-secondary);
+        }
+
+        .anomaly-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .anomaly-item.warning .anomaly-icon {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .anomaly-item.critical .anomaly-icon {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--negative);
+        }
+
+        .anomaly-item.info .anomaly-icon {
+            background: var(--accent-secondary-dim);
+            color: var(--accent-secondary);
+        }
+
+        .anomaly-content {
+            flex: 1;
+        }
+
+        .anomaly-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .anomaly-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .anomaly-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .anomaly-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Style Section */
+        .style-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .style-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .style-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .color-value {
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .component-demo {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .component-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .mini-forecast {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mini-chart {
+            width: 80px;
+            height: 30px;
+        }
+
+        .mini-forecast-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .mini-forecast-change {
+            font-size: 0.75rem;
+            color: var(--positive);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 1200px) {
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-section {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .summary-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+            </div>
+            <span class="logo-text">ForecastAI</span>
+        </div>
+
+        <nav class="nav">
+            <a href="#" class="nav-item active">Forecasts</a>
+            <a href="#" class="nav-item">Scenarios</a>
+            <a href="#" class="nav-item">Models</a>
+            <a href="#" class="nav-item">Anomalies</a>
+            <a href="#" class="nav-item">Settings</a>
+        </nav>
+
+        <div class="header-actions">
+            <div class="model-selector">
+                <span class="model-dot"></span>
+                <span>XGBoost v3.2</span>
+            </div>
+            <button class="btn btn-primary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                </svg>
+                Refresh Predictions
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Revenue Forecast</h1>
+            <p>Predictive analytics with confidence intervals and scenario modeling</p>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="summary-stats">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Q1 2025 Forecast</span>
+                    <span class="stat-badge badge-forecast">Predicted</span>
+                </div>
+                <div class="stat-value">$4.2M</div>
+                <div class="stat-forecast">
+                    <svg class="forecast-arrow up" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span class="forecast-value positive">+12.4%</span>
+                    <span class="forecast-period">vs Q4 2024</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Annual Projection</span>
+                    <span class="stat-badge badge-forecast">Predicted</span>
+                </div>
+                <div class="stat-value">$18.7M</div>
+                <div class="stat-forecast">
+                    <svg class="forecast-arrow up" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span class="forecast-value positive">+22.8%</span>
+                    <span class="forecast-period">YoY growth</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Churn Risk</span>
+                    <span class="stat-badge badge-forecast">Predicted</span>
+                </div>
+                <div class="stat-value">3.2%</div>
+                <div class="stat-forecast">
+                    <svg class="forecast-arrow down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/>
+                    </svg>
+                    <span class="forecast-value positive">-0.8%</span>
+                    <span class="forecast-period">improving</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Customer Growth</span>
+                    <span class="stat-badge badge-forecast">Predicted</span>
+                </div>
+                <div class="stat-value">+2,840</div>
+                <div class="stat-forecast">
+                    <svg class="forecast-arrow up" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span class="forecast-value positive">+18.2%</span>
+                    <span class="forecast-period">next quarter</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chart Section -->
+        <div class="chart-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Revenue Trend with Forecast</span>
+                    <div class="card-actions">
+                        <button class="action-btn active">Revenue</button>
+                        <button class="action-btn">Users</button>
+                        <button class="action-btn">Orders</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="forecast-chart">
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-line actual"></div>
+                                <span>Actual Data</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-line forecast"></div>
+                                <span>Forecast</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-area"></div>
+                                <span>95% Confidence</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-grid">
+                                <div class="grid-line"><span class="grid-label">$5M</span></div>
+                                <div class="grid-line"><span class="grid-label">$4M</span></div>
+                                <div class="grid-line"><span class="grid-label">$3M</span></div>
+                                <div class="grid-line"><span class="grid-label">$2M</span></div>
+                                <div class="grid-line"><span class="grid-label">$1M</span></div>
+                            </div>
+                            <svg class="chart-svg" viewBox="0 0 500 220" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="confidenceGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="var(--accent-primary)" stop-opacity="0.3"/>
+                                        <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Confidence Band -->
+                                <path class="confidence-band" d="M280,100 L320,85 L360,70 L400,55 L440,45 L480,35 L500,30 L500,140 L480,120 L440,110 L400,95 L360,105 L320,115 L280,120 Z"/>
+                                <!-- Divider Line -->
+                                <line class="divider-line" x1="280" y1="0" x2="280" y2="200"/>
+                                <text class="divider-label" x="285" y="15">Today</text>
+                                <!-- Actual Line -->
+                                <path class="actual-line" d="M0,180 L40,165 L80,170 L120,150 L160,135 L200,125 L240,115 L280,110"/>
+                                <!-- Forecast Line -->
+                                <path class="forecast-line" d="M280,110 L320,100 L360,88 L400,75 L440,65 L480,55 L500,50"/>
+                            </svg>
+                            <div class="chart-x-axis">
+                                <span class="x-label">Jul</span>
+                                <span class="x-label">Aug</span>
+                                <span class="x-label">Sep</span>
+                                <span class="x-label">Oct</span>
+                                <span class="x-label">Nov</span>
+                                <span class="x-label">Dec</span>
+                                <span class="x-label">Jan</span>
+                                <span class="x-label">Feb</span>
+                                <span class="x-label">Mar</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="confidence-section">
+                        <div class="confidence-header">
+                            <span class="confidence-title">Prediction Intervals</span>
+                            <div class="confidence-levels">
+                                <div class="confidence-level">
+                                    <div class="level-indicator level-95"></div>
+                                    <span>95% CI</span>
+                                </div>
+                                <div class="confidence-level">
+                                    <div class="level-indicator level-80"></div>
+                                    <span>80% CI</span>
+                                </div>
+                                <div class="confidence-level">
+                                    <div class="level-indicator level-50"></div>
+                                    <span>50% CI</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prediction-table">
+                            <div class="prediction-row">
+                                <span class="prediction-period">Jan 2025</span>
+                                <div class="prediction-bar">
+                                    <div class="prediction-range" style="left: 25%; width: 50%;"></div>
+                                    <div class="prediction-point" style="left: 52%;"></div>
+                                </div>
+                                <span class="prediction-value">$4.12M</span>
+                                <span class="prediction-low">$3.65M</span>
+                                <span class="prediction-high">$4.58M</span>
+                            </div>
+                            <div class="prediction-row">
+                                <span class="prediction-period">Feb 2025</span>
+                                <div class="prediction-bar">
+                                    <div class="prediction-range" style="left: 22%; width: 56%;"></div>
+                                    <div class="prediction-point" style="left: 55%;"></div>
+                                </div>
+                                <span class="prediction-value">$4.35M</span>
+                                <span class="prediction-low">$3.72M</span>
+                                <span class="prediction-high">$4.98M</span>
+                            </div>
+                            <div class="prediction-row">
+                                <span class="prediction-period">Mar 2025</span>
+                                <div class="prediction-bar">
+                                    <div class="prediction-range" style="left: 18%; width: 64%;"></div>
+                                    <div class="prediction-point" style="left: 58%;"></div>
+                                </div>
+                                <span class="prediction-value">$4.68M</span>
+                                <span class="prediction-low">$3.81M</span>
+                                <span class="prediction-high">$5.55M</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card model-card">
+                <div class="card-header">
+                    <span class="card-title">Model Performance</span>
+                </div>
+                <div class="card-body">
+                    <div class="model-accuracy">
+                        <div class="accuracy-ring">
+                            <svg width="140" height="140" viewBox="0 0 140 140">
+                                <defs>
+                                    <linearGradient id="accuracyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="var(--accent-primary)"/>
+                                        <stop offset="100%" stop-color="var(--accent-secondary)"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle class="accuracy-bg" cx="70" cy="70" r="60"/>
+                                <circle class="accuracy-fill" cx="70" cy="70" r="60"/>
+                            </svg>
+                            <span class="accuracy-value">88%</span>
+                        </div>
+                        <span class="accuracy-label">Model Accuracy (MAPE: 12%)</span>
+                    </div>
+                    <div class="model-metrics">
+                        <div class="metric-item">
+                            <span class="metric-label">R-Squared</span>
+                            <span class="metric-value good">0.94</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">RMSE</span>
+                            <span class="metric-value good">$142K</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">MAE</span>
+                            <span class="metric-value good">$98K</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Forecast Horizon</span>
+                            <span class="metric-value">90 days</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Last Retrained</span>
+                            <span class="metric-value">2h ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="bottom-section">
+            <div class="card scenario-card">
+                <div class="card-header">
+                    <span class="card-title">Scenario Analysis</span>
+                </div>
+                <div class="card-body">
+                    <div class="scenario-tabs">
+                        <button class="scenario-tab">Pessimistic</button>
+                        <button class="scenario-tab active">Base Case</button>
+                        <button class="scenario-tab">Optimistic</button>
+                    </div>
+                    <div class="scenario-content">
+                        <div class="scenario-result">
+                            <div class="scenario-outcome">
+                                <div class="outcome-label">Q1 Revenue</div>
+                                <div class="outcome-value positive">$4.2M</div>
+                            </div>
+                            <div class="scenario-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">New Customer Revenue</span>
+                                    <span class="breakdown-value">$1.42M</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Expansion Revenue</span>
+                                    <span class="breakdown-value">$0.89M</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="breakdown-label">Recurring Revenue</span>
+                                    <span class="breakdown-value">$1.89M</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scenario-factors">
+                            <div class="factors-title">Key Assumptions</div>
+                            <div class="factor-chips">
+                                <span class="factor-chip positive">+15% marketing spend</span>
+                                <span class="factor-chip positive">+2 new products</span>
+                                <span class="factor-chip">3.2% churn rate</span>
+                                <span class="factor-chip negative">-5% seasonal dip</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Anomaly Detection</span>
+                </div>
+                <div class="card-body">
+                    <div class="anomaly-list">
+                        <div class="anomaly-item warning">
+                            <div class="anomaly-icon">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                            <div class="anomaly-content">
+                                <div class="anomaly-title">Unusual Traffic Spike Predicted</div>
+                                <div class="anomaly-desc">Model detects 40% above normal traffic in week 3 of January</div>
+                                <div class="anomaly-meta">
+                                    <span>Confidence: 78%</span>
+                                    <span>Impact: Medium</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="anomaly-item critical">
+                            <div class="anomaly-icon">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="anomaly-content">
+                                <div class="anomaly-title">Churn Risk Cluster Identified</div>
+                                <div class="anomaly-desc">142 enterprise accounts showing early churn signals</div>
+                                <div class="anomaly-meta">
+                                    <span>Confidence: 92%</span>
+                                    <span>Impact: High</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="anomaly-item info">
+                            <div class="anomaly-icon">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="anomaly-content">
+                                <div class="anomaly-title">Seasonal Pattern Shift</div>
+                                <div class="anomaly-desc">Q1 demand curve differs from historical pattern by 12%</div>
+                                <div class="anomaly-meta">
+                                    <span>Confidence: 85%</span>
+                                    <span>Impact: Low</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Style Section -->
+        <section class="style-section">
+            <h2 class="style-title">Predictive Analytics Style</h2>
+            <p class="style-subtitle">Forecast visualizations with confidence intervals and scenario modeling</p>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Color Palette</h3>
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--accent-primary);"></div>
+                    <span class="color-label">Forecast</span>
+                    <span class="color-value">#8B5CF6</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--accent-secondary);"></div>
+                    <span class="color-label">Actual</span>
+                    <span class="color-value">#06B6D4</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--positive);"></div>
+                    <span class="color-label">Positive</span>
+                    <span class="color-value">#10B981</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--negative);"></div>
+                    <span class="color-label">Negative</span>
+                    <span class="color-value">#EF4444</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--bg-primary);"></div>
+                    <span class="color-label">Background</span>
+                    <span class="color-value">#0A0E1A</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--bg-secondary);"></div>
+                    <span class="color-label">Card</span>
+                    <span class="color-value">#111827</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Component Examples</h3>
+            <div class="components-grid">
+                <div class="component-demo">
+                    <div class="component-title">Forecast Indicator</div>
+                    <div class="mini-forecast">
+                        <svg class="mini-chart" viewBox="0 0 80 30">
+                            <path d="M0,25 L20,20 L40,15 L60,10 L80,5" fill="none" stroke="var(--accent-secondary)" stroke-width="2"/>
+                            <path d="M40,15 L60,10 L80,5" fill="none" stroke="var(--accent-primary)" stroke-width="2" stroke-dasharray="4 2"/>
+                        </svg>
+                        <div>
+                            <div class="mini-forecast-value">$4.2M</div>
+                            <div class="mini-forecast-change">+12.4%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Confidence Band</div>
+                    <div class="prediction-bar" style="height: 32px;">
+                        <div class="prediction-range" style="left: 20%; width: 60%;"></div>
+                        <div class="prediction-point" style="left: 50%;"></div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Scenario Chips</div>
+                    <div class="factor-chips">
+                        <span class="factor-chip positive">+15% growth</span>
+                        <span class="factor-chip negative">-5% risk</span>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Anomaly Badge</div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <div class="anomaly-icon" style="background: rgba(245, 158, 11, 0.2); color: var(--warning);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/>
+                            </svg>
+                        </div>
+                        <div class="anomaly-icon" style="background: rgba(239, 68, 68, 0.2); color: var(--negative);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span class="footer-text">Predictive Analytics Dashboard - Style 34</span>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">API Reference</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>

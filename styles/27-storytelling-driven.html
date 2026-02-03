@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storytelling-Driven | Landing Page Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1A1A2E;
+            --accent-1: #E94560;
+            --accent-2: #0F3460;
+            --accent-3: #16213E;
+            --warm: #F8B739;
+            --text: #1A1A2E;
+            --text-light: #6B7280;
+            --bg: #FFFBF5;
+            --bg-alt: #FFF5E9;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --font-display: 'Crimson Pro', Georgia, serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-narrow {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 251, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--accent-1);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Chapter/Story Sections */
+        .chapter {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .chapter-number {
+            font-family: var(--font-display);
+            font-size: 120px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.03);
+            position: absolute;
+            top: 60px;
+            left: 24px;
+        }
+
+        /* Hero - Opening */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 72px;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-eyebrow {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-1);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: var(--primary);
+        }
+
+        .hero-lead {
+            font-family: var(--font-display);
+            font-size: 24px;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 48px;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 80px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Story Sections */
+        .story-section {
+            padding: 120px 0;
+        }
+
+        .story-section.dark {
+            background: var(--primary);
+            color: white;
+        }
+
+        .story-section.accent {
+            background: var(--accent-2);
+            color: white;
+        }
+
+        .story-section.warm {
+            background: var(--bg-alt);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .story-grid.reverse {
+            direction: rtl;
+        }
+
+        .story-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .story-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-1);
+            margin-bottom: 16px;
+        }
+
+        .dark .story-label,
+        .accent .story-label {
+            color: var(--warm);
+        }
+
+        .story-heading {
+            font-family: var(--font-display);
+            font-size: 44px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .story-text {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .dark .story-text,
+        .accent .story-text {
+            opacity: 0.9;
+        }
+
+        .story-visual {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .visual-placeholder {
+            font-family: var(--font-display);
+            font-size: 80px;
+            opacity: 0.3;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            padding: 120px 0;
+            text-align: center;
+            background: var(--accent-3);
+            color: white;
+        }
+
+        .quote-mark {
+            font-family: var(--font-display);
+            font-size: 120px;
+            line-height: 1;
+            color: var(--warm);
+            margin-bottom: 24px;
+        }
+
+        .quote-text {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+
+        .quote-author {
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 120px 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 64px auto 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-1), var(--warm));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 72px;
+            padding-bottom: 48px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 16px;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-1);
+            border: 4px solid var(--bg);
+        }
+
+        .timeline-year {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-1);
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        /* Color Palette */
+        .colors {
+            padding: 120px 0;
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-preview {
+            aspect-ratio: 1;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            opacity: 0.6;
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 120px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px;
+            margin-top: 64px;
+        }
+
+        .component-panel {
+            background: var(--bg-alt);
+            border-radius: 24px;
+            padding: 48px;
+        }
+
+        .component-panel h3 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+
+        .btn-primary {
+            background: var(--accent-1);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #D63A52;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Typography Demo */
+        .type-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .type-item {
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .type-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .type-display {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .type-body {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 160px 0;
+            background: linear-gradient(135deg, var(--accent-1), var(--warm));
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .cta p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 48px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 40px;
+            background: white;
+            color: var(--accent-1);
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 0;
+            background: var(--primary);
+            color: white;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .footer-meta {
+            display: flex;
+            gap: 32px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .story-grid.reverse {
+                direction: ltr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .story-heading {
+                font-size: 32px;
+            }
+
+            .quote-text {
+                font-size: 24px;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta h2 {
+                font-size: 36px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-back">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Back
+            </a>
+            <span class="nav-logo">StoryBrand</span>
+            <a href="#cta" class="nav-cta">Join Us</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Chapter 1: The Beginning -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-eyebrow">Chapter One</div>
+                    <h1>Every great journey begins with a single step.</h1>
+                    <p class="hero-lead">This is not just a product. It's a story of transformation, innovation, and the relentless pursuit of something better. Your story starts here.</p>
+                    <div class="scroll-indicator">
+                        <span>Scroll to continue</span>
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: The Challenge -->
+        <section class="story-section warm">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-content">
+                        <div class="story-label">Chapter Two: The Challenge</div>
+                        <h2 class="story-heading">We saw a world struggling with complexity.</h2>
+                        <p class="story-text">In 2020, teams everywhere were drowning in tools that promised simplicity but delivered chaos. Communication scattered across platforms. Ideas lost in the noise. Something had to change.</p>
+                    </div>
+                    <div class="story-visual">
+                        <div class="visual-placeholder">?</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3: The Vision -->
+        <section class="story-section dark">
+            <div class="container">
+                <div class="story-grid reverse">
+                    <div class="story-content">
+                        <div class="story-label">Chapter Three: The Vision</div>
+                        <h2 class="story-heading">What if there was a better way?</h2>
+                        <p class="story-text">We imagined a world where technology adapts to people, not the other way around. Where every interaction feels natural, every feature has purpose, and simplicity is the ultimate sophistication.</p>
+                    </div>
+                    <div class="story-visual" style="background: rgba(255,255,255,0.1);">
+                        <div class="visual-placeholder" style="color: white;">!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="quote-section">
+            <div class="container-narrow">
+                <div class="quote-mark">"</div>
+                <p class="quote-text">The best stories don't tell people what to think. They invite them to discover something new about themselves.</p>
+                <p class="quote-author">- Our Founding Philosophy</p>
+            </div>
+        </section>
+
+        <!-- Chapter 4: The Journey -->
+        <section class="story-section">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-content">
+                        <div class="story-label">Chapter Four: The Journey</div>
+                        <h2 class="story-heading">Building something that matters.</h2>
+                        <p class="story-text">For two years, our team worked tirelessly. We listened to thousands of users, iterated countless times, and never compromised on our vision. Every setback was a lesson. Every success, a stepping stone.</p>
+                    </div>
+                    <div class="story-visual">
+                        <div class="visual-placeholder">...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="timeline-section">
+            <div class="container-narrow">
+                <div class="section-header">
+                    <h2>Our Story Unfolds</h2>
+                    <p>Key moments that shaped who we are.</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2020</div>
+                        <h3 class="timeline-title">The Spark</h3>
+                        <p class="timeline-desc">Three founders in a garage, united by a shared frustration and a bold vision.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: var(--accent-2);"></div>
+                        <div class="timeline-year">2021</div>
+                        <h3 class="timeline-title">First Users</h3>
+                        <p class="timeline-desc">100 early believers who helped shape our product with honest feedback.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: var(--warm);"></div>
+                        <div class="timeline-year">2022</div>
+                        <h3 class="timeline-title">Product Launch</h3>
+                        <p class="timeline-desc">The world met our creation. 10,000 users in the first month.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: var(--accent-1);"></div>
+                        <div class="timeline-year">Today</div>
+                        <h3 class="timeline-title">Your Chapter</h3>
+                        <p class="timeline-desc">Now it's your turn to write the next chapter of this story.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 5: The Transformation -->
+        <section class="story-section accent">
+            <div class="container">
+                <div class="story-grid reverse">
+                    <div class="story-content">
+                        <div class="story-label">Chapter Five: The Transformation</div>
+                        <h2 class="story-heading">From complexity to clarity.</h2>
+                        <p class="story-text">Today, over 50,000 teams use our platform to do their best work. But this isn't our success story - it's theirs. Every feature exists because of them. Every improvement is for them.</p>
+                    </div>
+                    <div class="story-visual" style="background: rgba(255,255,255,0.1);">
+                        <div class="visual-placeholder" style="color: white;">+</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Palette -->
+        <section class="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette</h2>
+                    <p>Warm, emotional colors that tell a story.</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-swatch">
+                        <div class="color-preview" style="background: #1A1A2E;"></div>
+                        <div class="color-name">Primary</div>
+                        <div class="color-hex">#1A1A2E</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-preview" style="background: #E94560;"></div>
+                        <div class="color-name">Accent</div>
+                        <div class="color-hex">#E94560</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-preview" style="background: #0F3460;"></div>
+                        <div class="color-name">Deep Blue</div>
+                        <div class="color-hex">#0F3460</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-preview" style="background: #F8B739;"></div>
+                        <div class="color-name">Warm</div>
+                        <div class="color-hex">#F8B739</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-preview" style="background: #FFFBF5;"></div>
+                        <div class="color-name">Canvas</div>
+                        <div class="color-hex">#FFFBF5</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Design Components</h2>
+                    <p>Elements that bring stories to life.</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-panel">
+                        <h3>Buttons</h3>
+                        <div class="btn-row">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-secondary">Secondary</button>
+                            <button class="btn btn-outline">Outline</button>
+                        </div>
+                    </div>
+                    <div class="component-panel">
+                        <h3>Typography</h3>
+                        <div class="type-demo">
+                            <div class="type-item">
+                                <div class="type-label">Display / Crimson Pro</div>
+                                <div class="type-display">Storytelling</div>
+                            </div>
+                            <div class="type-item">
+                                <div class="type-label">Body / Inter</div>
+                                <div class="type-body">Every great story deserves beautiful typography that guides the reader through the narrative.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA - The Invitation -->
+        <section class="cta" id="cta">
+            <div class="container">
+                <h2>Your story is waiting.</h2>
+                <p>Join thousands who have already begun their transformation. The next chapter starts with you.</p>
+                <a href="#" class="cta-btn">
+                    Begin Your Story
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Storytelling-Driven</div>
+                <div class="footer-meta">
+                    <span>Landing Page Style</span>
+                    <span>Brand / Lifestyle / Premium</span>
+                    <span>High Engagement</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

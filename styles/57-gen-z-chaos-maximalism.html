@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen Z Chaos / Maximalism | Z世代混乱/极繁主义</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --magenta: #FF00FF;
+            --green: #00FF00;
+            --yellow: #FFFF00;
+            --blue: #0000FF;
+            --red: #FF0000;
+            --cyan: #00FFFF;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #FF00FF 0%, #00FFFF 25%, #FFFF00 50%, #00FF00 75%, #FF00FF 100%);
+            background-size: 400% 400%;
+            animation: gradient-chaos 10s ease infinite;
+            color: var(--black);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradient-chaos {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Random floating elements */
+        .chaos-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 40px;
+            animation: float-random 8s ease-in-out infinite;
+        }
+
+        @keyframes float-random {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(10deg); }
+            50% { transform: translateY(10px) rotate(-5deg); }
+            75% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 24px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: var(--white);
+            border: 4px solid var(--black);
+            box-shadow: 8px 8px 0 var(--magenta), 12px 12px 0 var(--cyan);
+            transform: rotate(-1deg);
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: var(--magenta);
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--magenta), var(--cyan), var(--yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: text-chaos 2s ease infinite;
+        }
+
+        @keyframes text-chaos {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(2deg); }
+            75% { transform: scale(0.98) rotate(-2deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 16px;
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            transform: rotate(2deg);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: var(--magenta);
+            color: var(--white);
+            transform: rotate(-3deg) scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-stickers {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 48px;
+            animation: bounce-chaos 3s ease-in-out infinite;
+        }
+
+        .sticker-1 { top: -10%; left: 5%; animation-delay: 0s; }
+        .sticker-2 { top: 20%; right: 10%; animation-delay: 0.5s; }
+        .sticker-3 { bottom: 10%; left: 15%; animation-delay: 1s; }
+        .sticker-4 { bottom: 30%; right: 5%; animation-delay: 1.5s; }
+
+        @keyframes bounce-chaos {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-20px) rotate(15deg) scale(1.1); }
+            50% { transform: translateY(10px) rotate(-10deg) scale(0.9); }
+            75% { transform: translateY(-10px) rotate(5deg) scale(1.05); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--magenta);
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
+            border: 4px solid var(--black);
+            box-shadow: 6px 6px 0 var(--black);
+            margin-bottom: 32px;
+            transform: rotate(-3deg);
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(-3deg) translateX(0); }
+            25% { transform: rotate(-1deg) translateX(-2px); }
+            75% { transform: rotate(-5deg) translateX(2px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 10vw, 100px);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            display: inline-block;
+        }
+
+        .hero h1 .magenta { color: var(--magenta); text-shadow: 4px 4px 0 var(--cyan); }
+        .hero h1 .green { color: var(--green); text-shadow: 4px 4px 0 var(--yellow); }
+        .hero h1 .yellow { color: var(--yellow); text-shadow: 4px 4px 0 var(--magenta); }
+        .hero h1 .blue { color: var(--blue); text-shadow: 4px 4px 0 var(--green); }
+
+        .hero-subtitle {
+            font-size: 22px;
+            font-weight: 600;
+            background: var(--white);
+            display: inline-block;
+            padding: 16px 32px;
+            border: 4px solid var(--black);
+            box-shadow: 6px 6px 0 var(--yellow);
+            margin-bottom: 40px;
+            transform: rotate(1deg);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 32px;
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 4px solid var(--black);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-chaos {
+            background: var(--magenta);
+            color: var(--white);
+            box-shadow: 6px 6px 0 var(--cyan);
+            transform: rotate(-2deg);
+        }
+
+        .btn-chaos:hover {
+            transform: rotate(3deg) scale(1.1);
+            box-shadow: 10px 10px 0 var(--yellow);
+        }
+
+        .btn-wild {
+            background: var(--green);
+            color: var(--black);
+            box-shadow: 6px 6px 0 var(--magenta);
+            transform: rotate(2deg);
+        }
+
+        .btn-wild:hover {
+            transform: rotate(-3deg) scale(1.1);
+            box-shadow: 10px 10px 0 var(--cyan);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: 'Caveat', cursive;
+            font-size: 32px;
+            color: var(--black);
+            margin-bottom: 16px;
+            transform: rotate(-5deg);
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            background: var(--white);
+            display: inline-block;
+            padding: 16px 32px;
+            border: 4px solid var(--black);
+            box-shadow: 8px 8px 0 var(--magenta);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            background: var(--white);
+            border: 4px solid var(--black);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:nth-child(1) { transform: rotate(-2deg); box-shadow: 8px 8px 0 var(--magenta); }
+        .feature-card:nth-child(2) { transform: rotate(1deg); box-shadow: 8px 8px 0 var(--cyan); }
+        .feature-card:nth-child(3) { transform: rotate(-1deg); box-shadow: 8px 8px 0 var(--yellow); }
+        .feature-card:nth-child(4) { transform: rotate(2deg); box-shadow: 8px 8px 0 var(--green); }
+        .feature-card:nth-child(5) { transform: rotate(-1deg); box-shadow: 8px 8px 0 var(--magenta); }
+        .feature-card:nth-child(6) { transform: rotate(1deg); box-shadow: 8px 8px 0 var(--cyan); }
+
+        .feature-card:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .color-card {
+            background: var(--white);
+            border: 4px solid var(--black);
+            padding: 20px;
+            text-align: center;
+            transform: rotate(-2deg);
+            transition: all 0.3s;
+        }
+
+        .color-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .color-card:hover {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 12px;
+            border: 3px solid var(--black);
+        }
+
+        .color-preview--magenta { background: var(--magenta); }
+        .color-preview--green { background: var(--green); }
+        .color-preview--yellow { background: var(--yellow); }
+        .color-preview--blue { background: var(--blue); }
+        .color-preview--red { background: var(--red); }
+        .color-preview--cyan { background: var(--cyan); }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 11px;
+        }
+
+        /* Components Section */
+        .components {
+            padding: 100px 0;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .component-demo {
+            background: var(--white);
+            border: 4px solid var(--black);
+            padding: 32px;
+            box-shadow: 8px 8px 0 var(--magenta);
+            transform: rotate(-1deg);
+        }
+
+        .component-demo:nth-child(even) {
+            box-shadow: 8px 8px 0 var(--cyan);
+            transform: rotate(1deg);
+        }
+
+        .component-title {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 4px dashed var(--black);
+        }
+
+        /* Chaos Input */
+        .chaos-input {
+            width: 100%;
+            padding: 16px;
+            border: 4px solid var(--black);
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: 600;
+            background: var(--yellow);
+            margin-bottom: 16px;
+        }
+
+        .chaos-input:focus {
+            outline: none;
+            background: var(--cyan);
+            box-shadow: 4px 4px 0 var(--magenta);
+        }
+
+        /* Chaos Tags */
+        .chaos-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .chaos-tag {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 800;
+            border: 3px solid var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chaos-tag:nth-child(1) { background: var(--magenta); color: var(--white); transform: rotate(-3deg); }
+        .chaos-tag:nth-child(2) { background: var(--green); transform: rotate(2deg); }
+        .chaos-tag:nth-child(3) { background: var(--yellow); transform: rotate(-1deg); }
+        .chaos-tag:nth-child(4) { background: var(--cyan); transform: rotate(3deg); }
+
+        .chaos-tag:hover {
+            transform: rotate(0deg) scale(1.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+            background: var(--white);
+            border: 4px solid var(--black);
+            box-shadow: 8px 8px 0 var(--magenta), 12px 12px 0 var(--cyan);
+            transform: rotate(-1deg);
+        }
+
+        .footer-brand {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--magenta), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-item {
+            text-align: center;
+            padding: 12px 20px;
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            transform: rotate(2deg);
+        }
+
+        .footer-item:nth-child(even) {
+            background: var(--cyan);
+            transform: rotate(-2deg);
+        }
+
+        .footer-label {
+            font-size: 10px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chaos-bg">
+        <span class="floating-emoji" style="top: 10%; left: 5%;">&#128293;</span>
+        <span class="floating-emoji" style="top: 30%; right: 10%;">&#10024;</span>
+        <span class="floating-emoji" style="top: 60%; left: 15%;">&#128640;</span>
+        <span class="floating-emoji" style="top: 80%; right: 20%;">&#127881;</span>
+        <span class="floating-emoji" style="top: 45%; left: 80%;">&#128171;</span>
+    </div>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">< BACK</a>
+                <span class="nav-logo">CHAOS MODE</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">FEATURES</a>
+                    <a href="#colors" class="nav-link">COLORS</a>
+                    <a href="#components" class="nav-link">COMPONENTS</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-stickers">
+                        <span class="sticker sticker-1">&#128142;</span>
+                        <span class="sticker sticker-2">&#127775;</span>
+                        <span class="sticker sticker-3">&#128525;</span>
+                        <span class="sticker sticker-4">&#127752;</span>
+                    </div>
+                    <span class="hero-badge">NO RULES !!!</span>
+                    <h1>
+                        <span class="magenta">Gen Z</span>
+                        <span class="green">Chaos</span>
+                        <br>
+                        <span class="yellow">极繁</span><span class="blue">主义</span>
+                    </h1>
+                    <p class="hero-subtitle">打破所有设计规则，贴纸、拼贴、混乱、互联网文化的视觉狂欢!</p>
+                    <div class="hero-buttons">
+                        <a href="#features" class="btn btn-chaos">GO WILD !!!</a>
+                        <a href="#components" class="btn btn-wild">MORE CHAOS</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">design principles? lol</span>
+                    <h2 class="section-title">CORE FEATURES</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128165;</div>
+                        <h3 class="feature-title">CHAOS ENERGY</h3>
+                        <p class="feature-desc">混乱即美学，打破所有传统设计规则。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3 class="feature-title">COLLAGE STYLE</h3>
+                        <p class="feature-desc">拼贴艺术风格，层层叠叠的视觉元素。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128640;</div>
+                        <h3 class="feature-title">STICKER BOMB</h3>
+                        <p class="feature-desc">贴纸轰炸，emoji和图形无处不在。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127752;</div>
+                        <h3 class="feature-title">LOUD COLORS</h3>
+                        <p class="feature-desc">高饱和度的霓虹色彩，越亮越好。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128293;</div>
+                        <h3 class="feature-title">INTERNET CORE</h3>
+                        <p class="feature-desc">互联网文化、梗图、Y2K怀旧元素。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#10024;</div>
+                        <h3 class="feature-title">MAXIMALISM</h3>
+                        <p class="feature-desc">多就是好，越多越好，填满每个角落。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">all the colors!!!</span>
+                    <h2 class="section-title">COLOR PALETTE</h2>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview color-preview--magenta"></div>
+                        <div class="color-name">MAGENTA</div>
+                        <div class="color-hex">#FF00FF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--green"></div>
+                        <div class="color-name">GREEN</div>
+                        <div class="color-hex">#00FF00</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--yellow"></div>
+                        <div class="color-name">YELLOW</div>
+                        <div class="color-hex">#FFFF00</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--blue"></div>
+                        <div class="color-name">BLUE</div>
+                        <div class="color-hex">#0000FF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--red"></div>
+                        <div class="color-name">RED</div>
+                        <div class="color-hex">#FF0000</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--cyan"></div>
+                        <div class="color-name">CYAN</div>
+                        <div class="color-hex">#00FFFF</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">ui goes brrrr</span>
+                    <h2 class="section-title">COMPONENTS</h2>
+                </div>
+                <div class="components-grid">
+                    <div class="component-demo">
+                        <h4 class="component-title">FORM INPUT</h4>
+                        <input type="text" class="chaos-input" placeholder="TYPE SOMETHING WILD...">
+                        <button class="btn btn-chaos" style="width: 100%;">SUBMIT !!!</button>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">CHAOS TAGS</h4>
+                        <div class="chaos-tags">
+                            <span class="chaos-tag">CHAOS</span>
+                            <span class="chaos-tag">WILD</span>
+                            <span class="chaos-tag">LOUD</span>
+                            <span class="chaos-tag">BASED</span>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">BUTTONS</h4>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <button class="btn btn-chaos">PRIMARY</button>
+                            <button class="btn btn-wild">SECONDARY</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">STICKER PACK</h4>
+                        <div style="font-size: 48px; display: flex; gap: 16px; flex-wrap: wrap;">
+                            <span>&#128293;</span>
+                            <span>&#10024;</span>
+                            <span>&#128640;</span>
+                            <span>&#127881;</span>
+                            <span>&#128171;</span>
+                            <span>&#127775;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">GEN Z CHAOS</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">ERA</div>
+                        <div class="footer-value">2023+ Internet Core</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">CATEGORY</div>
+                        <div class="footer-value">General</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">THEME</div>
+                        <div class="footer-value">CHAOS</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">STYLE ID</div>
+                        <div class="footer-value">#57</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brutalism | 野兽派风格</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #FFFFFF;
+            color: #000000;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            border-bottom: 5px solid #000;
+            padding: 20px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #FFFF00;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid #000;
+            text-transform: uppercase;
+        }
+
+        .nav-back:hover {
+            background: #000;
+            color: #FFFF00;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            border: 3px solid #000;
+            border-left: none;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: #FFF;
+        }
+
+        .nav-link:first-child {
+            border-left: 3px solid #000;
+        }
+
+        .nav-link:hover {
+            background: #000;
+            color: #FFF;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            border-bottom: 5px solid #000;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: bold;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero h1 .red { color: #FF0000; }
+        .hero h1 .blue { color: #0000FF; }
+
+        .hero-text {
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .hero-block {
+            aspect-ratio: 1;
+            border: 5px solid #000;
+        }
+
+        .hero-block--red { background: #FF0000; }
+        .hero-block--blue { background: #0000FF; }
+        .hero-block--yellow { background: #FFFF00; }
+        .hero-block--white { background: #FFF; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 5px solid #000;
+            cursor: pointer;
+            font-family: inherit;
+            transition: none;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: #FFF;
+        }
+
+        .btn-primary:hover {
+            background: #FF0000;
+        }
+
+        .btn-secondary {
+            background: #FFF;
+            color: #000;
+        }
+
+        .btn-secondary:hover {
+            background: #FFFF00;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            border-bottom: 5px solid #000;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            border-bottom: 5px solid #000;
+            padding-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .feature-card {
+            border: 5px solid #000;
+            border-right: none;
+            padding: 40px 30px;
+        }
+
+        .feature-card:last-child {
+            border-right: 5px solid #000;
+        }
+
+        .feature-number {
+            font-size: 64px;
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .feature-card:nth-child(1) .feature-number { color: #FF0000; }
+        .feature-card:nth-child(2) .feature-number { color: #0000FF; }
+        .feature-card:nth-child(3) .feature-number { color: #00FF00; }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Manifesto */
+        .manifesto {
+            padding: 80px 0;
+            background: #000;
+            color: #FFF;
+        }
+
+        .manifesto-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .manifesto h2 {
+            font-size: 48px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .manifesto-list {
+            list-style: none;
+        }
+
+        .manifesto-item {
+            padding: 20px 0;
+            border-bottom: 2px solid #FFF;
+            font-size: 18px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .manifesto-item span {
+            color: #FF0000;
+            font-weight: bold;
+        }
+
+        .manifesto-quote {
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .manifesto-quote .yellow {
+            color: #FFFF00;
+        }
+
+        /* Colors */
+        .colors {
+            padding: 80px 0;
+            border-bottom: 5px solid #000;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .color-swatch {
+            aspect-ratio: 1;
+            border: 5px solid #000;
+            border-right: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .color-swatch:last-child {
+            border-right: 5px solid #000;
+        }
+
+        .color-swatch--red { background: #FF0000; color: #FFF; }
+        .color-swatch--blue { background: #0000FF; color: #FFF; }
+        .color-swatch--yellow { background: #FFFF00; color: #000; }
+        .color-swatch--black { background: #000000; color: #FFF; }
+        .color-swatch--white { background: #FFFFFF; color: #000; }
+
+        .color-name {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Typography */
+        .typography {
+            padding: 80px 0;
+            border-bottom: 5px solid #000;
+        }
+
+        .type-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .type-sample {
+            font-size: 120px;
+            font-weight: bold;
+            line-height: 0.9;
+        }
+
+        .type-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .type-spec {
+            padding: 20px 0;
+            border-bottom: 3px solid #000;
+        }
+
+        .type-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .type-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+            border-bottom: 5px solid #000;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .component-box {
+            border: 5px solid #000;
+            padding: 40px;
+        }
+
+        .component-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #000;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 3px solid #000;
+            margin-bottom: 15px;
+            background: #FFF;
+        }
+
+        .input-field:focus {
+            outline: none;
+            background: #FFFF00;
+        }
+
+        .card-brutal {
+            border: 5px solid #000;
+            margin-bottom: 20px;
+        }
+
+        .card-brutal-header {
+            background: #0000FF;
+            color: #FFF;
+            padding: 15px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .card-brutal-body {
+            padding: 20px;
+        }
+
+        .card-brutal-body p {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        /* Links Section */
+        .links-section {
+            padding: 80px 0;
+            background: #FF0000;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .link-item {
+            border: 5px solid #000;
+            border-right: none;
+            padding: 40px 20px;
+            text-align: center;
+            background: #FFF;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .link-item:last-child {
+            border-right: 5px solid #000;
+        }
+
+        .link-item:hover {
+            background: #FFFF00;
+        }
+
+        .link-number {
+            font-size: 48px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .link-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            border-top: 5px solid #000;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Marquee */
+        .marquee {
+            background: #000;
+            color: #FFF;
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                border-right: 5px solid #000;
+                border-bottom: none;
+            }
+
+            .feature-card:last-child {
+                border-bottom: 5px solid #000;
+            }
+
+            .manifesto-content {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-swatch {
+                border-right: 5px solid #000;
+            }
+
+            .color-swatch:nth-child(2n) {
+                border-right: 5px solid #000;
+            }
+
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .link-item {
+                border-right: 5px solid #000;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .type-display {
+                grid-template-columns: 1fr;
+            }
+
+            .type-sample {
+                font-size: 80px;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-back">← BACK</a>
+            <span class="nav-logo">BRUTALISM</span>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">FEATURES</a>
+                <a href="#colors" class="nav-link">COLORS</a>
+                <a href="#components" class="nav-link">COMPONENTS</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="marquee">
+        <span class="marquee-content">
+            BRUTALISM — RAW — UNPOLISHED — STARK — HIGH CONTRAST — ANTI-DESIGN — BRUTALISM — RAW — UNPOLISHED — STARK — HIGH CONTRAST — ANTI-DESIGN —
+        </span>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>
+                            <span class="red">BRUTAL</span>
+                            <span class="blue">ISM</span>
+                            <span>野兽派</span>
+                        </h1>
+                        <p class="hero-text">
+                            反对设计的设计。源自建筑中的粗野主义运动，以原始、未经修饰的美学挑战传统UI规范。
+                        </p>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#features" class="btn btn-primary">EXPLORE</a>
+                            <a href="#" class="btn btn-secondary">LEARN MORE</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-block hero-block--red"></div>
+                        <div class="hero-block hero-block--blue"></div>
+                        <div class="hero-block hero-block--yellow"></div>
+                        <div class="hero-block hero-block--white"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">CORE PRINCIPLES / 核心原则</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-number">01</div>
+                        <h3 class="feature-title">RAW AESTHETICS</h3>
+                        <p class="feature-desc">拒绝精致的视觉修饰，展示设计的原始骨架。使用默认字体、可见边框和纯色块。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">02</div>
+                        <h3 class="feature-title">HIGH CONTRAST</h3>
+                        <p class="feature-desc">强烈的黑白对比和原色运用（红、蓝、黄），创造视觉冲击力。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">03</div>
+                        <h3 class="feature-title">NO TRANSITIONS</h3>
+                        <p class="feature-desc">即时的交互响应，拒绝平滑过渡动画，保持界面的直接和诚实。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="manifesto">
+            <div class="container">
+                <div class="manifesto-content">
+                    <div>
+                        <h2>MANIFESTO</h2>
+                        <ul class="manifesto-list">
+                            <li class="manifesto-item"><span>01</span> Function over decoration</li>
+                            <li class="manifesto-item"><span>02</span> Visible structure</li>
+                            <li class="manifesto-item"><span>03</span> Honest materials</li>
+                            <li class="manifesto-item"><span>04</span> No hidden complexity</li>
+                            <li class="manifesto-item"><span>05</span> Embrace imperfection</li>
+                        </ul>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <p class="manifesto-quote">
+                            DESIGN SHOULD BE <span class="yellow">HONEST</span>, NOT BEAUTIFUL
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <h2 class="section-title">COLOR PALETTE / 色彩方案</h2>
+                <div class="color-grid">
+                    <div class="color-swatch color-swatch--red">
+                        <span class="color-name">RED</span>
+                        <span class="color-hex">#FF0000</span>
+                    </div>
+                    <div class="color-swatch color-swatch--blue">
+                        <span class="color-name">BLUE</span>
+                        <span class="color-hex">#0000FF</span>
+                    </div>
+                    <div class="color-swatch color-swatch--yellow">
+                        <span class="color-name">YELLOW</span>
+                        <span class="color-hex">#FFFF00</span>
+                    </div>
+                    <div class="color-swatch color-swatch--black">
+                        <span class="color-name">BLACK</span>
+                        <span class="color-hex">#000000</span>
+                    </div>
+                    <div class="color-swatch color-swatch--white">
+                        <span class="color-name">WHITE</span>
+                        <span class="color-hex">#FFFFFF</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="typography">
+            <div class="container">
+                <h2 class="section-title">TYPOGRAPHY / 字体排印</h2>
+                <div class="type-display">
+                    <div class="type-sample">Aa</div>
+                    <div class="type-info">
+                        <div class="type-spec">
+                            <div class="type-label">FONT FAMILY</div>
+                            <div class="type-value">Courier New / Monospace</div>
+                        </div>
+                        <div class="type-spec">
+                            <div class="type-label">WEIGHT</div>
+                            <div class="type-value">Bold (700+)</div>
+                        </div>
+                        <div class="type-spec">
+                            <div class="type-label">STYLE</div>
+                            <div class="type-value">ALL CAPS / UPPERCASE</div>
+                        </div>
+                        <div class="type-spec">
+                            <div class="type-label">CORNERS</div>
+                            <div class="type-value">Sharp (0px border-radius)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <h2 class="section-title">COMPONENTS / 组件</h2>
+                <div class="component-grid">
+                    <div class="component-box">
+                        <h3 class="component-title">FORM ELEMENTS</h3>
+                        <input type="text" class="input-field" placeholder="YOUR NAME">
+                        <input type="email" class="input-field" placeholder="YOUR EMAIL">
+                        <button class="btn btn-primary" style="width: 100%;">SUBMIT</button>
+                    </div>
+                    <div class="component-box">
+                        <h3 class="component-title">CARDS</h3>
+                        <div class="card-brutal">
+                            <div class="card-brutal-header">CARD TITLE</div>
+                            <div class="card-brutal-body">
+                                <p>简洁的卡片设计，使用粗边框和纯色标题栏。没有阴影，没有圆角，直接了当。</p>
+                                <a href="#" class="btn btn-secondary" style="padding: 10px 20px; font-size: 12px;">READ MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="links-section">
+            <div class="container">
+                <div class="links-grid">
+                    <a href="#" class="link-item">
+                        <span class="link-number">01</span>
+                        <span class="link-text">DESIGN</span>
+                    </a>
+                    <a href="#" class="link-item">
+                        <span class="link-number">02</span>
+                        <span class="link-text">CODE</span>
+                    </a>
+                    <a href="#" class="link-item">
+                        <span class="link-number">03</span>
+                        <span class="link-text">BUILD</span>
+                    </a>
+                    <a href="#" class="link-item">
+                        <span class="link-number">04</span>
+                        <span class="link-text">SHIP</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">BRUTALISM</div>
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-label">ERA</div>
+                    <div class="footer-value">1950s BRUTALIST</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">COMPLEXITY</div>
+                    <div class="footer-value">LOW</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">BEST FOR</div>
+                    <div class="footer-value">PORTFOLIOS</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">ACCESSIBILITY</div>
+                    <div class="footer-value">WCAG AAA ✓</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

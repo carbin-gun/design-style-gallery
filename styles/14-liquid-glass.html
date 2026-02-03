@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Glass | 液态玻璃风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --liquid-pink: #FF69B4;
+            --liquid-cyan: #00FFFF;
+            --liquid-magenta: #FF1493;
+            --liquid-purple: #8B00FF;
+            --liquid-green: #00FF7F;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --bg-dark: #0a0a1a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Liquid Background */
+        .liquid-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .liquid-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: liquidMove 15s ease-in-out infinite;
+        }
+
+        .liquid-blob:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, var(--liquid-pink), var(--liquid-magenta));
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .liquid-blob:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, var(--liquid-cyan), var(--liquid-green));
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .liquid-blob:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(45deg, var(--liquid-purple), var(--liquid-pink));
+            top: 50%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes liquidMove {
+            0%, 100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+            }
+            25% {
+                transform: translate(50px, -30px) scale(1.1) rotate(90deg);
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                transform: translate(-30px, 50px) scale(0.95) rotate(180deg);
+                border-radius: 30% 70% 70% 30% / 30% 52% 48% 70%;
+            }
+            75% {
+                transform: translate(-50px, -20px) scale(1.05) rotate(270deg);
+                border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Liquid Glass Effect */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+            border-radius: 30px 30px 0 0;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--liquid-cyan);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-back:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--liquid-pink), var(--liquid-cyan), var(--liquid-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 700;
+            line-height: 1.0;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--liquid-pink), var(--liquid-cyan), var(--liquid-purple), var(--liquid-green));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-liquid {
+            background: linear-gradient(135deg, var(--liquid-pink), var(--liquid-purple));
+            color: var(--text-primary);
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .btn-liquid:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--liquid-cyan), var(--liquid-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 36px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(0, 255, 255, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Morphing Showcase */
+        .showcase {
+            padding: 100px 0;
+        }
+
+        .showcase-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .morph-demo {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .morph-shape {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--liquid-pink), var(--liquid-cyan), var(--liquid-purple));
+            animation: morphShape 8s ease-in-out infinite;
+            position: relative;
+        }
+
+        .morph-shape::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: inherit;
+            filter: blur(30px);
+            opacity: 0.5;
+            animation: morphShape 8s ease-in-out infinite;
+            animation-delay: -0.5s;
+        }
+
+        @keyframes morphShape {
+            0%, 100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                transform: rotate(90deg) scale(1.1);
+            }
+            50% {
+                border-radius: 50% 60% 30% 60% / 30% 70% 50% 60%;
+                transform: rotate(180deg) scale(0.95);
+            }
+            75% {
+                border-radius: 60% 30% 60% 30% / 50% 40% 50% 60%;
+                transform: rotate(270deg) scale(1.05);
+            }
+        }
+
+        .showcase-content h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--liquid-pink), var(--liquid-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .showcase-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .color-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            animation: colorPulse 4s ease-in-out infinite;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        @keyframes colorPulse {
+            0%, 100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                transform: scale(1);
+            }
+            50% {
+                border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+                transform: scale(1.1);
+            }
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 100px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .component-card {
+            padding: 36px;
+        }
+
+        .component-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+
+        .liquid-input {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 15px;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+
+        .liquid-input:focus {
+            outline: none;
+            border-color: var(--liquid-pink);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .liquid-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .bubble-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .bubble-tag {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bubble-tag:nth-child(1) {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(255, 105, 180, 0.1));
+            border: 1px solid rgba(255, 105, 180, 0.4);
+        }
+        .bubble-tag:nth-child(2) {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.1));
+            border: 1px solid rgba(0, 255, 255, 0.4);
+        }
+        .bubble-tag:nth-child(3) {
+            background: linear-gradient(135deg, rgba(139, 0, 255, 0.3), rgba(139, 0, 255, 0.1));
+            border: 1px solid rgba(139, 0, 255, 0.4);
+        }
+        .bubble-tag:nth-child(4) {
+            background: linear-gradient(135deg, rgba(0, 255, 127, 0.3), rgba(0, 255, 127, 0.1));
+            border: 1px solid rgba(0, 255, 127, 0.4);
+        }
+
+        .bubble-tag:hover {
+            transform: scale(1.1);
+        }
+
+        .liquid-progress {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .liquid-progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--liquid-pink), var(--liquid-cyan), var(--liquid-purple));
+            background-size: 200% 100%;
+            animation: liquidProgress 3s ease infinite;
+        }
+
+        @keyframes liquidProgress {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 36px;
+        }
+
+        .footer-brand {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--liquid-pink), var(--liquid-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+        }
+
+        .footer-value {
+            font-size: 15px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--liquid-cyan), var(--liquid-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .showcase-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+            .features-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="liquid-bg">
+        <div class="liquid-blob"></div>
+        <div class="liquid-blob"></div>
+        <div class="liquid-blob"></div>
+    </div>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner liquid-glass">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">Liquid Glass</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#showcase" class="nav-link">Showcase</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Liquid Glass<br>液态玻璃风格</h1>
+                <p>流动的玻璃质感与有机形态相结合，创造出如水银般流动、变幻的梦幻界面效果。</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-liquid">Explore Style</button>
+                    <button class="btn btn-outline">View Components</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Principles / 核心原则</h2>
+                    <p>Fluid, organic, and mesmerizing visual effects</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card liquid-glass">
+                        <div class="feature-icon">&#128167;</div>
+                        <h3>Fluid Shapes</h3>
+                        <p>不规则的有机形状不断变化，模拟液体流动的自然状态。</p>
+                    </div>
+                    <div class="feature-card liquid-glass">
+                        <div class="feature-icon">&#10024;</div>
+                        <h3>Iridescent Colors</h3>
+                        <p>彩虹般的色彩渐变，如肥皂泡或油膜般的光学效果。</p>
+                    </div>
+                    <div class="feature-card liquid-glass">
+                        <div class="feature-icon">&#127752;</div>
+                        <h3>Morphing Animation</h3>
+                        <p>持续变形的动画效果，让界面元素仿佛活了起来。</p>
+                    </div>
+                    <div class="feature-card liquid-glass">
+                        <div class="feature-icon">&#128302;</div>
+                        <h3>Glass Refraction</h3>
+                        <p>玻璃折射效果让背景内容产生扭曲，增加深度感。</p>
+                    </div>
+                    <div class="feature-card liquid-glass">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3>Soft Blur</h3>
+                        <p>柔和的模糊效果营造梦幻氛围，让界面更加柔美。</p>
+                    </div>
+                    <div class="feature-card liquid-glass">
+                        <div class="feature-icon">&#128171;</div>
+                        <h3>Organic Feel</h3>
+                        <p>整体设计呈现有机、自然的生命力，远离机械感。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase" id="showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Morphing Demo / 变形演示</h2>
+                    <p>Organic shapes that flow and transform</p>
+                </div>
+                <div class="showcase-container">
+                    <div class="morph-demo">
+                        <div class="morph-shape"></div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Organic Transformation</h3>
+                        <p>液态玻璃风格的核心在于持续的形态变化。通过CSS动画和变形效果，让静态的界面元素拥有流动的生命力。</p>
+                        <p>这种风格特别适合创意、艺术和时尚类应用，能够给用户带来独特的视觉记忆点。</p>
+                        <button class="btn btn-liquid">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette / 色彩方案</h2>
+                    <p>Iridescent, vibrant colors that shift and flow</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card liquid-glass">
+                        <div class="color-preview" style="background: linear-gradient(135deg, var(--liquid-pink), var(--liquid-magenta));"></div>
+                        <div class="color-name">Hot Pink</div>
+                        <div class="color-value">#FF69B4</div>
+                    </div>
+                    <div class="color-card liquid-glass">
+                        <div class="color-preview" style="background: linear-gradient(135deg, var(--liquid-cyan), #00CED1); animation-delay: -1s;"></div>
+                        <div class="color-name">Cyan</div>
+                        <div class="color-value">#00FFFF</div>
+                    </div>
+                    <div class="color-card liquid-glass">
+                        <div class="color-preview" style="background: linear-gradient(135deg, var(--liquid-magenta), #C71585); animation-delay: -2s;"></div>
+                        <div class="color-name">Deep Pink</div>
+                        <div class="color-value">#FF1493</div>
+                    </div>
+                    <div class="color-card liquid-glass">
+                        <div class="color-preview" style="background: linear-gradient(135deg, var(--liquid-purple), #9400D3); animation-delay: -3s;"></div>
+                        <div class="color-name">Purple</div>
+                        <div class="color-value">#8B00FF</div>
+                    </div>
+                    <div class="color-card liquid-glass">
+                        <div class="color-preview" style="background: linear-gradient(135deg, var(--liquid-green), #00FA9A); animation-delay: -4s;"></div>
+                        <div class="color-name">Spring Green</div>
+                        <div class="color-value">#00FF7F</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Component Examples / 组件示例</h2>
+                    <p>Fluid, organic UI elements</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card liquid-glass">
+                        <h4>Form Elements</h4>
+                        <input type="text" class="liquid-input" placeholder="Enter your email">
+                        <input type="password" class="liquid-input" placeholder="Enter password">
+                        <button class="btn btn-liquid" style="width: 100%;">Subscribe</button>
+                    </div>
+                    <div class="component-card liquid-glass">
+                        <h4>Tags & Progress</h4>
+                        <div class="bubble-tags">
+                            <span class="bubble-tag">Design</span>
+                            <span class="bubble-tag">Creative</span>
+                            <span class="bubble-tag">Modern</span>
+                            <span class="bubble-tag">Organic</span>
+                        </div>
+                        <p style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">Loading Progress</p>
+                        <div class="liquid-progress">
+                            <div class="liquid-progress-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner liquid-glass">
+                <div class="footer-brand">Liquid Glass</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">High</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Creative, Art</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">GPU Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

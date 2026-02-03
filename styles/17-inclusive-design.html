@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclusive Design | 包容性设计</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --blue: #0066CC;
+            --green: #228B22;
+            --orange: #CC6600;
+            --text-primary: #000000;
+            --text-secondary: #4A4A4A;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F5;
+            --focus-ring: #0066CC;
+        }
+
+        body {
+            font-family: 'Atkinson Hyperlegible', Arial, sans-serif;
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--blue);
+            color: var(--white);
+            padding: 16px 32px;
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 1000;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Focus Styles */
+        *:focus {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 4px;
+        }
+
+        *:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        *:focus-visible {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 4px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--black);
+            padding: 16px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+            padding: 12px 24px;
+            border: 3px solid var(--white);
+            transition: all 0.2s;
+        }
+
+        .nav-back:hover,
+        .nav-back:focus {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 700;
+            padding: 12px 20px;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            border-color: var(--white);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            border-bottom: 4px solid var(--black);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 3px solid var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: var(--bg-secondary);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 3px solid var(--black);
+            padding: 32px;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Accessibility Patterns */
+        .patterns {
+            padding: 80px 0;
+        }
+
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .pattern-card {
+            border: 3px solid var(--black);
+            padding: 32px;
+            text-align: center;
+        }
+
+        .pattern-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .pattern-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .pattern-card p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Color Blind Friendly Palette */
+        .colors {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .color-comparison {
+            margin-top: 48px;
+        }
+
+        .color-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .color-example {
+            flex: 1;
+            border: 3px solid var(--black);
+            overflow: hidden;
+        }
+
+        .color-example h5 {
+            background: var(--black);
+            color: var(--white);
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+
+        .color-swatches {
+            display: flex;
+            padding: 20px;
+            gap: 12px;
+            background: var(--white);
+        }
+
+        .swatch {
+            flex: 1;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* Alternative Indicators */
+        .indicators {
+            padding: 80px 0;
+        }
+
+        .indicator-demo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .indicator-card {
+            background: var(--bg-secondary);
+            border: 3px solid var(--black);
+            padding: 32px;
+        }
+
+        .indicator-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .status-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border: 3px solid;
+        }
+
+        .status-badge.success {
+            background: #E8F5E9;
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .status-badge.error {
+            background: #FFEBEE;
+            border-color: #C62828;
+            color: #C62828;
+        }
+
+        .status-badge.warning {
+            background: #FFF3E0;
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        .chart-demo {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            height: 150px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .bar {
+            width: 100%;
+            background: var(--black);
+        }
+
+        .bar.pattern-1 {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--black),
+                var(--black) 4px,
+                var(--white) 4px,
+                var(--white) 8px
+            );
+            border: 2px solid var(--black);
+        }
+
+        .bar.pattern-2 {
+            background: repeating-linear-gradient(
+                0deg,
+                var(--black),
+                var(--black) 4px,
+                var(--white) 4px,
+                var(--white) 8px
+            );
+            border: 2px solid var(--black);
+        }
+
+        .bar.solid {
+            background: var(--black);
+        }
+
+        .bar-label {
+            font-size: 14px;
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .component-card {
+            background: var(--white);
+            border: 3px solid var(--black);
+            padding: 32px;
+        }
+
+        .component-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #C62828;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 18px;
+            font-family: inherit;
+            border: 3px solid var(--black);
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            border-color: var(--blue);
+        }
+
+        .form-helper {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .error-message {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #FFEBEE;
+            border: 2px solid #C62828;
+            color: #C62828;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 48px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+            opacity: 0.7;
+        }
+
+        .footer-value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .features-grid,
+            .indicator-demo,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .color-row {
+                flex-direction: column;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back" aria-label="Go back to homepage">&#8592; Back</a>
+                <span class="nav-logo">Inclusive Design</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#patterns" class="nav-link">Patterns</a>
+                    <a href="#components" class="nav-link">Components</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <h1 id="hero-title">Inclusive Design<br>包容性设计</h1>
+                <p>为所有人而设计。不仅是无障碍合规，更是创造让每个人都能平等使用和享受的数字体验。</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary">Learn Principles</a>
+                    <a href="#patterns" class="btn btn-secondary">View Patterns</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features" aria-labelledby="features-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="features-title">Core Principles / 核心原则</h2>
+                    <p>Design that works for everyone</p>
+                </div>
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128065;</div>
+                        <h3>Color Independence</h3>
+                        <p>不仅依赖颜色传达信息，使用图标、文字和图案作为辅助指示，确保色盲用户也能理解。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128483;</div>
+                        <h3>Voice Interaction</h3>
+                        <p>支持语音控制和屏幕阅读器，让视障和运动障碍用户也能无障碍使用。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#65;&#65;</div>
+                        <h3>Readable Typography</h3>
+                        <p>使用高可读性字体，支持字体大小调整，确保阅读障碍用户也能轻松阅读。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#9000;</div>
+                        <h3>Keyboard Navigation</h3>
+                        <p>完整的键盘导航支持，清晰的焦点指示器，让无法使用鼠标的用户也能操作。</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="patterns" id="patterns" aria-labelledby="patterns-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="patterns-title">Inclusive Patterns / 包容性模式</h2>
+                    <p>Design patterns that consider all users</p>
+                </div>
+                <div class="pattern-grid">
+                    <article class="pattern-card">
+                        <div class="pattern-icon" aria-hidden="true">&#128100;</div>
+                        <h4>Permanent</h4>
+                        <p>永久性障碍：失明、失聪、肢体残疾</p>
+                    </article>
+                    <article class="pattern-card">
+                        <div class="pattern-icon" aria-hidden="true">&#129656;</div>
+                        <h4>Temporary</h4>
+                        <p>临时性障碍：手臂骨折、眼部手术</p>
+                    </article>
+                    <article class="pattern-card">
+                        <div class="pattern-icon" aria-hidden="true">&#127774;</div>
+                        <h4>Situational</h4>
+                        <p>情境性障碍：强光下、嘈杂环境、单手操作</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors" aria-labelledby="colors-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="colors-title">Color Blind Safe / 色盲友好</h2>
+                    <p>Never rely on color alone to convey information</p>
+                </div>
+                <div class="color-comparison">
+                    <div class="color-row">
+                        <div class="color-example">
+                            <h5>Traditional (Color Only)</h5>
+                            <div class="color-swatches">
+                                <div class="swatch" style="background: #EF4444; color: white;">Error</div>
+                                <div class="swatch" style="background: #22C55E; color: white;">Success</div>
+                                <div class="swatch" style="background: #F59E0B; color: white;">Warning</div>
+                            </div>
+                        </div>
+                        <div class="color-example">
+                            <h5>Inclusive (Color + Icons + Text)</h5>
+                            <div class="color-swatches">
+                                <div class="swatch" style="background: #FFEBEE; color: #C62828; border: 2px solid #C62828;">&#10006; Error</div>
+                                <div class="swatch" style="background: #E8F5E9; color: #228B22; border: 2px solid #228B22;">&#10003; Success</div>
+                                <div class="swatch" style="background: #FFF3E0; color: #CC6600; border: 2px solid #CC6600;">&#9888; Warning</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="indicators" aria-labelledby="indicators-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="indicators-title">Alternative Indicators / 替代指示</h2>
+                    <p>Use patterns and shapes alongside colors</p>
+                </div>
+                <div class="indicator-demo">
+                    <div class="indicator-card">
+                        <h4>Status with Icons</h4>
+                        <div class="status-row">
+                            <span class="status-badge success">&#10003; Complete</span>
+                            <span class="status-badge error">&#10006; Failed</span>
+                            <span class="status-badge warning">&#9888; Pending</span>
+                        </div>
+                    </div>
+                    <div class="indicator-card">
+                        <h4>Charts with Patterns</h4>
+                        <div class="chart-demo">
+                            <div class="chart-bar">
+                                <div class="bar solid" style="height: 100px;"></div>
+                                <span class="bar-label">A: 100</span>
+                            </div>
+                            <div class="chart-bar">
+                                <div class="bar pattern-1" style="height: 75px;"></div>
+                                <span class="bar-label">B: 75</span>
+                            </div>
+                            <div class="chart-bar">
+                                <div class="bar pattern-2" style="height: 50px;"></div>
+                                <span class="bar-label">C: 50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components" aria-labelledby="components-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="components-title">Component Examples / 组件示例</h2>
+                    <p>Accessible form patterns with clear feedback</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h4>Accessible Form</h4>
+                        <form>
+                            <div class="form-group">
+                                <label for="name" class="form-label">
+                                    Full Name <span class="required">*</span>
+                                </label>
+                                <input type="text" id="name" class="form-input" aria-required="true" aria-describedby="name-helper">
+                                <p id="name-helper" class="form-helper">Enter your first and last name.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email Address <span class="required">*</span>
+                                </label>
+                                <input type="email" id="email" class="form-input" aria-required="true" aria-invalid="true" aria-describedby="email-error">
+                                <div id="email-error" class="error-message" role="alert">
+                                    <span aria-hidden="true">&#10006;</span>
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Form</button>
+                        </form>
+                    </div>
+                    <div class="component-card">
+                        <h4>Best Practices</h4>
+                        <ul style="list-style: none; font-size: 16px;">
+                            <li style="padding: 12px 0; border-bottom: 1px solid #E5E5E5; display: flex; gap: 12px;">
+                                <span style="color: var(--green);">&#10003;</span>
+                                Always use visible labels
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #E5E5E5; display: flex; gap: 12px;">
+                                <span style="color: var(--green);">&#10003;</span>
+                                Mark required fields clearly
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #E5E5E5; display: flex; gap: 12px;">
+                                <span style="color: var(--green);">&#10003;</span>
+                                Provide helpful error messages
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #E5E5E5; display: flex; gap: 12px;">
+                                <span style="color: var(--green);">&#10003;</span>
+                                Use icons alongside colors
+                            </li>
+                            <li style="padding: 12px 0; display: flex; gap: 12px;">
+                                <span style="color: var(--green);">&#10003;</span>
+                                Support keyboard navigation
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Inclusive Design</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">Universal</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">All Projects</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Standard</div>
+                        <div class="footer-value">WCAG AAA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

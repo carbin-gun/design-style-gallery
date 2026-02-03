@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ink / Paper | 电子墨水/纸张风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --paper: #FDFBF7;
+            --paper-dark: #F5F5F5;
+            --ink: #1A1A1A;
+            --ink-light: #4A4A4A;
+            --highlight: #FFFF00;
+            --border: #E5E5E5;
+        }
+
+        body {
+            font-family: 'Newsreader', 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.7;
+            min-height: 100vh;
+            font-size: 18px;
+        }
+
+        /* Paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            background: var(--paper);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: var(--ink-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        .nav-back:hover {
+            color: var(--ink);
+            text-decoration: underline;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--ink-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            color: var(--ink);
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--ink-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--ink-light);
+            font-style: italic;
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--ink-light);
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Article Content */
+        .article {
+            padding: 60px 0;
+        }
+
+        .article p {
+            margin-bottom: 24px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .article p:first-of-type::first-letter {
+            font-size: 72px;
+            float: left;
+            line-height: 1;
+            margin-right: 12px;
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        .highlight {
+            background: var(--highlight);
+            padding: 2px 4px;
+        }
+
+        /* Blockquote */
+        .blockquote {
+            margin: 48px 0;
+            padding: 32px 40px;
+            border-left: 3px solid var(--ink);
+            background: var(--paper-dark);
+            font-style: italic;
+            font-size: 20px;
+        }
+
+        .blockquote-author {
+            margin-top: 16px;
+            font-style: normal;
+            font-size: 14px;
+            color: var(--ink-light);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-light);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 32px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--ink-light);
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            font-size: 16px;
+            color: var(--ink-light);
+            line-height: 1.6;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .color-card {
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 100%;
+            aspect-ratio: 1;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .color-preview--paper { background: var(--paper); }
+        .color-preview--paper-dark { background: var(--paper-dark); }
+        .color-preview--ink { background: var(--ink); }
+        .color-preview--ink-light { background: var(--ink-light); }
+        .color-preview--highlight { background: var(--highlight); }
+
+        .color-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: var(--ink-light);
+        }
+
+        /* Components Section */
+        .components {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .component-demo {
+            padding: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .component-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-light);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Paper Input */
+        .paper-input {
+            width: 100%;
+            padding: 14px 0;
+            border: none;
+            border-bottom: 1px solid var(--ink);
+            font-size: 16px;
+            font-family: inherit;
+            background: transparent;
+            margin-bottom: 20px;
+        }
+
+        .paper-input:focus {
+            outline: none;
+            border-bottom-width: 2px;
+        }
+
+        .paper-input::placeholder {
+            color: var(--ink-light);
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .btn-primary:hover {
+            background: var(--ink-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--ink);
+        }
+
+        .btn-outline:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        /* Paper Tags */
+        .paper-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .paper-tag {
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            border: 1px solid var(--ink);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .paper-tag:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .paper-tag.active {
+            background: var(--highlight);
+        }
+
+        /* Reading Progress */
+        .reading-progress {
+            margin-bottom: 24px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--ink-light);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: var(--border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ink);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-brand {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: left;
+        }
+
+        .footer-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-light);
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .feature-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-back">← Back</a>
+            <span class="nav-logo">E-Ink</span>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#colors" class="nav-link">Colors</a>
+                <a href="#components" class="nav-link">Components</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-date">Digital Well-being</div>
+                <h1>E-Ink / Paper Style<br>电子墨水/纸张风格</h1>
+                <p class="hero-subtitle">回归阅读的本质，高对比度、纸张质感、平静舒适的数字体验。</p>
+                <div class="hero-meta">
+                    <span>Style #56</span>
+                    <span>2020s Digital Well-being</span>
+                    <span>5 min read</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="article">
+            <div class="container">
+                <p>在数字噪音充斥的时代，E-Ink风格代表着一种回归本质的设计理念。它摒弃了华丽的动画和鲜艳的色彩，转而追求<span class="highlight">高对比度</span>、清晰的排版和纸张般的质感，为用户创造一个平静、专注的阅读环境。</p>
+
+                <p>这种设计风格源于电子墨水显示器的视觉特性，但已经超越了技术限制，成为一种独立的美学追求。它特别适合阅读应用、笔记工具和任何需要长时间专注的场景。</p>
+
+                <div class="blockquote">
+                    "好的设计是尽可能少的设计。少但是更好，因为它专注于本质，而不是让产品被非本质的东西所累。"
+                    <div class="blockquote-author">- Dieter Rams</div>
+                </div>
+
+                <p>通过使用温暖的纸张色调、经典的衬线字体和大量的留白，E-Ink风格创造了一种与印刷品相似的阅读体验，让数字内容感觉更加真实和持久。</p>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Design Principles</div>
+                    <h2 class="section-title">Core Features</h2>
+                </div>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-number">01</span>
+                        <div class="feature-content">
+                            <h3>Paper-Like Texture</h3>
+                            <p>温暖的纸张色调和微妙的纹理，模拟真实纸张的触感。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">02</span>
+                        <div class="feature-content">
+                            <h3>High Contrast</h3>
+                            <p>黑白高对比度设计，确保清晰的可读性和舒适的阅读体验。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">03</span>
+                        <div class="feature-content">
+                            <h3>Classic Typography</h3>
+                            <p>衬线字体为主，传统的排版规则，优化长文本阅读。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">04</span>
+                        <div class="feature-content">
+                            <h3>Minimal Interface</h3>
+                            <p>极简的界面元素，让内容成为主角，减少视觉干扰。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">05</span>
+                        <div class="feature-content">
+                            <h3>Calm Experience</h3>
+                            <p>无动画、无强调色，创造平静舒适的数字阅读环境。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">06</span>
+                        <div class="feature-content">
+                            <h3>Eye-Friendly</h3>
+                            <p>护眼设计，减少蓝光和屏幕疲劳，支持长时间阅读。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Color Palette</div>
+                    <h2 class="section-title">Paper Colors</h2>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview color-preview--paper"></div>
+                        <div class="color-name">Paper</div>
+                        <div class="color-hex">#FDFBF7</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--paper-dark"></div>
+                        <div class="color-name">Paper Dark</div>
+                        <div class="color-hex">#F5F5F5</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--ink"></div>
+                        <div class="color-name">Ink</div>
+                        <div class="color-hex">#1A1A1A</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--ink-light"></div>
+                        <div class="color-name">Ink Light</div>
+                        <div class="color-hex">#4A4A4A</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--highlight"></div>
+                        <div class="color-name">Highlight</div>
+                        <div class="color-hex">#FFFF00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">UI Components</div>
+                    <h2 class="section-title">Component Examples</h2>
+                </div>
+                <div class="components-grid">
+                    <div class="component-demo">
+                        <h4 class="component-title">Form Input</h4>
+                        <input type="text" class="paper-input" placeholder="Enter your email...">
+                        <button class="btn btn-primary" style="width: 100%;">Subscribe</button>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Tags</h4>
+                        <div class="paper-tags">
+                            <span class="paper-tag active">Reading</span>
+                            <span class="paper-tag">Paper</span>
+                            <span class="paper-tag">Calm</span>
+                            <span class="paper-tag">Minimal</span>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Reading Progress</h4>
+                        <div class="reading-progress">
+                            <div class="progress-label">
+                                <span>Reading progress</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div class="reading-progress">
+                            <div class="progress-label">
+                                <span>Chapter 3 of 12</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Buttons</h4>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-outline">Secondary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">E-Ink / Paper</div>
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-label">Era</div>
+                    <div class="footer-value">2020s Digital Well-being</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Category</div>
+                    <div class="footer-value">General</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Theme</div>
+                    <div class="footer-value">Light</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Style ID</div>
+                    <div class="footer-value">#56</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

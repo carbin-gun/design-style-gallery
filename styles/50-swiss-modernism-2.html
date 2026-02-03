@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiss Modernism 2.0 | 瑞士现代主义2.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #F5F5F5;
+            --red: #FF0000;
+            --grid-color: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.5;
+            font-feature-settings: 'ss01' on, 'cv01' on;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-back:hover {
+            color: var(--red);
+        }
+
+        .nav-logo {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-link:hover {
+            color: var(--red);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 120px;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 48px;
+        }
+
+        .hero-content {
+            padding-right: 48px;
+            border-right: 1px solid var(--black);
+        }
+
+        .hero-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-weight: 300;
+            font-size: 48px;
+            margin-top: 8px;
+        }
+
+        .hero-text {
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 480px;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .meta-item {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--grid-color);
+        }
+
+        .meta-item:last-child {
+            border-bottom: none;
+        }
+
+        .meta-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 48px;
+            margin-bottom: 80px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--grid-color);
+        }
+
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--black);
+        }
+
+        .feature-card {
+            padding: 40px 32px;
+            background: var(--white);
+        }
+
+        .feature-number {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--red);
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 120px 0;
+            background: var(--gray);
+            border-bottom: 1px solid var(--black);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--black);
+            margin-top: 60px;
+        }
+
+        .color-card {
+            background: var(--white);
+            padding: 32px;
+        }
+
+        .color-preview {
+            width: 100%;
+            aspect-ratio: 2/1;
+            margin-bottom: 24px;
+        }
+
+        .color-preview--black { background: var(--black); }
+        .color-preview--white { background: var(--white); border: 1px solid var(--black); }
+        .color-preview--gray { background: var(--gray); border: 1px solid rgba(0,0,0,0.1); }
+        .color-preview--red { background: var(--red); }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.5);
+            font-family: 'SF Mono', 'Monaco', monospace;
+        }
+
+        /* Typography Section */
+        .typography {
+            padding: 120px 0;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .type-samples {
+            margin-top: 60px;
+        }
+
+        .type-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--grid-color);
+            align-items: baseline;
+        }
+
+        .type-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        .type-h1 {
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .type-h2 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .type-h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .type-body {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .type-small {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Components Section */
+        .components {
+            padding: 120px 0;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--black);
+            margin-top: 60px;
+        }
+
+        .component-demo {
+            background: var(--white);
+            padding: 48px;
+        }
+
+        .component-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 32px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--red);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 1px solid var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Swiss Input */
+        .swiss-input {
+            width: 100%;
+            padding: 16px 0;
+            border: none;
+            border-bottom: 1px solid var(--black);
+            font-size: 16px;
+            font-family: inherit;
+            background: transparent;
+            margin-bottom: 24px;
+        }
+
+        .swiss-input:focus {
+            outline: none;
+            border-bottom-width: 2px;
+        }
+
+        .swiss-input::placeholder {
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Grid System Demo */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 8px;
+        }
+
+        .grid-cell {
+            background: var(--gray);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Swiss Tags */
+        .swiss-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .swiss-tag {
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid var(--black);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .swiss-tag:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .swiss-tag.active {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--black);
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 48px;
+        }
+
+        .footer-brand {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: flex-end;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: left;
+        }
+
+        .footer-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                border-right: none;
+                padding-bottom: 48px;
+                border-bottom: 1px solid var(--black);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero h1 span {
+                font-size: 32px;
+            }
+
+            .section-header {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .type-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-info {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-back">← Back</a>
+            <span class="nav-logo">Swiss 2.0</span>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#colors" class="nav-link">Colors</a>
+                <a href="#components" class="nav-link">Components</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="hero-label">International Style</div>
+                        <h1>Swiss Modernism<span>瑞士现代主义2.0</span></h1>
+                        <p class="hero-text">将经典的瑞士设计原则与现代数字界面结合，网格系统、无衬线字体、功能至上的设计哲学。</p>
+                    </div>
+                    <div class="hero-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Era</div>
+                            <div class="meta-value">1950s+</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Grid</div>
+                            <div class="meta-value">12 Col</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Style</div>
+                            <div class="meta-value">#50</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-number">01 Principles</div>
+                    <h2 class="section-title">Core Features</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-number">01</div>
+                        <h3 class="feature-title">Grid System</h3>
+                        <p class="feature-desc">严格的网格系统是瑞士设计的基础，确保布局的秩序感和一致性。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">02</div>
+                        <h3 class="feature-title">Sans-Serif</h3>
+                        <p class="feature-desc">无衬线字体如Helvetica、Inter，清晰易读，现代感十足。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">03</div>
+                        <h3 class="feature-title">Objective Design</h3>
+                        <p class="feature-desc">客观理性的设计方法，内容决定形式，功能优先于装饰。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">04</div>
+                        <h3 class="feature-title">Asymmetry</h3>
+                        <p class="feature-desc">动态的不对称布局，通过视觉张力创造兴趣点。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">05</div>
+                        <h3 class="feature-title">Minimalism</h3>
+                        <p class="feature-desc">去除不必要的装饰，让内容成为主角。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-number">06</div>
+                        <h3 class="feature-title">Hierarchy</h3>
+                        <p class="feature-desc">清晰的视觉层次，通过字体大小和粗细建立信息结构。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-number">02 Palette</div>
+                    <h2 class="section-title">Color System</h2>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview color-preview--black"></div>
+                        <div class="color-name">Black</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--white"></div>
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--gray"></div>
+                        <div class="color-name">Gray</div>
+                        <div class="color-hex">#F5F5F5</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--red"></div>
+                        <div class="color-name">Red</div>
+                        <div class="color-hex">#FF0000</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="typography">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-number">03 Typography</div>
+                    <h2 class="section-title">Type Scale</h2>
+                </div>
+                <div class="type-samples">
+                    <div class="type-row">
+                        <div class="type-label">H1 / 72px</div>
+                        <div class="type-h1">Heading</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-label">H2 / 48px</div>
+                        <div class="type-h2">Subheading</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-label">H3 / 24px</div>
+                        <div class="type-h3">Section Title</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-label">Body / 16px</div>
+                        <div class="type-body">The quick brown fox jumps over the lazy dog.</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-label">Small / 13px</div>
+                        <div class="type-small">Caption text and metadata information.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-number">04 Components</div>
+                    <h2 class="section-title">UI Elements</h2>
+                </div>
+                <div class="components-grid">
+                    <div class="component-demo">
+                        <h4 class="component-title">Buttons</h4>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-outline">Secondary</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Form Input</h4>
+                        <input type="text" class="swiss-input" placeholder="Enter your email">
+                        <button class="btn btn-primary" style="width: 100%;">Subscribe</button>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">12 Column Grid</h4>
+                        <div class="grid-demo">
+                            <div class="grid-cell">1</div>
+                            <div class="grid-cell">2</div>
+                            <div class="grid-cell">3</div>
+                            <div class="grid-cell">4</div>
+                            <div class="grid-cell">5</div>
+                            <div class="grid-cell">6</div>
+                            <div class="grid-cell">7</div>
+                            <div class="grid-cell">8</div>
+                            <div class="grid-cell">9</div>
+                            <div class="grid-cell">10</div>
+                            <div class="grid-cell">11</div>
+                            <div class="grid-cell">12</div>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Tags</h4>
+                        <div class="swiss-tags">
+                            <span class="swiss-tag active">Grid</span>
+                            <span class="swiss-tag">Modular</span>
+                            <span class="swiss-tag">Helvetica</span>
+                            <span class="swiss-tag">Clean</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Swiss Modernism 2.0</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">1950s Swiss + 2020s</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Category</div>
+                        <div class="footer-value">General</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Theme</div>
+                        <div class="footer-value">Light</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Style ID</div>
+                        <div class="footer-value">#50</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

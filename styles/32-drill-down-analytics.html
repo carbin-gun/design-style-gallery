@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill-Down Analytics | BI/Analytics Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366F1;
+            --primary-light: #818CF8;
+            --secondary: #EC4899;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --bg: #F9FAFB;
+            --bg-card: #FFFFFF;
+            --border: #E5E7EB;
+            --font: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .breadcrumb-item:hover {
+            background: var(--bg);
+            color: var(--primary);
+        }
+
+        .breadcrumb-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .breadcrumb-sep {
+            color: var(--border);
+        }
+
+        /* Main */
+        .main {
+            padding: 24px;
+        }
+
+        /* Drill Path Indicator */
+        .drill-path {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .drill-path-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .drill-levels {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .drill-level {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg);
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .drill-level:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .drill-level.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .drill-level-num {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .drill-level.active .drill-level-num {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .drill-arrow {
+            color: var(--border);
+        }
+
+        /* Summary Cards */
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .summary-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .summary-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .drill-indicator {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Expandable Table */
+        .table-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table td {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table tr {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .table tr:hover {
+            background: var(--bg);
+        }
+
+        .table tr.expanded {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .expand-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        .nested-row {
+            background: var(--bg);
+        }
+
+        .nested-row td {
+            padding-left: 48px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .nested-row td:first-child {
+            padding-left: 48px;
+        }
+
+        .deep-nested-row td {
+            padding-left: 72px;
+        }
+
+        /* Progress Bars in Table */
+        .table-bar {
+            width: 80px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .table-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        /* Color Palette */
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 32px 0 16px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        .color-swatch {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .color-preview {
+            height: 50px;
+        }
+
+        .color-info {
+            padding: 10px;
+        }
+
+        .color-name {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .color-hex {
+            font-size: 10px;
+            color: var(--text-light);
+            font-family: var(--font-mono);
+        }
+
+        /* Components */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .component-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .component-card h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 32px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .footer-meta {
+            display: flex;
+            gap: 24px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .summary-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .summary-row {
+                grid-template-columns: 1fr;
+            }
+
+            .drill-levels {
+                flex-wrap: wrap;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="header-left">
+                <a href="../index.html" class="header-back">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back
+                </a>
+                <span class="header-title">Sales Analytics</span>
+            </div>
+        </div>
+        <div class="breadcrumb">
+            <a href="#" class="breadcrumb-item">All Regions</a>
+            <span class="breadcrumb-sep">></span>
+            <a href="#" class="breadcrumb-item">North America</a>
+            <span class="breadcrumb-sep">></span>
+            <a href="#" class="breadcrumb-item active">United States</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Drill Path Indicator -->
+        <div class="drill-path">
+            <div class="drill-path-label">Current Drill Path</div>
+            <div class="drill-levels">
+                <div class="drill-level">
+                    <span class="drill-level-num">1</span>
+                    Region
+                </div>
+                <svg class="drill-arrow" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <div class="drill-level active">
+                    <span class="drill-level-num">2</span>
+                    Country
+                </div>
+                <svg class="drill-arrow" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <div class="drill-level">
+                    <span class="drill-level-num">3</span>
+                    State
+                </div>
+                <svg class="drill-arrow" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <div class="drill-level">
+                    <span class="drill-level-num">4</span>
+                    City
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-row">
+            <div class="summary-card">
+                <div class="summary-label">Total Revenue</div>
+                <div class="summary-value">$12.4M</div>
+                <div class="summary-detail">
+                    <span class="drill-indicator">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                        Click to drill down
+                    </span>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Total Orders</div>
+                <div class="summary-value">8,432</div>
+                <div class="summary-detail">
+                    <span class="drill-indicator">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                        Click to drill down
+                    </span>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Avg Order Value</div>
+                <div class="summary-value">$1,471</div>
+                <div class="summary-detail">
+                    <span style="color: var(--success);">+8.2% vs last period</span>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Conversion Rate</div>
+                <div class="summary-value">4.8%</div>
+                <div class="summary-detail">
+                    <span style="color: var(--warning);">-0.3% vs last period</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expandable Data Table -->
+        <div class="table-card">
+            <div class="table-header">
+                <span class="table-title">Revenue by State (Click to expand)</span>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="40"></th>
+                        <th>State</th>
+                        <th>Revenue</th>
+                        <th>Orders</th>
+                        <th>Performance</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="expanded">
+                        <td>
+                            <div class="expand-icon">
+                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                            </div>
+                        </td>
+                        <td><strong>California</strong></td>
+                        <td style="font-family: var(--font-mono);">$4,234,500</td>
+                        <td>2,847</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 85%; background: var(--primary);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--success);">+12.4%</td>
+                    </tr>
+                    <tr class="nested-row">
+                        <td></td>
+                        <td>Los Angeles</td>
+                        <td style="font-family: var(--font-mono);">$1,892,300</td>
+                        <td>1,245</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 75%; background: var(--primary-light);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--success);">+15.2%</td>
+                    </tr>
+                    <tr class="nested-row">
+                        <td></td>
+                        <td>San Francisco</td>
+                        <td style="font-family: var(--font-mono);">$1,456,200</td>
+                        <td>987</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 60%; background: var(--primary-light);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--success);">+8.7%</td>
+                    </tr>
+                    <tr class="nested-row">
+                        <td></td>
+                        <td>San Diego</td>
+                        <td style="font-family: var(--font-mono);">$886,000</td>
+                        <td>615</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 45%; background: var(--primary-light);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--warning);">+2.1%</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="expand-icon">
+                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                            </div>
+                        </td>
+                        <td><strong>Texas</strong></td>
+                        <td style="font-family: var(--font-mono);">$3,128,400</td>
+                        <td>2,156</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 65%; background: var(--primary);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--success);">+9.8%</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="expand-icon">
+                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                            </div>
+                        </td>
+                        <td><strong>New York</strong></td>
+                        <td style="font-family: var(--font-mono);">$2,845,600</td>
+                        <td>1,892</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 58%; background: var(--primary);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--success);">+7.3%</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="expand-icon">
+                                <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                            </div>
+                        </td>
+                        <td><strong>Florida</strong></td>
+                        <td style="font-family: var(--font-mono);">$2,191,500</td>
+                        <td>1,537</td>
+                        <td>
+                            <div class="table-bar">
+                                <div class="table-bar-fill" style="width: 45%; background: var(--primary);"></div>
+                            </div>
+                        </td>
+                        <td style="color: var(--warning);">+3.2%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Color Palette -->
+        <h2 class="section-title">Color Palette</h2>
+        <div class="color-grid">
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #6366F1;"></div>
+                <div class="color-info">
+                    <div class="color-name">Primary</div>
+                    <div class="color-hex">#6366F1</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #818CF8;"></div>
+                <div class="color-info">
+                    <div class="color-name">Primary Light</div>
+                    <div class="color-hex">#818CF8</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #EC4899;"></div>
+                <div class="color-info">
+                    <div class="color-name">Secondary</div>
+                    <div class="color-hex">#EC4899</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #10B981;"></div>
+                <div class="color-info">
+                    <div class="color-name">Success</div>
+                    <div class="color-hex">#10B981</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #F59E0B;"></div>
+                <div class="color-info">
+                    <div class="color-name">Warning</div>
+                    <div class="color-hex">#F59E0B</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #F9FAFB;"></div>
+                <div class="color-info">
+                    <div class="color-name">Background</div>
+                    <div class="color-hex">#F9FAFB</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Components -->
+        <h2 class="section-title">Drill-Down Components</h2>
+        <div class="components-grid">
+            <div class="component-card">
+                <h3>Drill Level Indicators</h3>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div class="drill-level" style="cursor: default;">
+                        <span class="drill-level-num">1</span>
+                        Level 1
+                    </div>
+                    <div class="drill-level active" style="cursor: default;">
+                        <span class="drill-level-num">2</span>
+                        Active
+                    </div>
+                    <div class="drill-level" style="cursor: default;">
+                        <span class="drill-level-num">3</span>
+                        Level 3
+                    </div>
+                </div>
+            </div>
+            <div class="component-card">
+                <h3>Breadcrumb Navigation</h3>
+                <div class="breadcrumb">
+                    <a href="#" class="breadcrumb-item" style="font-size: 12px;">Root</a>
+                    <span class="breadcrumb-sep">></span>
+                    <a href="#" class="breadcrumb-item" style="font-size: 12px;">Parent</a>
+                    <span class="breadcrumb-sep">></span>
+                    <a href="#" class="breadcrumb-item active" style="font-size: 12px;">Current</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-brand">Drill-Down Analytics</div>
+            <div class="footer-meta">
+                <span>BI/Analytics Style</span>
+                <span>Sales / Product Analytics</span>
+                <span>WCAG AA</span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
