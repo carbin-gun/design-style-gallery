@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism | 玻璃拟态风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-blue: #0080FF;
+            --accent-purple: #8B00FF;
+            --accent-pink: #FF1493;
+            --accent-teal: #20B2AA;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-shapes {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 20s infinite;
+        }
+
+        .bg-shape:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: #ff6b6b;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-shape:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: #4ecdc4;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .bg-shape:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            background: #ffe66d;
+            top: 50%;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(100px, 50px) scale(0.9); }
+            75% { transform: translate(-50px, 100px) scale(1.05); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass Effect */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s;
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: #764ba2;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Cards Section */
+        .cards-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Dashboard Preview */
+        .dashboard {
+            padding: 80px 0;
+        }
+
+        .dashboard-container {
+            padding: 24px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: var(--accent-blue); }
+        .stat-card:nth-child(2) .stat-value { color: var(--accent-purple); }
+        .stat-card:nth-child(3) .stat-value { color: var(--accent-pink); }
+        .stat-card:nth-child(4) .stat-value { color: var(--accent-teal); }
+
+        .dashboard-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-area {
+            padding: 24px;
+            min-height: 300px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .chart-visual {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            padding-top: 20px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .chart-bar:hover {
+            opacity: 0.8;
+        }
+
+        .sidebar-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-card {
+            padding: 20px;
+        }
+
+        .sidebar-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .progress-item {
+            margin-bottom: 12px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        /* Colors */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .color-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Modal Example */
+        .modal-section {
+            padding: 80px 0;
+        }
+
+        .modal-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .modal-card {
+            width: 400px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .modal-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .modal-card p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 16px;
+        }
+
+        .modal-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+        }
+
+        .footer-brand {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-main {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+    </div>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner glass">
+                <a href="../index.html" class="nav-back">← Back</a>
+                <span class="nav-logo">Glassmorphism</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#dashboard" class="nav-link">Dashboard</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Glassmorphism<br>玻璃拟态风格</h1>
+                <p>通过磨砂玻璃效果、透明度和模糊背景创造层次感与深度的现代UI设计风格。</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Explore Style</button>
+                    <button class="btn btn-glass">View Components</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="cards-section" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Principles / 核心原则</h2>
+                    <p>Frosted glass effects create depth and hierarchy</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="card glass">
+                        <div class="card-icon">🌫️</div>
+                        <h3>Backdrop Blur</h3>
+                        <p>使用CSS backdrop-filter创造磨砂玻璃效果，通常设置10-20px的模糊值。</p>
+                    </div>
+                    <div class="card glass">
+                        <div class="card-icon">💎</div>
+                        <h3>Transparency</h3>
+                        <p>半透明的背景色（通常10%-30%不透明度）让底层内容若隐若现。</p>
+                    </div>
+                    <div class="card glass">
+                        <div class="card-icon">✨</div>
+                        <h3>Light Border</h3>
+                        <p>细微的白色边框（rgba白色20%）模拟玻璃边缘的光线折射效果。</p>
+                    </div>
+                    <div class="card glass">
+                        <div class="card-icon">🎨</div>
+                        <h3>Vibrant Background</h3>
+                        <p>鲜艳的渐变或图形背景，通过玻璃层呈现出柔和的色彩。</p>
+                    </div>
+                    <div class="card glass">
+                        <div class="card-icon">📐</div>
+                        <h3>Layered Design</h3>
+                        <p>多层玻璃面板叠加，通过不同的透明度和模糊度创造Z轴深度。</p>
+                    </div>
+                    <div class="card glass">
+                        <div class="card-icon">💫</div>
+                        <h3>Subtle Shadow</h3>
+                        <p>柔和的阴影增强玻璃面板的悬浮感，避免过于生硬的边界。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard" id="dashboard">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Dashboard Preview / 仪表盘预览</h2>
+                    <p>Glass panels create a layered, modern interface</p>
+                </div>
+                <div class="dashboard-container glass-strong">
+                    <div class="dashboard-header">
+                        <span class="dashboard-title">Analytics Overview</span>
+                        <button class="btn btn-glass" style="padding: 10px 20px; font-size: 12px;">This Week ▾</button>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="stat-card glass">
+                            <div class="stat-value">12.5K</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <div class="stat-value">$48.2K</div>
+                            <div class="stat-label">Revenue</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <div class="stat-value">2.4K</div>
+                            <div class="stat-label">Orders</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <div class="stat-value">89%</div>
+                            <div class="stat-label">Satisfaction</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-main">
+                        <div class="chart-area glass">
+                            <div class="chart-header">
+                                <span class="chart-title">Weekly Performance</span>
+                                <div class="chart-legend">
+                                    <span class="legend-item"><span class="legend-dot" style="background: var(--accent-blue);"></span> Revenue</span>
+                                    <span class="legend-item"><span class="legend-dot" style="background: var(--accent-purple);"></span> Orders</span>
+                                </div>
+                            </div>
+                            <div class="chart-visual">
+                                <div class="chart-bar" style="height: 60%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                                <div class="chart-bar" style="height: 80%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                                <div class="chart-bar" style="height: 45%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                                <div class="chart-bar" style="height: 90%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                                <div class="chart-bar" style="height: 70%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                                <div class="chart-bar" style="height: 85%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                                <div class="chart-bar" style="height: 55%; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));"></div>
+                            </div>
+                        </div>
+                        <div class="sidebar-cards">
+                            <div class="sidebar-card glass">
+                                <h4>Progress</h4>
+                                <div class="progress-item">
+                                    <div class="progress-header">
+                                        <span>Design</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%; background: var(--accent-blue);"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-header">
+                                        <span>Development</span>
+                                        <span>45%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 45%; background: var(--accent-purple);"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-header">
+                                        <span>Marketing</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 90%; background: var(--accent-pink);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sidebar-card glass">
+                                <h4>Quick Actions</h4>
+                                <button class="btn btn-glass" style="width: 100%; margin-bottom: 8px; padding: 12px;">New Project</button>
+                                <button class="btn btn-glass" style="width: 100%; padding: 12px;">View Reports</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="modal-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Modal & Forms / 弹窗与表单</h2>
+                    <p>Glass panels perfect for overlays and modals</p>
+                </div>
+                <div class="modal-demo">
+                    <div class="modal-card glass-strong">
+                        <h3>Welcome Back</h3>
+                        <p>Sign in to continue to your dashboard</p>
+                        <input type="email" class="modal-input" placeholder="Email address">
+                        <input type="password" class="modal-input" placeholder="Password">
+                        <button class="btn btn-primary" style="width: 100%;">Sign In</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette / 色彩方案</h2>
+                    <p>Vibrant colors shine through glass layers</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card glass">
+                        <div class="color-preview" style="background: var(--accent-blue);"></div>
+                        <div class="color-name">Electric Blue</div>
+                        <div class="color-value">#0080FF</div>
+                    </div>
+                    <div class="color-card glass">
+                        <div class="color-preview" style="background: var(--accent-purple);"></div>
+                        <div class="color-name">Neon Purple</div>
+                        <div class="color-value">#8B00FF</div>
+                    </div>
+                    <div class="color-card glass">
+                        <div class="color-preview" style="background: var(--accent-pink);"></div>
+                        <div class="color-name">Vivid Pink</div>
+                        <div class="color-value">#FF1493</div>
+                    </div>
+                    <div class="color-card glass">
+                        <div class="color-preview" style="background: var(--accent-teal);"></div>
+                        <div class="color-name">Teal</div>
+                        <div class="color-value">#20B2AA</div>
+                    </div>
+                    <div class="color-card glass">
+                        <div class="color-preview" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);"></div>
+                        <div class="color-name">Glass White</div>
+                        <div class="color-value">rgba(255,255,255,0.2)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner glass">
+                <div class="footer-brand">Glassmorphism</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">SaaS, Dashboards</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">Good ⚠️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

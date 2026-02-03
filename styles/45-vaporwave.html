@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaporwave | 蒸汽波风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink: #FF71CE;
+            --cyan: #01CDFE;
+            --mint: #05FFA1;
+            --purple: #B967FF;
+            --hot-pink: #FF6AD5;
+            --lavender: #C774E8;
+            --dark-purple: #1A0A2E;
+            --dark-blue: #16213E;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: linear-gradient(180deg, var(--dark-purple) 0%, var(--dark-blue) 50%, #0F0F23 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Sunset Gradient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60vh;
+            background: linear-gradient(180deg,
+                #FF6AD5 0%,
+                #FF71CE 20%,
+                #C774E8 40%,
+                #B967FF 60%,
+                #01CDFE 80%,
+                transparent 100%);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Grid Floor */
+        .grid-floor {
+            position: fixed;
+            bottom: 0;
+            left: -50%;
+            right: -50%;
+            height: 40vh;
+            background:
+                linear-gradient(90deg, var(--cyan) 1px, transparent 1px),
+                linear-gradient(0deg, var(--cyan) 1px, transparent 1px);
+            background-size: 60px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center top;
+            opacity: 0.5;
+            animation: grid-move 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes grid-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 400px; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glitch Text Effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            color: var(--cyan);
+            animation: glitch-1 2s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .glitch::after {
+            color: var(--pink);
+            animation: glitch-2 3s infinite linear alternate-reverse;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(2px, -2px); }
+            40% { transform: translate(-2px, 2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            background: linear-gradient(90deg, rgba(185, 103, 255, 0.2), rgba(1, 205, 254, 0.2));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 113, 206, 0.3);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--cyan);
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 1px solid var(--cyan);
+            transition: all 0.3s;
+        }
+
+        .nav-back:hover {
+            background: var(--cyan);
+            color: var(--dark-purple);
+            box-shadow: 0 0 20px var(--cyan);
+        }
+
+        .nav-logo {
+            font-family: 'Russo One', sans-serif;
+            font-size: 24px;
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--pink);
+            font-size: 18px;
+            padding: 10px 18px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            border-color: var(--pink);
+            text-shadow: 0 0 10px var(--pink);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, rgba(255, 113, 206, 0.2), rgba(185, 103, 255, 0.2));
+            border: 1px solid var(--pink);
+            font-size: 16px;
+            color: var(--pink);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .hero h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 80px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(90deg, var(--pink), var(--purple), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Decorative Sun */
+        .vaporwave-sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(180deg, var(--hot-pink) 0%, var(--purple) 50%, transparent 50%);
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .vaporwave-sun::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 10px,
+                var(--dark-purple) 10px,
+                var(--dark-purple) 20px
+            );
+            border-radius: 50%;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            font-size: 18px;
+            font-weight: 400;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--pink), var(--purple));
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px var(--pink);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--cyan);
+            border: 2px solid var(--cyan);
+        }
+
+        .btn-outline:hover {
+            background: var(--cyan);
+            color: var(--dark-purple);
+            box-shadow: 0 0 30px var(--cyan);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 16px;
+            color: var(--cyan);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding: 10px 24px;
+            border: 1px solid var(--cyan);
+        }
+
+        .section-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 48px;
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            background: linear-gradient(135deg, rgba(185, 103, 255, 0.1), rgba(1, 205, 254, 0.1));
+            border: 1px solid rgba(255, 113, 206, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--pink);
+            box-shadow: 0 0 30px rgba(255, 113, 206, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .feature-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--cyan);
+        }
+
+        .feature-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .color-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 113, 206, 0.3);
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .color-card:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(1, 205, 254, 0.2);
+        }
+
+        .color-preview {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+        }
+
+        .color-preview--pink { background: var(--pink); box-shadow: 0 0 20px var(--pink); }
+        .color-preview--cyan { background: var(--cyan); box-shadow: 0 0 20px var(--cyan); }
+        .color-preview--mint { background: var(--mint); box-shadow: 0 0 20px var(--mint); }
+        .color-preview--purple { background: var(--purple); box-shadow: 0 0 20px var(--purple); }
+        .color-preview--hot-pink { background: var(--hot-pink); box-shadow: 0 0 20px var(--hot-pink); }
+        .color-preview--lavender { background: var(--lavender); box-shadow: 0 0 20px var(--lavender); }
+
+        .color-name {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: white;
+        }
+
+        .color-hex {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Components Section */
+        .components {
+            padding: 100px 0;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .component-demo {
+            background: linear-gradient(135deg, rgba(185, 103, 255, 0.1), rgba(1, 205, 254, 0.1));
+            border: 1px solid rgba(255, 113, 206, 0.3);
+            padding: 32px;
+        }
+
+        .component-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: var(--cyan);
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(1, 205, 254, 0.3);
+        }
+
+        /* Vaporwave Input */
+        .vapor-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--purple);
+            color: white;
+            font-size: 18px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+
+        .vapor-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(1, 205, 254, 0.3);
+        }
+
+        .vapor-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Tags */
+        .vapor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .vapor-tag {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 1px solid;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .vapor-tag:nth-child(1) { border-color: var(--pink); color: var(--pink); }
+        .vapor-tag:nth-child(2) { border-color: var(--cyan); color: var(--cyan); }
+        .vapor-tag:nth-child(3) { border-color: var(--purple); color: var(--purple); }
+        .vapor-tag:nth-child(4) { border-color: var(--mint); color: var(--mint); }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 113, 206, 0.3);
+            margin-top: 80px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Russo One', sans-serif;
+            font-size: 24px;
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 16px;
+            color: var(--cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-floor"></div>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">← BACK</a>
+                <span class="nav-logo">VAPORWAVE</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                    <a href="#components" class="nav-link">Components</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="vaporwave-sun"></div>
+            <div class="container">
+                <span class="hero-badge">A E S T H E T I C</span>
+                <h1>
+                    <span class="gradient glitch" data-text="VAPORWAVE">VAPORWAVE</span>
+                    <br>蒸汽波风格
+                </h1>
+                <p class="hero-subtitle">复古未来主义的视觉盛宴，霓虹渐变、网格地板、日落美学、故障艺术。</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary">ENTER AESTHETIC →</a>
+                    <a href="#components" class="btn btn-outline">VIEW COMPONENTS</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">DESIGN PRINCIPLES</span>
+                    <h2 class="section-title">Core Features</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌅</div>
+                        <h3 class="feature-title">Sunset Gradients</h3>
+                        <p class="feature-desc">粉紫渐变模拟日落天空，营造怀旧而梦幻的氛围。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3 class="feature-title">Grid Floors</h3>
+                        <p class="feature-desc">透视网格地板，营造80年代科幻电影的视觉效果。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💿</div>
+                        <h3 class="feature-title">Retro-Futurism</h3>
+                        <p class="feature-desc">融合80-90年代的视觉元素，创造复古未来感。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Glitch Effects</h3>
+                        <p class="feature-desc">故障艺术效果，色彩偏移、扫描线，数字怀旧感。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌴</div>
+                        <h3 class="feature-title">Palm Trees</h3>
+                        <p class="feature-desc">标志性的棕榈树剪影，热带与电子的完美融合。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3 class="feature-title">Neon Glow</h3>
+                        <p class="feature-desc">霓虹发光效果，粉色与青色的对比，营造迷幻氛围。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">COLOR PALETTE</span>
+                    <h2 class="section-title">Aesthetic Colors</h2>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview color-preview--pink"></div>
+                        <div class="color-name">Pink</div>
+                        <div class="color-hex">#FF71CE</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--cyan"></div>
+                        <div class="color-name">Cyan</div>
+                        <div class="color-hex">#01CDFE</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--mint"></div>
+                        <div class="color-name">Mint</div>
+                        <div class="color-hex">#05FFA1</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--purple"></div>
+                        <div class="color-name">Purple</div>
+                        <div class="color-hex">#B967FF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--hot-pink"></div>
+                        <div class="color-name">Hot Pink</div>
+                        <div class="color-hex">#FF6AD5</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--lavender"></div>
+                        <div class="color-name">Lavender</div>
+                        <div class="color-hex">#C774E8</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">UI COMPONENTS</span>
+                    <h2 class="section-title">Component Examples</h2>
+                </div>
+                <div class="components-grid">
+                    <div class="component-demo">
+                        <h4 class="component-title">Form Elements</h4>
+                        <input type="text" class="vapor-input" placeholder="Enter your email...">
+                        <button class="btn btn-primary" style="width: 100%;">SUBSCRIBE</button>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Tags</h4>
+                        <div class="vapor-tags">
+                            <span class="vapor-tag">Synthwave</span>
+                            <span class="vapor-tag">Aesthetic</span>
+                            <span class="vapor-tag">Retro</span>
+                            <span class="vapor-tag">Neon</span>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Buttons</h4>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <button class="btn btn-primary">PRIMARY</button>
+                            <button class="btn btn-outline">SECONDARY</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Glitch Text</h4>
+                        <div style="font-family: 'Russo One', sans-serif; font-size: 32px;">
+                            <span class="glitch" data-text="AESTHETIC">AESTHETIC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">VAPORWAVE</div>
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-label">Era</div>
+                    <div class="footer-value">1980s-90s Retro</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Category</div>
+                    <div class="footer-value">General</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Theme</div>
+                    <div class="footer-value">Dark</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Style ID</div>
+                    <div class="footer-value">#45</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

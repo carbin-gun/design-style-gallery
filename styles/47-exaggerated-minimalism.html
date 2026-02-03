@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exaggerated Minimalism | 夸张极简主义</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --red: #FF0000;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.4;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 32px 48px;
+            background: var(--white);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+
+        .nav-back:hover {
+            color: var(--red);
+        }
+
+        .nav-logo {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--red);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 160px 0 100px;
+        }
+
+        .hero-content {
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: clamp(80px, 15vw, 200px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 .red {
+            color: var(--red);
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid var(--black);
+            padding-top: 32px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 40px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--red);
+        }
+
+        .btn-text {
+            background: transparent;
+            color: var(--black);
+            padding: 20px 0;
+        }
+
+        .btn-text:hover {
+            color: var(--red);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 200px 0;
+            border-top: 1px solid var(--black);
+        }
+
+        .section-header {
+            margin-bottom: 120px;
+        }
+
+        .section-number {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(48px, 8vw, 100px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            padding-left: 20px;
+        }
+
+        .feature-number {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--red);
+        }
+
+        .feature-content h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-content p {
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.6);
+            line-height: 1.7;
+            max-width: 500px;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 200px 0;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .colors .section-title {
+            color: var(--white);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-top: 120px;
+        }
+
+        .color-card {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px;
+        }
+
+        .color-card--black {
+            background: var(--black);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .color-card--white {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .color-card--red {
+            background: var(--red);
+        }
+
+        .color-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .color-hex {
+            font-size: 14px;
+            opacity: 0.6;
+            letter-spacing: 0.1em;
+        }
+
+        /* Components Section */
+        .components {
+            padding: 200px 0;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 80px;
+            margin-top: 120px;
+        }
+
+        .component-demo {
+            padding: 60px;
+            border: 1px solid var(--black);
+        }
+
+        .component-title {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Giant Typography */
+        .giant-text {
+            font-size: 120px;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+
+        .giant-text .red {
+            color: var(--red);
+        }
+
+        /* Minimal Input */
+        .minimal-input {
+            width: 100%;
+            padding: 24px 0;
+            border: none;
+            border-bottom: 2px solid var(--black);
+            font-size: 24px;
+            font-family: inherit;
+            font-weight: 500;
+            background: transparent;
+            transition: border-color 0.3s;
+            margin-bottom: 32px;
+        }
+
+        .minimal-input:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+
+        .minimal-input::placeholder {
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Statement Tags */
+        .statement-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .statement-tag {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            border: 2px solid var(--black);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .statement-tag:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .statement-tag.active {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 100px 0;
+            border-top: 1px solid var(--black);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footer-brand {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 80px;
+        }
+
+        .footer-item {
+            text-align: left;
+        }
+
+        .footer-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .nav {
+                padding: 24px;
+            }
+
+            .feature-item {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 32px;
+            }
+
+            .giant-text {
+                font-size: 60px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 48px;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-back">← Back</a>
+            <span class="nav-logo">Minimal</span>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#colors" class="nav-link">Colors</a>
+                <a href="#components" class="nav-link">Components</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Exaggerated<br>Minimal<span class="red">.</span><br>夸张极简</h1>
+                    <div class="hero-meta">
+                        <p class="hero-subtitle">用最少的元素创造最大的视觉冲击。超大字体、极致留白、强烈对比。</p>
+                        <div class="hero-cta">
+                            <a href="#features" class="btn btn-primary">Explore</a>
+                            <a href="#components" class="btn btn-text">Components →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">01</span>
+                    <h2 class="section-title">Core<br>Principles</h2>
+                </div>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-number">01</span>
+                        <div class="feature-content">
+                            <h3>Oversized Typography</h3>
+                            <p>超大字体作为主要视觉元素，字体本身就是设计，无需多余装饰。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">02</span>
+                        <div class="feature-content">
+                            <h3>Extreme Negative Space</h3>
+                            <p>大量留白让内容呼吸，强调少即是多的设计哲学。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">03</span>
+                        <div class="feature-content">
+                            <h3>Bold Statements</h3>
+                            <p>每个元素都要有存在的理由，用最少的元素传达最强的信息。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">04</span>
+                        <div class="feature-content">
+                            <h3>High Contrast</h3>
+                            <p>黑白对比为主，点缀色谨慎使用，创造视觉张力。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">05</span>
+                        <div class="feature-content">
+                            <h3>Intentional Asymmetry</h3>
+                            <p>打破对称的布局创造动态感和视觉兴趣点。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-number">06</span>
+                        <div class="feature-content">
+                            <h3>Functional Beauty</h3>
+                            <p>美来源于功能，每个设计决策都服务于目的。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number" style="color: rgba(255,255,255,0.4);">02</span>
+                    <h2 class="section-title">Color<br>Palette</h2>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card color-card--black">
+                        <div class="color-name">Black</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                    <div class="color-card color-card--white">
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-card color-card--red">
+                        <div class="color-name">Red</div>
+                        <div class="color-hex">#FF0000</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">03</span>
+                    <h2 class="section-title">Component<br>Examples</h2>
+                </div>
+                <div class="components-grid">
+                    <div class="component-demo">
+                        <h4 class="component-title">Giant Typography</h4>
+                        <div class="giant-text">Big<span class="red">.</span></div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Minimal Form</h4>
+                        <input type="text" class="minimal-input" placeholder="Your email">
+                        <button class="btn btn-primary" style="width: 100%;">Subscribe</button>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Statement Tags</h4>
+                        <div class="statement-tags">
+                            <span class="statement-tag active">Bold</span>
+                            <span class="statement-tag">Minimal</span>
+                            <span class="statement-tag">Clean</span>
+                            <span class="statement-tag">Statement</span>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Buttons</h4>
+                        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-text">Text →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">Exaggerated Minimalism</div>
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-label">Era</div>
+                    <div class="footer-value">2020s Modern</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Category</div>
+                    <div class="footer-value">General</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Theme</div>
+                    <div class="footer-value">Light</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Style ID</div>
+                    <div class="footer-value">#47</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

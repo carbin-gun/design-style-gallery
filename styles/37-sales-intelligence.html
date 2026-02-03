@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Intelligence Dashboard - Style 37</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F1F5F9;
+            --bg-dark: #0F172A;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border-color: #E2E8F0;
+            --accent-primary: #4F46E5;
+            --accent-primary-light: rgba(79, 70, 229, 0.1);
+            --accent-secondary: #0EA5E9;
+            --pipeline-lead: #8B5CF6;
+            --pipeline-qualified: #3B82F6;
+            --pipeline-proposal: #0EA5E9;
+            --pipeline-negotiation: #F59E0B;
+            --pipeline-closed: #10B981;
+            --won: #10B981;
+            --won-light: rgba(16, 185, 129, 0.1);
+            --lost: #EF4444;
+            --lost-light: rgba(239, 68, 68, 0.1);
+            --at-risk: #F59E0B;
+            --at-risk-light: rgba(245, 158, 11, 0.1);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .nav-item {
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-item.active {
+            color: var(--accent-primary);
+            background: var(--accent-primary-light);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            width: 240px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.875rem;
+            width: 100%;
+            color: var(--text-primary);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4338CA;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .quota-progress {
+            text-align: right;
+        }
+
+        .quota-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .quota-bar {
+            width: 200px;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+        }
+
+        .quota-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--won));
+            border-radius: 4px;
+        }
+
+        .quota-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .quota-text strong {
+            color: var(--won);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .stat-trend.positive {
+            color: var(--won);
+        }
+
+        .stat-trend.negative {
+            color: var(--lost);
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Pipeline Section */
+        .pipeline-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .pipeline-container {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pipeline-stages {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pipeline-stage {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pipeline-stage:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pipeline-stage::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -0.75rem;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid var(--bg-tertiary);
+        }
+
+        .pipeline-stage:last-child::after {
+            display: none;
+        }
+
+        .pipeline-stage.lead { border-top: 3px solid var(--pipeline-lead); }
+        .pipeline-stage.qualified { border-top: 3px solid var(--pipeline-qualified); }
+        .pipeline-stage.proposal { border-top: 3px solid var(--pipeline-proposal); }
+        .pipeline-stage.negotiation { border-top: 3px solid var(--pipeline-negotiation); }
+        .pipeline-stage.closed { border-top: 3px solid var(--pipeline-closed); }
+
+        .stage-name {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .stage-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 0.25rem;
+        }
+
+        .stage-count {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .pipeline-funnel {
+            display: flex;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .funnel-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .funnel-segment:hover {
+            filter: brightness(1.1);
+        }
+
+        .funnel-segment.lead { background: var(--pipeline-lead); }
+        .funnel-segment.qualified { background: var(--pipeline-qualified); }
+        .funnel-segment.proposal { background: var(--pipeline-proposal); }
+        .funnel-segment.negotiation { background: var(--pipeline-negotiation); }
+        .funnel-segment.closed { background: var(--pipeline-closed); }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        /* Deals Table */
+        .deals-table {
+            width: 100%;
+        }
+
+        .deals-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 100px 100px 80px;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .deal-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 100px 100px 80px;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .deal-row:hover {
+            background: var(--bg-tertiary);
+            margin: 0 -1.25rem;
+            padding: 1rem 1.25rem;
+        }
+
+        .deal-row:last-child {
+            border-bottom: none;
+        }
+
+        .deal-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .deal-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--accent-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--accent-primary);
+        }
+
+        .deal-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .deal-company {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .deal-owner {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .deal-value {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .deal-stage {
+            display: inline-flex;
+            padding: 0.25rem 0.625rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .deal-stage.lead {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--pipeline-lead);
+        }
+
+        .deal-stage.qualified {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--pipeline-qualified);
+        }
+
+        .deal-stage.proposal {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--pipeline-proposal);
+        }
+
+        .deal-stage.negotiation {
+            background: var(--at-risk-light);
+            color: var(--at-risk);
+        }
+
+        .deal-stage.closed {
+            background: var(--won-light);
+            color: var(--won);
+        }
+
+        .deal-health {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .health-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .health-indicator.healthy {
+            background: var(--won);
+        }
+
+        .health-indicator.at-risk {
+            background: var(--at-risk);
+        }
+
+        .health-indicator.critical {
+            background: var(--lost);
+        }
+
+        .health-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Sales Rep Leaderboard */
+        .leaderboard {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(4px);
+        }
+
+        .leaderboard-item.gold {
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
+            border-left: 3px solid #F59E0B;
+        }
+
+        .leaderboard-item.silver {
+            background: linear-gradient(90deg, rgba(148, 163, 184, 0.15), transparent);
+            border-left: 3px solid #94A3B8;
+        }
+
+        .leaderboard-item.bronze {
+            background: linear-gradient(90deg, rgba(180, 83, 9, 0.1), transparent);
+            border-left: 3px solid #B45309;
+        }
+
+        .leaderboard-rank {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .leaderboard-item.gold .leaderboard-rank {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+
+        .leaderboard-item.silver .leaderboard-rank {
+            background: rgba(148, 163, 184, 0.3);
+            color: #64748B;
+        }
+
+        .leaderboard-item.bronze .leaderboard-rank {
+            background: rgba(180, 83, 9, 0.2);
+            color: #B45309;
+        }
+
+        .leaderboard-info {
+            flex: 1;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .leaderboard-deals {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .leaderboard-stats {
+            text-align: right;
+        }
+
+        .leaderboard-revenue {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .leaderboard-quota {
+            font-size: 0.7rem;
+            color: var(--won);
+        }
+
+        /* Activity & Insights */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.call {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--pipeline-qualified);
+        }
+
+        .activity-icon.email {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--pipeline-lead);
+        }
+
+        .activity-icon.meeting {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--pipeline-proposal);
+        }
+
+        .activity-icon.deal {
+            background: var(--won-light);
+            color: var(--won);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-text strong {
+            color: var(--text-primary);
+        }
+
+        .activity-time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Win/Loss Analysis */
+        .win-loss-chart {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .donut-chart {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .donut-chart svg {
+            transform: rotate(-90deg);
+        }
+
+        .donut-segment {
+            fill: none;
+            stroke-width: 16;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-percentage {
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .donut-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .win-loss-legend {
+            flex: 1;
+        }
+
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .legend-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        .legend-dot.won { background: var(--won); }
+        .legend-dot.lost { background: var(--lost); }
+
+        .legend-value {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .loss-reasons {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .loss-reason-title {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .loss-reason-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .loss-reason-name {
+            color: var(--text-secondary);
+        }
+
+        .loss-reason-percent {
+            font-family: 'Space Mono', monospace;
+            font-weight: 500;
+            color: var(--lost);
+        }
+
+        /* AI Insights */
+        .insights-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .insight-item {
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid;
+        }
+
+        .insight-item.opportunity {
+            background: var(--won-light);
+            border-color: var(--won);
+        }
+
+        .insight-item.warning {
+            background: var(--at-risk-light);
+            border-color: var(--at-risk);
+        }
+
+        .insight-item.action {
+            background: var(--accent-primary-light);
+            border-color: var(--accent-primary);
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .insight-item.opportunity .insight-badge { color: var(--won); }
+        .insight-item.warning .insight-badge { color: var(--at-risk); }
+        .insight-item.action .insight-badge { color: var(--accent-primary); }
+
+        .insight-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .insight-text strong {
+            color: var(--text-primary);
+        }
+
+        /* Style Section */
+        .style-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .style-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .style-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-label-text {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .color-value {
+            font-size: 0.75rem;
+            font-family: 'Space Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .component-demo {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .component-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 1200px) {
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline-stages {
+                flex-wrap: wrap;
+            }
+
+            .pipeline-stage::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .deals-header,
+            .deal-row {
+                grid-template-columns: 1fr 80px;
+            }
+
+            .deal-row > *:nth-child(2),
+            .deal-row > *:nth-child(4),
+            .deals-header > *:nth-child(2),
+            .deals-header > *:nth-child(4) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+            </div>
+            <span class="logo-text">SalesIQ</span>
+        </div>
+
+        <nav class="nav">
+            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="#" class="nav-item">Pipeline</a>
+            <a href="#" class="nav-item">Deals</a>
+            <a href="#" class="nav-item">Contacts</a>
+            <a href="#" class="nav-item">Reports</a>
+        </nav>
+
+        <div class="header-actions">
+            <div class="search-box">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" placeholder="Search deals, contacts...">
+            </div>
+            <button class="btn btn-primary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                New Deal
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1>Sales Intelligence Dashboard</h1>
+                <p>Q4 2024 performance overview and pipeline analysis</p>
+            </div>
+            <div class="quota-progress">
+                <div class="quota-label">QUARTERLY QUOTA PROGRESS</div>
+                <div class="quota-bar">
+                    <div class="quota-bar-fill" style="width: 78%;"></div>
+                </div>
+                <div class="quota-text"><strong>$2.34M</strong> of $3M target (78%)</div>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Total Pipeline</span>
+                    <span class="stat-trend positive">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        </svg>
+                        +15.2%
+                    </span>
+                </div>
+                <div class="stat-value">$4.82M</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Closed Won</span>
+                    <span class="stat-trend positive">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        </svg>
+                        +22.8%
+                    </span>
+                </div>
+                <div class="stat-value" style="color: var(--won);">$2.34M</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Active Deals</span>
+                    <span class="stat-trend positive">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        </svg>
+                        +8
+                    </span>
+                </div>
+                <div class="stat-value">47</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Avg Deal Size</span>
+                    <span class="stat-trend positive">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        </svg>
+                        +12.4%
+                    </span>
+                </div>
+                <div class="stat-value">$102K</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Win Rate</span>
+                    <span class="stat-trend negative">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                        -2.1%
+                    </span>
+                </div>
+                <div class="stat-value">32%</div>
+            </div>
+        </div>
+
+        <!-- Pipeline Section -->
+        <div class="pipeline-section">
+            <div class="section-header">
+                <h2 class="section-title">Deal Pipeline</h2>
+            </div>
+            <div class="pipeline-container">
+                <div class="pipeline-stages">
+                    <div class="pipeline-stage lead">
+                        <div class="stage-name">Lead</div>
+                        <div class="stage-value">$842K</div>
+                        <div class="stage-count">18 deals</div>
+                    </div>
+                    <div class="pipeline-stage qualified">
+                        <div class="stage-name">Qualified</div>
+                        <div class="stage-value">$1.24M</div>
+                        <div class="stage-count">12 deals</div>
+                    </div>
+                    <div class="pipeline-stage proposal">
+                        <div class="stage-name">Proposal</div>
+                        <div class="stage-value">$985K</div>
+                        <div class="stage-count">9 deals</div>
+                    </div>
+                    <div class="pipeline-stage negotiation">
+                        <div class="stage-name">Negotiation</div>
+                        <div class="stage-value">$1.42M</div>
+                        <div class="stage-count">5 deals</div>
+                    </div>
+                    <div class="pipeline-stage closed">
+                        <div class="stage-name">Closed Won</div>
+                        <div class="stage-value">$2.34M</div>
+                        <div class="stage-count">23 deals</div>
+                    </div>
+                </div>
+                <div class="pipeline-funnel">
+                    <div class="funnel-segment lead" style="width: 17%;">17%</div>
+                    <div class="funnel-segment qualified" style="width: 26%;">26%</div>
+                    <div class="funnel-segment proposal" style="width: 20%;">20%</div>
+                    <div class="funnel-segment negotiation" style="width: 29%;">29%</div>
+                    <div class="funnel-segment closed" style="width: 8%;">8%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Top Deals</span>
+                    <a href="#" style="font-size: 0.8rem; color: var(--accent-primary); text-decoration: none; font-weight: 600;">View All</a>
+                </div>
+                <div class="card-body">
+                    <div class="deals-table">
+                        <div class="deals-header">
+                            <span>Deal</span>
+                            <span>Owner</span>
+                            <span>Value</span>
+                            <span>Stage</span>
+                            <span>Health</span>
+                        </div>
+                        <div class="deal-row">
+                            <div class="deal-info">
+                                <div class="deal-avatar">AC</div>
+                                <div>
+                                    <div class="deal-name">Enterprise License</div>
+                                    <div class="deal-company">Acme Corp</div>
+                                </div>
+                            </div>
+                            <span class="deal-owner">Sarah Chen</span>
+                            <span class="deal-value">$245,000</span>
+                            <span class="deal-stage negotiation">Negotiation</span>
+                            <div class="deal-health">
+                                <span class="health-indicator healthy"></span>
+                                <span class="health-text">On Track</span>
+                            </div>
+                        </div>
+                        <div class="deal-row">
+                            <div class="deal-info">
+                                <div class="deal-avatar">TI</div>
+                                <div>
+                                    <div class="deal-name">Platform Migration</div>
+                                    <div class="deal-company">TechInnovate</div>
+                                </div>
+                            </div>
+                            <span class="deal-owner">Mike Johnson</span>
+                            <span class="deal-value">$189,000</span>
+                            <span class="deal-stage proposal">Proposal</span>
+                            <div class="deal-health">
+                                <span class="health-indicator at-risk"></span>
+                                <span class="health-text">At Risk</span>
+                            </div>
+                        </div>
+                        <div class="deal-row">
+                            <div class="deal-info">
+                                <div class="deal-avatar">GS</div>
+                                <div>
+                                    <div class="deal-name">Annual Subscription</div>
+                                    <div class="deal-company">GlobalScale</div>
+                                </div>
+                            </div>
+                            <span class="deal-owner">Lisa Park</span>
+                            <span class="deal-value">$156,000</span>
+                            <span class="deal-stage negotiation">Negotiation</span>
+                            <div class="deal-health">
+                                <span class="health-indicator healthy"></span>
+                                <span class="health-text">On Track</span>
+                            </div>
+                        </div>
+                        <div class="deal-row">
+                            <div class="deal-info">
+                                <div class="deal-avatar">DF</div>
+                                <div>
+                                    <div class="deal-name">Custom Integration</div>
+                                    <div class="deal-company">DataFlow Inc</div>
+                                </div>
+                            </div>
+                            <span class="deal-owner">James Wilson</span>
+                            <span class="deal-value">$142,500</span>
+                            <span class="deal-stage qualified">Qualified</span>
+                            <div class="deal-health">
+                                <span class="health-indicator healthy"></span>
+                                <span class="health-text">On Track</span>
+                            </div>
+                        </div>
+                        <div class="deal-row">
+                            <div class="deal-info">
+                                <div class="deal-avatar">NS</div>
+                                <div>
+                                    <div class="deal-name">Pilot Program</div>
+                                    <div class="deal-company">NextStep</div>
+                                </div>
+                            </div>
+                            <span class="deal-owner">Sarah Chen</span>
+                            <span class="deal-value">$98,000</span>
+                            <span class="deal-stage lead">Lead</span>
+                            <div class="deal-health">
+                                <span class="health-indicator critical"></span>
+                                <span class="health-text">Stalled</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Sales Leaderboard</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">This Quarter</span>
+                </div>
+                <div class="card-body">
+                    <div class="leaderboard">
+                        <div class="leaderboard-item gold">
+                            <div class="leaderboard-rank">1</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">Sarah Chen</div>
+                                <div class="leaderboard-deals">12 deals closed</div>
+                            </div>
+                            <div class="leaderboard-stats">
+                                <div class="leaderboard-revenue">$842,500</div>
+                                <div class="leaderboard-quota">140% of quota</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item silver">
+                            <div class="leaderboard-rank">2</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">Mike Johnson</div>
+                                <div class="leaderboard-deals">9 deals closed</div>
+                            </div>
+                            <div class="leaderboard-stats">
+                                <div class="leaderboard-revenue">$621,000</div>
+                                <div class="leaderboard-quota">103% of quota</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item bronze">
+                            <div class="leaderboard-rank">3</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">Lisa Park</div>
+                                <div class="leaderboard-deals">8 deals closed</div>
+                            </div>
+                            <div class="leaderboard-stats">
+                                <div class="leaderboard-revenue">$548,200</div>
+                                <div class="leaderboard-quota">91% of quota</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-rank" style="background: var(--bg-tertiary);">4</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">James Wilson</div>
+                                <div class="leaderboard-deals">6 deals closed</div>
+                            </div>
+                            <div class="leaderboard-stats">
+                                <div class="leaderboard-revenue">$328,500</div>
+                                <div class="leaderboard-quota" style="color: var(--at-risk);">55% of quota</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Grid -->
+        <div class="bottom-grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Recent Activity</span>
+                </div>
+                <div class="card-body">
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon deal">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text"><strong>Sarah Chen</strong> closed deal with <strong>Acme Corp</strong> for $245,000</div>
+                                <div class="activity-time">15 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon meeting">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text"><strong>Mike Johnson</strong> scheduled demo with <strong>TechInnovate</strong></div>
+                                <div class="activity-time">1 hour ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon email">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text"><strong>Lisa Park</strong> sent proposal to <strong>GlobalScale</strong></div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon call">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-text"><strong>James Wilson</strong> completed discovery call with <strong>DataFlow Inc</strong></div>
+                                <div class="activity-time">3 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Win/Loss Analysis</span>
+                </div>
+                <div class="card-body">
+                    <div class="win-loss-chart">
+                        <div class="donut-chart">
+                            <svg width="100" height="100" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" class="donut-segment" stroke="var(--won)" stroke-dasharray="84 264" stroke-dashoffset="0"/>
+                                <circle cx="50" cy="50" r="42" class="donut-segment" stroke="var(--lost)" stroke-dasharray="180 264" stroke-dashoffset="-84"/>
+                            </svg>
+                            <div class="donut-center">
+                                <div class="donut-percentage">32%</div>
+                                <div class="donut-label">Win Rate</div>
+                            </div>
+                        </div>
+                        <div class="win-loss-legend">
+                            <div class="legend-item">
+                                <span class="legend-name">
+                                    <span class="legend-dot won"></span>
+                                    Won Deals
+                                </span>
+                                <span class="legend-value">23</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-name">
+                                    <span class="legend-dot lost"></span>
+                                    Lost Deals
+                                </span>
+                                <span class="legend-value">49</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loss-reasons">
+                        <div class="loss-reason-title">Top Loss Reasons</div>
+                        <div class="loss-reason-item">
+                            <span class="loss-reason-name">Budget constraints</span>
+                            <span class="loss-reason-percent">34%</span>
+                        </div>
+                        <div class="loss-reason-item">
+                            <span class="loss-reason-name">Chose competitor</span>
+                            <span class="loss-reason-percent">28%</span>
+                        </div>
+                        <div class="loss-reason-item">
+                            <span class="loss-reason-name">Project postponed</span>
+                            <span class="loss-reason-percent">22%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">AI Insights</span>
+                    <span style="padding: 0.125rem 0.5rem; background: var(--accent-primary-light); color: var(--accent-primary); font-size: 0.65rem; font-weight: 700; border-radius: 4px;">BETA</span>
+                </div>
+                <div class="card-body">
+                    <div class="insights-list">
+                        <div class="insight-item opportunity">
+                            <div class="insight-header">
+                                <span class="insight-badge">Opportunity</span>
+                            </div>
+                            <div class="insight-text">
+                                <strong>TechInnovate</strong> has increased engagement by 45% this week. Consider scheduling a follow-up call to accelerate the deal.
+                            </div>
+                        </div>
+                        <div class="insight-item warning">
+                            <div class="insight-header">
+                                <span class="insight-badge">Warning</span>
+                            </div>
+                            <div class="insight-text">
+                                <strong>NextStep</strong> deal has been stalled for 14 days. Similar deals typically close within 10 days at this stage.
+                            </div>
+                        </div>
+                        <div class="insight-item action">
+                            <div class="insight-header">
+                                <span class="insight-badge">Suggested Action</span>
+                            </div>
+                            <div class="insight-text">
+                                Send personalized case study to <strong>DataFlow Inc</strong> - they match the profile of your top 5 closed deals.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Style Section -->
+        <section class="style-section">
+            <h2 class="style-title">Sales Intelligence Style</h2>
+            <p class="style-subtitle">Deal pipeline visualization, quota tracking, leaderboards, and AI-powered insights</p>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Color Palette</h3>
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--pipeline-lead);"></div>
+                    <span class="color-label-text">Lead</span>
+                    <span class="color-value">#8B5CF6</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--pipeline-qualified);"></div>
+                    <span class="color-label-text">Qualified</span>
+                    <span class="color-value">#3B82F6</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--pipeline-proposal);"></div>
+                    <span class="color-label-text">Proposal</span>
+                    <span class="color-value">#0EA5E9</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--pipeline-negotiation);"></div>
+                    <span class="color-label-text">Negotiation</span>
+                    <span class="color-value">#F59E0B</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--won);"></div>
+                    <span class="color-label-text">Won</span>
+                    <span class="color-value">#10B981</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--lost);"></div>
+                    <span class="color-label-text">Lost</span>
+                    <span class="color-value">#EF4444</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Component Examples</h3>
+            <div class="components-grid">
+                <div class="component-demo">
+                    <div class="component-title">Stage Badges</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span class="deal-stage lead">Lead</span>
+                        <span class="deal-stage qualified">Qualified</span>
+                        <span class="deal-stage proposal">Proposal</span>
+                        <span class="deal-stage negotiation">Negotiation</span>
+                        <span class="deal-stage closed">Won</span>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Health Indicators</div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="deal-health">
+                            <span class="health-indicator healthy"></span>
+                            <span class="health-text">On Track</span>
+                        </div>
+                        <div class="deal-health">
+                            <span class="health-indicator at-risk"></span>
+                            <span class="health-text">At Risk</span>
+                        </div>
+                        <div class="deal-health">
+                            <span class="health-indicator critical"></span>
+                            <span class="health-text">Stalled</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Quota Progress</div>
+                    <div class="quota-bar" style="width: 100%;">
+                        <div class="quota-bar-fill" style="width: 78%;"></div>
+                    </div>
+                    <div class="quota-text" style="margin-top: 0.5rem;"><strong>78%</strong> of target</div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Pipeline Funnel</div>
+                    <div class="pipeline-funnel" style="height: 32px;">
+                        <div class="funnel-segment lead" style="width: 25%;"></div>
+                        <div class="funnel-segment qualified" style="width: 25%;"></div>
+                        <div class="funnel-segment proposal" style="width: 20%;"></div>
+                        <div class="funnel-segment negotiation" style="width: 20%;"></div>
+                        <div class="funnel-segment closed" style="width: 10%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span class="footer-text">Sales Intelligence Dashboard - Style 37</span>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">API Reference</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>

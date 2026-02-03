@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion-Optimized | Landing Page Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --primary-light: #818CF8;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --bg: #FFFFFF;
+            --bg-alt: #F9FAFB;
+            --border: #E5E7EB;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover {
+            color: var(--primary);
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section - Form Focused */
+        .hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+
+        .trust-badges {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .trust-badge svg {
+            width: 20px;
+            height: 20px;
+            color: var(--success);
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .urgency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: var(--font);
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn-primary-large {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary-large:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.3);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* Social Proof Strip */
+        .social-proof-strip {
+            padding: 48px 0;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .proof-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .proof-stat {
+            padding: 24px;
+        }
+
+        .proof-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .proof-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .benefit-card {
+            padding: 32px;
+            background: var(--bg-alt);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .benefit-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .benefit-card p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Color Palette */
+        .colors {
+            padding: 80px 0;
+            background: var(--bg-alt);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .color-swatch {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 12px;
+            color: white;
+        }
+
+        .color-swatch.light {
+            color: var(--text);
+        }
+
+        .color-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .color-hex {
+            font-size: 11px;
+            opacity: 0.8;
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .component-panel {
+            background: var(--bg-alt);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .component-panel h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-light);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: var(--font);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: var(--primary);
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            opacity: 0.9;
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: white;
+            color: var(--primary);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 0;
+            background: var(--text);
+            color: white;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .form-card {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+
+            .proof-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-back">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Back to Gallery
+            </a>
+            <span class="nav-logo">ConvertPro</span>
+            <a href="#signup" class="nav-cta">Start Free Trial</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>Convert More Visitors Into <span>Paying Customers</span></h1>
+                        <p>The conversion-optimized landing page design focuses on a single, clear call-to-action with minimal distractions and maximum trust signals.</p>
+                        <div class="trust-badges">
+                            <div class="trust-badge">
+                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                No credit card required
+                            </div>
+                            <div class="trust-badge">
+                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                14-day free trial
+                            </div>
+                            <div class="trust-badge">
+                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                Cancel anytime
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-card" id="signup">
+                        <div class="form-header">
+                            <div class="urgency-badge">
+                                <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                                Limited time: 50% off first month
+                            </div>
+                            <h2>Start Your Free Trial</h2>
+                            <p>Join 10,000+ companies growing with us</p>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" placeholder="John Smith">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Work Email</label>
+                                <input type="email" class="form-input" placeholder="john@company.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-input" placeholder="Acme Inc">
+                            </div>
+                            <button type="submit" class="btn-primary-large">
+                                Get Started Free
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </button>
+                        </form>
+                        <p class="form-footer">By signing up, you agree to our Terms & Privacy Policy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="social-proof-strip">
+            <div class="container">
+                <div class="proof-stats">
+                    <div class="proof-stat">
+                        <div class="proof-number">10,000+</div>
+                        <div class="proof-label">Active Users</div>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-number">98%</div>
+                        <div class="proof-label">Customer Satisfaction</div>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-number">150%</div>
+                        <div class="proof-label">Avg. Conversion Increase</div>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-number">24/7</div>
+                        <div class="proof-label">Customer Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why This Design Converts</h2>
+                    <p>Every element is optimized for one purpose: getting visitors to take action</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">1</div>
+                        <h3>Single Focus CTA</h3>
+                        <p>Minimize distractions with one clear call-to-action that guides users exactly where you want them.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">2</div>
+                        <h3>Urgency Elements</h3>
+                        <p>Time-limited offers and scarcity signals encourage immediate action rather than postponement.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">3</div>
+                        <h3>Trust Signals</h3>
+                        <p>Social proof, testimonials, and security badges reduce anxiety and build confidence.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">4</div>
+                        <h3>High Contrast CTAs</h3>
+                        <p>Buttons that stand out from the page ensure visitors never miss the action point.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">5</div>
+                        <h3>Short Forms</h3>
+                        <p>Request only essential information to minimize friction and form abandonment.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">6</div>
+                        <h3>Clear Value Prop</h3>
+                        <p>Communicate the benefit immediately - visitors should understand value in seconds.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette</h2>
+                    <p>High contrast colors optimized for action and clarity</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-swatch" style="background: #4F46E5;">
+                        <span class="color-name">Primary</span>
+                        <span class="color-hex">#4F46E5</span>
+                    </div>
+                    <div class="color-swatch" style="background: #4338CA;">
+                        <span class="color-name">Primary Dark</span>
+                        <span class="color-hex">#4338CA</span>
+                    </div>
+                    <div class="color-swatch" style="background: #22C55E;">
+                        <span class="color-name">Success</span>
+                        <span class="color-hex">#22C55E</span>
+                    </div>
+                    <div class="color-swatch" style="background: #F59E0B;">
+                        <span class="color-name">Warning</span>
+                        <span class="color-hex">#F59E0B</span>
+                    </div>
+                    <div class="color-swatch" style="background: #EF4444;">
+                        <span class="color-name">Danger</span>
+                        <span class="color-hex">#EF4444</span>
+                    </div>
+                    <div class="color-swatch light" style="background: #F9FAFB; border: 1px solid #E5E7EB;">
+                        <span class="color-name">Background</span>
+                        <span class="color-hex">#F9FAFB</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2>UI Components</h2>
+                    <p>Action-oriented components designed to drive conversions</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-panel">
+                        <h3>Buttons</h3>
+                        <div class="btn-row">
+                            <button class="btn btn-primary">Primary Action</button>
+                            <button class="btn btn-outline">Secondary</button>
+                            <button class="btn btn-success">Success</button>
+                            <button class="btn btn-warning">Urgency</button>
+                        </div>
+                    </div>
+                    <div class="component-panel">
+                        <h3>Form Inputs</h3>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" placeholder="Enter password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2>Ready to Boost Your Conversions?</h2>
+                <p>Start your free trial today and see the difference a conversion-optimized design makes.</p>
+                <a href="#signup" class="cta-btn">
+                    Start Free Trial
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Conversion-Optimized</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Type</div>
+                        <div class="footer-value">Landing Page</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Focus</div>
+                        <div class="footer-value">Single CTA</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Lead Generation</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Conversion</div>
+                        <div class="footer-value">Very High</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

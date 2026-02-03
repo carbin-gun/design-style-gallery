@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flat Design | 扁平化设计</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #FF5722;
+            --blue: #2196F3;
+            --green: #4CAF50;
+            --yellow: #FFC107;
+            --gray: #9E9E9E;
+            --blue-gray: #607D8B;
+            --white: #FFFFFF;
+            --bg-light: #FAFAFA;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--blue);
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 16px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0 60px;
+            background: var(--blue);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 strong {
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--blue);
+        }
+
+        .btn-white:hover {
+            background: #E3F2FD;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-orange {
+            background: var(--orange);
+            color: var(--white);
+        }
+
+        .btn-orange:hover {
+            background: #E64A19;
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .btn-green:hover {
+            background: #388E3C;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            text-align: center;
+            background: var(--bg-light);
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .feature-card:hover {
+            background: #F5F5F5;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+            color: var(--white);
+        }
+
+        .feature-card:nth-child(1) .feature-icon { background: var(--orange); }
+        .feature-card:nth-child(2) .feature-icon { background: var(--blue); }
+        .feature-card:nth-child(3) .feature-icon { background: var(--green); }
+        .feature-card:nth-child(4) .feature-icon { background: var(--yellow); color: var(--text-primary); }
+        .feature-card:nth-child(5) .feature-icon { background: var(--blue-gray); }
+        .feature-card:nth-child(6) .feature-icon { background: var(--gray); }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Card Showcase */
+        .showcase {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .flat-card {
+            background: var(--white);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .flat-card:nth-child(1) .card-image { background: var(--orange); }
+        .flat-card:nth-child(2) .card-image { background: var(--blue); }
+        .flat-card:nth-child(3) .card-image { background: var(--green); }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .card-content h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .card-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .card-action {
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .card-action:hover {
+            text-decoration: underline;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .color-card {
+            background: var(--bg-light);
+            border-radius: 4px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .color-preview {
+            height: 100px;
+        }
+
+        .color-info {
+            padding: 16px;
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .color-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .component-card {
+            background: var(--white);
+            border-radius: 4px;
+            padding: 32px;
+        }
+
+        .component-card h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .flat-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-family: inherit;
+            border: none;
+            border-bottom: 2px solid #E0E0E0;
+            background: transparent;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .flat-input:focus {
+            outline: none;
+            border-bottom-color: var(--blue);
+        }
+
+        .flat-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .chip-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 16px;
+            background: #E0E0E0;
+            color: var(--text-primary);
+        }
+
+        .chip.blue { background: #BBDEFB; color: #1565C0; }
+        .chip.green { background: #C8E6C9; color: #2E7D32; }
+        .chip.orange { background: #FFCCBC; color: #D84315; }
+        .chip.yellow { background: #FFF9C4; color: #F57F17; }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #E0E0E0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 4px;
+            padding: 32px;
+            text-align: center;
+            border-left: 4px solid;
+        }
+
+        .stat-card:nth-child(1) { border-color: var(--orange); }
+        .stat-card:nth-child(2) { border-color: var(--blue); }
+        .stat-card:nth-child(3) { border-color: var(--green); }
+        .stat-card:nth-child(4) { border-color: var(--yellow); }
+
+        .stat-value {
+            font-size: 40px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: var(--orange); }
+        .stat-card:nth-child(2) .stat-value { color: var(--blue); }
+        .stat-card:nth-child(3) .stat-value { color: var(--green); }
+        .stat-card:nth-child(4) .stat-value { color: #F9A825; }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--blue-gray);
+            padding: 48px 0;
+            color: var(--white);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 12px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid,
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .features-grid,
+            .card-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">Flat Design</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#showcase" class="nav-link">Showcase</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1><strong>Flat Design</strong><br>扁平化设计</h1>
+                <p>摒弃多余装饰，专注内容本身。简洁的2D图形、鲜明的色彩和清晰的排版是扁平化设计的核心要素。</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-white">Get Started</button>
+                    <button class="btn btn-outline">Learn More</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Principles / 核心原则</h2>
+                    <p>Simple, clean, and functional design approach</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9635;</div>
+                        <h3>2D Elements</h3>
+                        <p>使用简单的二维图形，避免3D效果、渐变和复杂的纹理。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3>Bold Colors</h3>
+                        <p>使用鲜明、饱和的纯色，创造清晰的视觉层次。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9728;</div>
+                        <h3>No Shadows</h3>
+                        <p>去除投影和阴影效果，保持界面的平面感和简洁性。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#65;&#65;</div>
+                        <h3>Clean Typography</h3>
+                        <p>使用简洁的无衬线字体，强调可读性和清晰度。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9881;</div>
+                        <h3>Minimalist Icons</h3>
+                        <p>简化的图标设计，使用线条和简单几何形状。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h3>Focus on Content</h3>
+                        <p>设计服务于内容，不添加无功能的装饰元素。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase" id="showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Card Examples / 卡片示例</h2>
+                    <p>Clean, content-focused card designs</p>
+                </div>
+                <div class="card-grid">
+                    <div class="flat-card">
+                        <div class="card-image">&#128161;</div>
+                        <div class="card-content">
+                            <h4>Simple & Clean</h4>
+                            <p>扁平化设计强调简洁，去除所有不必要的装饰元素。</p>
+                            <a href="#" class="card-action">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="flat-card">
+                        <div class="card-image">&#127912;</div>
+                        <div class="card-content">
+                            <h4>Bold Colors</h4>
+                            <p>鲜明的色彩帮助区分不同区域和建立视觉层次。</p>
+                            <a href="#" class="card-action">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="flat-card">
+                        <div class="card-image">&#9881;</div>
+                        <div class="card-content">
+                            <h4>Functional Design</h4>
+                            <p>每个元素都有其目的，设计完全服务于功能。</p>
+                            <a href="#" class="card-action">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette / 色彩方案</h2>
+                    <p>Vibrant, saturated colors without gradients</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--orange);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Orange</div>
+                            <div class="color-value">#FF5722</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--blue);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Blue</div>
+                            <div class="color-value">#2196F3</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--green);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Green</div>
+                            <div class="color-value">#4CAF50</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--yellow);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Yellow</div>
+                            <div class="color-value">#FFC107</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--gray);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Gray</div>
+                            <div class="color-value">#9E9E9E</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: var(--blue-gray);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Blue Gray</div>
+                            <div class="color-value">#607D8B</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Component Examples / 组件示例</h2>
+                    <p>Clean, functional UI elements</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h4>Buttons & Chips</h4>
+                        <div class="button-row">
+                            <button class="btn btn-orange">Primary</button>
+                            <button class="btn btn-green">Success</button>
+                            <button class="btn" style="background: var(--blue); color: white;">Info</button>
+                        </div>
+                        <div class="chip-row">
+                            <span class="chip blue">Design</span>
+                            <span class="chip green">Complete</span>
+                            <span class="chip orange">Pending</span>
+                            <span class="chip yellow">Warning</span>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <h4>Form & Progress</h4>
+                        <input type="text" class="flat-input" placeholder="Enter your email">
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%; background: var(--blue);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Tasks</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%; background: var(--green);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$12.5K</div>
+                        <div class="stat-label">Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">98.5%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Flat Design</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2010s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Low</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Apps, Web</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">Excellent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

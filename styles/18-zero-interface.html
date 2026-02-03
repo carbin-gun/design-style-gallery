@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Interface | 零界面设计</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-white: #FAFAFA;
+            --bg-gray: #F0F0F0;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-light: #999999;
+            --accent-green: #22C55E;
+            --accent-red: #EF4444;
+            --border-color: #E5E5E5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-white);
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation - Minimal */
+        .nav {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-logo {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Hero - Ultra Minimal */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero h1 strong {
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        /* Voice Input Demo */
+        .voice-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .voice-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .voice-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .voice-hint {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 strong {
+            font-weight: 600;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 24px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feature-number {
+            font-size: 48px;
+            font-weight: 300;
+            color: var(--text-light);
+            line-height: 1;
+            min-width: 60px;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* AI Chat Demo */
+        .chat-section {
+            padding: 80px 0;
+            background: var(--bg-gray);
+        }
+
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .ai-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .ai-info p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .chat-messages {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            max-width: 85%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+        }
+
+        .message-content {
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: var(--text-primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.ai .message-content {
+            background: var(--bg-gray);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .message.user .message-time {
+            text-align: right;
+        }
+
+        .chat-input {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-family: inherit;
+            border: none;
+            background: var(--bg-gray);
+            border-radius: 24px;
+            color: var(--text-primary);
+        }
+
+        .chat-input input::placeholder {
+            color: var(--text-light);
+        }
+
+        .chat-input input:focus {
+            outline: none;
+        }
+
+        .chat-input button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .chat-input button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .color-card {
+            text-align: center;
+            padding: 24px 16px;
+        }
+
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .color-value {
+            font-size: 11px;
+            color: var(--text-light);
+            font-family: monospace;
+        }
+
+        /* Principles */
+        .principles {
+            padding: 80px 0;
+            background: var(--bg-gray);
+        }
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .principle-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .principle-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .principle-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-gray);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .principle-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 60px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 10px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .feature-item {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .feature-number {
+                font-size: 32px;
+            }
+            .principle-grid {
+                grid-template-columns: 1fr;
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">Zero UI</span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1><strong>Zero Interface</strong><br>零界面设计</h1>
+                <p>最好的界面是没有界面。通过AI、语音和上下文感知，让技术无形地融入生活。</p>
+                <div class="voice-demo">
+                    <button class="voice-btn" aria-label="Voice input">
+                        <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1 1.93c-3.94-.49-7-3.85-7-7.93V7h2v1c0 2.76 2.24 5 5 5s5-2.24 5-5V7h2v1c0 4.08-3.06 7.44-7 7.93V19h4v2H7v-2h4v-3.07z"/></svg>
+                    </button>
+                    <span class="voice-hint">Tap to speak</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2><strong>Less UI,</strong> More Experience</h2>
+                    <p>The interface should get out of the way</p>
+                </div>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-number">01</div>
+                        <div class="feature-content">
+                            <h3>Voice-First Design</h3>
+                            <p>语音作为主要交互方式，让用户无需看屏幕就能完成任务。说出需求，AI理解并执行。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">02</div>
+                        <div class="feature-content">
+                            <h3>Context Awareness</h3>
+                            <p>系统理解用户所处情境，主动提供相关信息和功能，无需用户主动寻找。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">03</div>
+                        <div class="feature-content">
+                            <h3>Ambient Computing</h3>
+                            <p>计算无处不在但不可见，技术融入环境，在需要时出现，完成后消隐。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">04</div>
+                        <div class="feature-content">
+                            <h3>Anticipatory Design</h3>
+                            <p>预测用户需求，在用户意识到之前就准备好答案和功能。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chat-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><strong>Conversational</strong> Interface</h2>
+                    <p>Natural language as the primary input method</p>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="ai-avatar">&#129302;</div>
+                        <div class="ai-info">
+                            <h4>AI Assistant</h4>
+                            <p>Always available</p>
+                        </div>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message user">
+                            <div class="message-content">Schedule a meeting with the design team for next Tuesday</div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                        <div class="message ai">
+                            <div class="message-content">I've scheduled a meeting with the design team for next Tuesday at 2:00 PM. I've sent calendar invites to all team members and booked Conference Room B. Would you like me to add an agenda?</div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-content">Yes, add "Q4 design review" as the topic</div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                        <div class="message ai">
+                            <div class="message-content">Done. The meeting agenda has been updated with "Q4 Design Review" as the main topic. I've also attached the latest design files for the team to review beforehand.</div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type a message...">
+                        <button aria-label="Send message">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2><strong>Minimal</strong> Palette</h2>
+                    <p>Neutral colors that fade into the background</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FAFAFA;"></div>
+                        <div class="color-name">Background</div>
+                        <div class="color-value">#FAFAFA</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #F0F0F0;"></div>
+                        <div class="color-name">Surface</div>
+                        <div class="color-value">#F0F0F0</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #333333;"></div>
+                        <div class="color-name">Primary</div>
+                        <div class="color-value">#333333</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #22C55E;"></div>
+                        <div class="color-name">Success</div>
+                        <div class="color-value">#22C55E</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #EF4444;"></div>
+                        <div class="color-name">Alert</div>
+                        <div class="color-value">#EF4444</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="principles">
+            <div class="container">
+                <div class="section-header">
+                    <h2><strong>Design</strong> Principles</h2>
+                    <p>Guidelines for invisible interfaces</p>
+                </div>
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h4>
+                            <span class="principle-icon">&#128161;</span>
+                            Simplicity First
+                        </h4>
+                        <p>每一个界面元素都应该有存在的理由，否则就应该被移除。少即是多。</p>
+                    </div>
+                    <div class="principle-card">
+                        <h4>
+                            <span class="principle-icon">&#128483;</span>
+                            Natural Input
+                        </h4>
+                        <p>支持语音、手势等自然交互方式，让用户以最自然的方式表达需求。</p>
+                    </div>
+                    <div class="principle-card">
+                        <h4>
+                            <span class="principle-icon">&#129302;</span>
+                            AI-Powered
+                        </h4>
+                        <p>AI理解意图、预测需求、自动执行，减少用户的认知负担。</p>
+                    </div>
+                    <div class="principle-card">
+                        <h4>
+                            <span class="principle-icon">&#127760;</span>
+                            Contextual
+                        </h4>
+                        <p>根据时间、地点、用户状态自动调整，提供恰到好处的信息和功能。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">90%</div>
+                        <div class="stat-label">Less UI Elements</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3x</div>
+                        <div class="stat-label">Faster Task Completion</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Learning Curve</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">AI Availability</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Zero Interface</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s AI-Era</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Backend-Heavy</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">AI Products</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">UI Footprint</div>
+                        <div class="footer-value">Minimal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

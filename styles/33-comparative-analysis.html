@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparative Analysis Dashboard - Style 33</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --border-color: #334155;
+            --primary-a: #3B82F6;
+            --primary-a-light: rgba(59, 130, 246, 0.15);
+            --primary-b: #F97316;
+            --primary-b-light: rgba(249, 115, 22, 0.15);
+            --success: #10B981;
+            --success-light: rgba(16, 185, 129, 0.15);
+            --danger: #EF4444;
+            --danger-light: rgba(239, 68, 68, 0.15);
+            --neutral: #6B7280;
+            --chart-grid: rgba(148, 163, 184, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-a), var(--primary-b));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .comparison-selector {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .selector-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .selector-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .selector-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .selector-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .selector-item.set-a {
+            border-left: 3px solid var(--primary-a);
+        }
+
+        .selector-item.set-b {
+            border-left: 3px solid var(--primary-b);
+        }
+
+        .selector-item-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .selector-item.set-a .selector-item-color {
+            background: var(--primary-a);
+        }
+
+        .selector-item.set-b .selector-item-color {
+            background: var(--primary-b);
+        }
+
+        .selector-item-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-title {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, var(--primary-a-light), var(--primary-b-light));
+            color: var(--text-primary);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 1.5rem 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-left p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-a), var(--primary-b));
+            color: white;
+        }
+
+        /* Period Tabs */
+        .period-tabs {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--bg-secondary);
+            padding: 0.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .period-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+        }
+
+        .period-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .period-tab.active {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .summary-card-title {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .summary-card-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-winner {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .badge-loser {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .badge-neutral {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--neutral);
+        }
+
+        .comparison-values {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-value {
+            flex: 1;
+        }
+
+        .comparison-value-label {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .comparison-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .comparison-dot.set-a {
+            background: var(--primary-a);
+        }
+
+        .comparison-dot.set-b {
+            background: var(--primary-b);
+        }
+
+        .comparison-value-label span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .comparison-value-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .delta-bar {
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .delta-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .delta-bar-fill.set-a {
+            background: var(--primary-a);
+        }
+
+        .delta-bar-fill.set-b {
+            background: var(--primary-b);
+        }
+
+        .delta-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .delta-percentage {
+            font-weight: 600;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .delta-percentage.positive {
+            color: var(--success);
+        }
+
+        .delta-percentage.negative {
+            color: var(--danger);
+        }
+
+        .delta-percentage.neutral {
+            color: var(--neutral);
+        }
+
+        /* Main Comparison Section */
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        /* Line Chart Comparison */
+        .comparison-chart {
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-line {
+            width: 24px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .legend-line.set-a {
+            background: var(--primary-a);
+        }
+
+        .legend-line.set-b {
+            background: var(--primary-b);
+        }
+
+        .chart-grid {
+            position: absolute;
+            top: 0;
+            left: 40px;
+            right: 0;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-line {
+            border-bottom: 1px dashed var(--chart-grid);
+            position: relative;
+        }
+
+        .grid-label {
+            position: absolute;
+            left: -40px;
+            top: -8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .chart-lines {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            right: 10px;
+            bottom: 40px;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+        }
+
+        .line-path {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .line-path.set-a {
+            stroke: var(--primary-a);
+        }
+
+        .line-path.set-b {
+            stroke: var(--primary-b);
+        }
+
+        .line-area {
+            opacity: 0.1;
+        }
+
+        .line-area.set-a {
+            fill: var(--primary-a);
+        }
+
+        .line-area.set-b {
+            fill: var(--primary-b);
+        }
+
+        .chart-x-axis {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .x-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Metrics Comparison Table */
+        .metrics-table {
+            width: 100%;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 80px 70px;
+            gap: 0.75rem;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+        }
+
+        .metrics-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .metric-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .metric-value.set-a {
+            color: var(--primary-a);
+        }
+
+        .metric-value.set-b {
+            color: var(--primary-b);
+        }
+
+        .metric-winner {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .winner-badge {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .winner-badge.set-a {
+            background: var(--primary-a-light);
+            color: var(--primary-a);
+        }
+
+        .winner-badge.set-b {
+            background: var(--primary-b-light);
+            color: var(--primary-b);
+        }
+
+        .winner-badge.tie {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--neutral);
+        }
+
+        /* Bar Comparison */
+        .bar-comparison {
+            margin-bottom: 1.5rem;
+        }
+
+        .bar-comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .bar-comparison-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .bar-comparison-values {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .bar-value-a {
+            color: var(--primary-a);
+        }
+
+        .bar-value-b {
+            color: var(--primary-b);
+        }
+
+        .dual-bar {
+            display: flex;
+            height: 32px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .dual-bar-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: width 0.5s ease;
+        }
+
+        .dual-bar-segment.set-a {
+            background: var(--primary-a);
+        }
+
+        .dual-bar-segment.set-b {
+            background: var(--primary-b);
+        }
+
+        /* Bottom Section */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* A/B Test Results */
+        .ab-test-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+        }
+
+        .ab-test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+
+        .ab-test-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .ab-test-status {
+            padding: 0.25rem 0.625rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-significant {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .status-running {
+            background: var(--primary-a-light);
+            color: var(--primary-a);
+        }
+
+        .ab-test-variants {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .variant {
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+        }
+
+        .variant.winning {
+            border: 1px solid var(--success);
+            background: var(--success-light);
+        }
+
+        .variant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .variant-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .variant-badge {
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .variant-badge.control {
+            background: var(--primary-a-light);
+            color: var(--primary-a);
+        }
+
+        .variant-badge.winner {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .variant-conversion {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .variant-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .variant-stat span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .confidence-bar {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .confidence-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .confidence-label span:first-child {
+            color: var(--text-muted);
+        }
+
+        .confidence-label span:last-child {
+            color: var(--success);
+            font-weight: 600;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .confidence-track {
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Style Section */
+        .style-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .style-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .style-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .color-value {
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .component-demo {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .component-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .mini-comparison-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mini-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mini-bar-label {
+            width: 60px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .mini-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .mini-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .mini-bar-fill.set-a {
+            background: var(--primary-a);
+        }
+
+        .mini-bar-fill.set-b {
+            background: var(--primary-b);
+        }
+
+        .mini-bar-value {
+            width: 40px;
+            text-align: right;
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 1200px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">CA</div>
+            <span class="logo-text">CompareHub</span>
+        </div>
+
+        <div class="comparison-selector">
+            <div class="selector-label">Comparing</div>
+            <div class="selector-items">
+                <div class="selector-item set-a">
+                    <div class="selector-item-color"></div>
+                    <span class="selector-item-text">Q4 2024</span>
+                </div>
+                <div class="selector-item set-b">
+                    <div class="selector-item-color"></div>
+                    <span class="selector-item-text">Q4 2023</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <div class="nav-title">Analysis</div>
+            <a href="#" class="nav-item active">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Period Comparison
+            </a>
+            <a href="#" class="nav-item">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                </svg>
+                A/B Testing
+            </a>
+            <a href="#" class="nav-item">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                Cohort Analysis
+            </a>
+            <a href="#" class="nav-item">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+                </svg>
+                Regional
+            </a>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-title">Reports</div>
+            <a href="#" class="nav-item">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Saved Reports
+            </a>
+            <a href="#" class="nav-item">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                Scheduled
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <h1>Period Comparison Analysis</h1>
+                <p>Analyzing performance metrics between Q4 2024 and Q4 2023</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Export
+                </button>
+                <button class="btn btn-primary">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    New Comparison
+                </button>
+            </div>
+        </header>
+
+        <div class="period-tabs">
+            <button class="period-tab">Daily</button>
+            <button class="period-tab">Weekly</button>
+            <button class="period-tab active">Monthly</button>
+            <button class="period-tab">Quarterly</button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Revenue</span>
+                    <span class="summary-card-badge badge-winner">+18.5%</span>
+                </div>
+                <div class="comparison-values">
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-a"></span>
+                            <span>Q4 2024</span>
+                        </div>
+                        <div class="comparison-value-number">$2.84M</div>
+                    </div>
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-b"></span>
+                            <span>Q4 2023</span>
+                        </div>
+                        <div class="comparison-value-number">$2.39M</div>
+                    </div>
+                </div>
+                <div class="delta-bar">
+                    <div class="delta-bar-fill set-a" style="width: 54%"></div>
+                    <div class="delta-bar-fill set-b" style="width: 46%"></div>
+                </div>
+                <div class="delta-indicator">
+                    <span class="delta-percentage positive">+$450K improvement</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Conversion Rate</span>
+                    <span class="summary-card-badge badge-winner">+2.1%</span>
+                </div>
+                <div class="comparison-values">
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-a"></span>
+                            <span>Q4 2024</span>
+                        </div>
+                        <div class="comparison-value-number">4.8%</div>
+                    </div>
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-b"></span>
+                            <span>Q4 2023</span>
+                        </div>
+                        <div class="comparison-value-number">2.7%</div>
+                    </div>
+                </div>
+                <div class="delta-bar">
+                    <div class="delta-bar-fill set-a" style="width: 64%"></div>
+                    <div class="delta-bar-fill set-b" style="width: 36%"></div>
+                </div>
+                <div class="delta-indicator">
+                    <span class="delta-percentage positive">77% relative increase</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Avg Order Value</span>
+                    <span class="summary-card-badge badge-loser">-5.2%</span>
+                </div>
+                <div class="comparison-values">
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-a"></span>
+                            <span>Q4 2024</span>
+                        </div>
+                        <div class="comparison-value-number">$142</div>
+                    </div>
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-b"></span>
+                            <span>Q4 2023</span>
+                        </div>
+                        <div class="comparison-value-number">$150</div>
+                    </div>
+                </div>
+                <div class="delta-bar">
+                    <div class="delta-bar-fill set-a" style="width: 47%"></div>
+                    <div class="delta-bar-fill set-b" style="width: 53%"></div>
+                </div>
+                <div class="delta-indicator">
+                    <span class="delta-percentage negative">-$8 decrease</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Customer Satisfaction</span>
+                    <span class="summary-card-badge badge-neutral">+0.1</span>
+                </div>
+                <div class="comparison-values">
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-a"></span>
+                            <span>Q4 2024</span>
+                        </div>
+                        <div class="comparison-value-number">4.6/5</div>
+                    </div>
+                    <div class="comparison-value">
+                        <div class="comparison-value-label">
+                            <span class="comparison-dot set-b"></span>
+                            <span>Q4 2023</span>
+                        </div>
+                        <div class="comparison-value-number">4.5/5</div>
+                    </div>
+                </div>
+                <div class="delta-bar">
+                    <div class="delta-bar-fill set-a" style="width: 51%"></div>
+                    <div class="delta-bar-fill set-b" style="width: 49%"></div>
+                </div>
+                <div class="delta-indicator">
+                    <span class="delta-percentage neutral">Stable performance</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Comparison Section -->
+        <div class="comparison-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Revenue Trend Comparison</span>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-line set-a"></div>
+                            <span>Q4 2024</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line set-b"></div>
+                            <span>Q4 2023</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="comparison-chart">
+                        <div class="chart-grid">
+                            <div class="grid-line"><span class="grid-label">$1M</span></div>
+                            <div class="grid-line"><span class="grid-label">$750K</span></div>
+                            <div class="grid-line"><span class="grid-label">$500K</span></div>
+                            <div class="grid-line"><span class="grid-label">$250K</span></div>
+                            <div class="grid-line"><span class="grid-label">$0</span></div>
+                        </div>
+                        <div class="chart-lines">
+                            <svg width="100%" height="100%" viewBox="0 0 400 200" preserveAspectRatio="none">
+                                <path class="line-area set-a" d="M0,180 L80,140 L160,100 L240,80 L320,40 L400,20 L400,200 L0,200 Z"/>
+                                <path class="line-area set-b" d="M0,170 L80,150 L160,130 L240,120 L320,90 L400,70 L400,200 L0,200 Z"/>
+                                <path class="line-path set-a" d="M0,180 L80,140 L160,100 L240,80 L320,40 L400,20"/>
+                                <path class="line-path set-b" d="M0,170 L80,150 L160,130 L240,120 L320,90 L400,70"/>
+                            </svg>
+                        </div>
+                        <div class="chart-x-axis">
+                            <span class="x-label">Oct</span>
+                            <span class="x-label">Nov</span>
+                            <span class="x-label">Dec</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Metrics Comparison</span>
+                </div>
+                <div class="card-body">
+                    <div class="metrics-table">
+                        <div class="metrics-row" style="border-bottom: none; padding-bottom: 0.5rem;">
+                            <span class="metric-name" style="color: var(--text-muted); font-size: 0.75rem;">METRIC</span>
+                            <span class="metric-value set-a" style="font-size: 0.7rem; font-weight: 400;">Q4 '24</span>
+                            <span class="metric-value set-b" style="font-size: 0.7rem; font-weight: 400;">Q4 '23</span>
+                            <span class="metric-winner" style="font-size: 0.7rem; color: var(--text-muted);">WIN</span>
+                        </div>
+                        <div class="metrics-row">
+                            <span class="metric-name">Total Orders</span>
+                            <span class="metric-value set-a">19,986</span>
+                            <span class="metric-value set-b">15,933</span>
+                            <div class="metric-winner">
+                                <span class="winner-badge set-a">A</span>
+                            </div>
+                        </div>
+                        <div class="metrics-row">
+                            <span class="metric-name">New Customers</span>
+                            <span class="metric-value set-a">4,521</span>
+                            <span class="metric-value set-b">3,892</span>
+                            <div class="metric-winner">
+                                <span class="winner-badge set-a">A</span>
+                            </div>
+                        </div>
+                        <div class="metrics-row">
+                            <span class="metric-name">Returning Rate</span>
+                            <span class="metric-value set-a">42%</span>
+                            <span class="metric-value set-b">45%</span>
+                            <div class="metric-winner">
+                                <span class="winner-badge set-b">B</span>
+                            </div>
+                        </div>
+                        <div class="metrics-row">
+                            <span class="metric-name">Cart Abandon</span>
+                            <span class="metric-value set-a">68%</span>
+                            <span class="metric-value set-b">71%</span>
+                            <div class="metric-winner">
+                                <span class="winner-badge set-a">A</span>
+                            </div>
+                        </div>
+                        <div class="metrics-row">
+                            <span class="metric-name">Support Tickets</span>
+                            <span class="metric-value set-a">847</span>
+                            <span class="metric-value set-b">812</span>
+                            <div class="metric-winner">
+                                <span class="winner-badge set-b">B</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Channel Comparison -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+                <span class="card-title">Channel Performance Comparison</span>
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                    <div class="bar-comparison">
+                        <div class="bar-comparison-header">
+                            <span class="bar-comparison-label">Organic Search</span>
+                            <div class="bar-comparison-values">
+                                <span class="bar-value-a">$892K</span>
+                                <span class="bar-value-b">$724K</span>
+                            </div>
+                        </div>
+                        <div class="dual-bar">
+                            <div class="dual-bar-segment set-a" style="width: 55%">55%</div>
+                            <div class="dual-bar-segment set-b" style="width: 45%">45%</div>
+                        </div>
+                    </div>
+                    <div class="bar-comparison">
+                        <div class="bar-comparison-header">
+                            <span class="bar-comparison-label">Paid Advertising</span>
+                            <div class="bar-comparison-values">
+                                <span class="bar-value-a">$645K</span>
+                                <span class="bar-value-b">$598K</span>
+                            </div>
+                        </div>
+                        <div class="dual-bar">
+                            <div class="dual-bar-segment set-a" style="width: 52%">52%</div>
+                            <div class="dual-bar-segment set-b" style="width: 48%">48%</div>
+                        </div>
+                    </div>
+                    <div class="bar-comparison">
+                        <div class="bar-comparison-header">
+                            <span class="bar-comparison-label">Email Marketing</span>
+                            <div class="bar-comparison-values">
+                                <span class="bar-value-a">$521K</span>
+                                <span class="bar-value-b">$489K</span>
+                            </div>
+                        </div>
+                        <div class="dual-bar">
+                            <div class="dual-bar-segment set-a" style="width: 52%">52%</div>
+                            <div class="dual-bar-segment set-b" style="width: 48%">48%</div>
+                        </div>
+                    </div>
+                    <div class="bar-comparison">
+                        <div class="bar-comparison-header">
+                            <span class="bar-comparison-label">Direct Traffic</span>
+                            <div class="bar-comparison-values">
+                                <span class="bar-value-a">$782K</span>
+                                <span class="bar-value-b">$579K</span>
+                            </div>
+                        </div>
+                        <div class="dual-bar">
+                            <div class="dual-bar-segment set-a" style="width: 57%">57%</div>
+                            <div class="dual-bar-segment set-b" style="width: 43%">43%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: A/B Tests -->
+        <div class="bottom-section">
+            <div class="ab-test-card">
+                <div class="ab-test-header">
+                    <div>
+                        <div class="ab-test-title">Checkout Flow Test</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Started 21 days ago</div>
+                    </div>
+                    <span class="ab-test-status status-significant">Significant</span>
+                </div>
+                <div class="ab-test-variants">
+                    <div class="variant">
+                        <div class="variant-header">
+                            <span class="variant-name">
+                                Control
+                                <span class="variant-badge control">A</span>
+                            </span>
+                            <span class="variant-conversion">3.2%</span>
+                        </div>
+                        <div class="variant-stats">
+                            <span class="variant-stat"><span>12,450</span> visitors</span>
+                            <span class="variant-stat"><span>398</span> conversions</span>
+                        </div>
+                    </div>
+                    <div class="variant winning">
+                        <div class="variant-header">
+                            <span class="variant-name">
+                                Single Page
+                                <span class="variant-badge winner">WINNER</span>
+                            </span>
+                            <span class="variant-conversion">4.1%</span>
+                        </div>
+                        <div class="variant-stats">
+                            <span class="variant-stat"><span>12,523</span> visitors</span>
+                            <span class="variant-stat"><span>513</span> conversions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">
+                        <span>Statistical Confidence</span>
+                        <span>97.8%</span>
+                    </div>
+                    <div class="confidence-track">
+                        <div class="confidence-fill" style="width: 97.8%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ab-test-card">
+                <div class="ab-test-header">
+                    <div>
+                        <div class="ab-test-title">Pricing Display Test</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Started 14 days ago</div>
+                    </div>
+                    <span class="ab-test-status status-running">Running</span>
+                </div>
+                <div class="ab-test-variants">
+                    <div class="variant">
+                        <div class="variant-header">
+                            <span class="variant-name">
+                                Monthly Price
+                                <span class="variant-badge control">A</span>
+                            </span>
+                            <span class="variant-conversion">2.8%</span>
+                        </div>
+                        <div class="variant-stats">
+                            <span class="variant-stat"><span>8,234</span> visitors</span>
+                            <span class="variant-stat"><span>231</span> conversions</span>
+                        </div>
+                    </div>
+                    <div class="variant">
+                        <div class="variant-header">
+                            <span class="variant-name">
+                                Annual Savings
+                                <span class="variant-badge" style="background: var(--primary-b-light); color: var(--primary-b);">B</span>
+                            </span>
+                            <span class="variant-conversion">3.1%</span>
+                        </div>
+                        <div class="variant-stats">
+                            <span class="variant-stat"><span>8,156</span> visitors</span>
+                            <span class="variant-stat"><span>253</span> conversions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">
+                        <span>Statistical Confidence</span>
+                        <span>82.4%</span>
+                    </div>
+                    <div class="confidence-track">
+                        <div class="confidence-fill" style="width: 82.4%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ab-test-card">
+                <div class="ab-test-header">
+                    <div>
+                        <div class="ab-test-title">CTA Button Color</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Started 7 days ago</div>
+                    </div>
+                    <span class="ab-test-status status-running">Running</span>
+                </div>
+                <div class="ab-test-variants">
+                    <div class="variant">
+                        <div class="variant-header">
+                            <span class="variant-name">
+                                Blue CTA
+                                <span class="variant-badge control">A</span>
+                            </span>
+                            <span class="variant-conversion">5.4%</span>
+                        </div>
+                        <div class="variant-stats">
+                            <span class="variant-stat"><span>4,892</span> visitors</span>
+                            <span class="variant-stat"><span>264</span> conversions</span>
+                        </div>
+                    </div>
+                    <div class="variant">
+                        <div class="variant-header">
+                            <span class="variant-name">
+                                Green CTA
+                                <span class="variant-badge" style="background: var(--primary-b-light); color: var(--primary-b);">B</span>
+                            </span>
+                            <span class="variant-conversion">5.2%</span>
+                        </div>
+                        <div class="variant-stats">
+                            <span class="variant-stat"><span>4,756</span> visitors</span>
+                            <span class="variant-stat"><span>247</span> conversions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">
+                        <span>Statistical Confidence</span>
+                        <span>54.2%</span>
+                    </div>
+                    <div class="confidence-track">
+                        <div class="confidence-fill" style="width: 54.2%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Style Section -->
+        <section class="style-section">
+            <h2 class="style-title">Comparative Analysis Style</h2>
+            <p class="style-subtitle">Side-by-side comparisons with period-over-period metrics and A/B testing results</p>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Color Palette</h3>
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--primary-a);"></div>
+                    <span class="color-label">Set A</span>
+                    <span class="color-value">#3B82F6</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--primary-b);"></div>
+                    <span class="color-label">Set B</span>
+                    <span class="color-value">#F97316</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--success);"></div>
+                    <span class="color-label">Winner</span>
+                    <span class="color-value">#10B981</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--danger);"></div>
+                    <span class="color-label">Loser</span>
+                    <span class="color-value">#EF4444</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--bg-primary);"></div>
+                    <span class="color-label">Background</span>
+                    <span class="color-value">#0F172A</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--bg-secondary);"></div>
+                    <span class="color-label">Card</span>
+                    <span class="color-value">#1E293B</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Component Examples</h3>
+            <div class="components-grid">
+                <div class="component-demo">
+                    <div class="component-title">Comparison Bars</div>
+                    <div class="mini-comparison-bar">
+                        <div class="mini-bar-item">
+                            <span class="mini-bar-label">Metric A</span>
+                            <div class="mini-bar-track">
+                                <div class="mini-bar-fill set-a" style="width: 75%;"></div>
+                            </div>
+                            <span class="mini-bar-value" style="color: var(--primary-a);">75%</span>
+                        </div>
+                        <div class="mini-bar-item">
+                            <span class="mini-bar-label">Metric B</span>
+                            <div class="mini-bar-track">
+                                <div class="mini-bar-fill set-b" style="width: 62%;"></div>
+                            </div>
+                            <span class="mini-bar-value" style="color: var(--primary-b);">62%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Winner Badges</div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <span class="winner-badge set-a" style="width: 32px; height: 32px; font-weight: 600;">A</span>
+                        <span class="winner-badge set-b" style="width: 32px; height: 32px; font-weight: 600;">B</span>
+                        <span class="winner-badge tie" style="width: 32px; height: 32px; font-weight: 600;">=</span>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Delta Indicators</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <span class="summary-card-badge badge-winner" style="width: fit-content;">+18.5%</span>
+                        <span class="summary-card-badge badge-loser" style="width: fit-content;">-5.2%</span>
+                        <span class="summary-card-badge badge-neutral" style="width: fit-content;">+0.1%</span>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Confidence Indicator</div>
+                    <div class="confidence-bar" style="margin-top: 0; padding-top: 0; border-top: none;">
+                        <div class="confidence-label">
+                            <span>Confidence</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="confidence-track">
+                            <div class="confidence-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span class="footer-text">Comparative Analysis Dashboard - Style 33</span>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">API Reference</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>

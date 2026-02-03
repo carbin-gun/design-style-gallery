@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft UI Evolution | 柔和界面进化版</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sky-blue: #87CEEB;
+            --light-pink: #FFB6C1;
+            --pale-green: #90EE90;
+            --plum: #DDA0DD;
+            --khaki: #F0E68C;
+            --bg-light: #F0F4F8;
+            --bg-soft: #E8EEF4;
+            --text-primary: #2D3748;
+            --text-secondary: #5A6978;
+            --shadow-light: rgba(255, 255, 255, 0.8);
+            --shadow-dark: rgba(163, 177, 198, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Soft UI Base Effect */
+        .soft-raised {
+            background: var(--bg-light);
+            border-radius: 20px;
+            box-shadow:
+                8px 8px 16px var(--shadow-dark),
+                -8px -8px 16px var(--shadow-light);
+        }
+
+        .soft-pressed {
+            background: var(--bg-light);
+            border-radius: 20px;
+            box-shadow:
+                inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+        }
+
+        /* Navigation */
+        .nav {
+            padding: 24px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 12px 24px;
+            border-radius: 14px;
+            background: var(--bg-light);
+            box-shadow:
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+            transition: all 0.2s;
+        }
+
+        .nav-back:hover {
+            box-shadow:
+                2px 2px 4px var(--shadow-dark),
+                -2px -2px 4px var(--shadow-light);
+        }
+
+        .nav-back:active {
+            box-shadow:
+                inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light);
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 18px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(135, 206, 235, 0.2);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-card {
+            padding: 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #98D8F0, #76BED5);
+            color: var(--text-primary);
+            box-shadow:
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+        }
+
+        .btn-primary:hover {
+            box-shadow:
+                6px 6px 12px var(--shadow-dark),
+                -6px -6px 12px var(--shadow-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            box-shadow:
+                inset 2px 2px 4px rgba(0, 0, 0, 0.1),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            box-shadow:
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light);
+        }
+
+        .btn-secondary:hover {
+            box-shadow:
+                6px 6px 12px var(--shadow-dark),
+                -6px -6px 12px var(--shadow-light);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 20px;
+            box-shadow:
+                inset 3px 3px 6px var(--shadow-dark),
+                inset -3px -3px 6px var(--shadow-light);
+        }
+
+        .feature-card:nth-child(1) .feature-icon { background: linear-gradient(145deg, #98D8F0, var(--bg-light)); }
+        .feature-card:nth-child(2) .feature-icon { background: linear-gradient(145deg, #FFC8CD, var(--bg-light)); }
+        .feature-card:nth-child(3) .feature-icon { background: linear-gradient(145deg, #A0F0A0, var(--bg-light)); }
+        .feature-card:nth-child(4) .feature-icon { background: linear-gradient(145deg, #E8B0E8, var(--bg-light)); }
+        .feature-card:nth-child(5) .feature-icon { background: linear-gradient(145deg, #F8F098, var(--bg-light)); }
+        .feature-card:nth-child(6) .feature-icon { background: linear-gradient(145deg, #98D8F0, var(--bg-light)); }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Dashboard Demo */
+        .dashboard {
+            padding: 80px 0;
+        }
+
+        .dashboard-container {
+            padding: 32px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .dashboard-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: #5BAFD8; }
+        .stat-card:nth-child(2) .stat-value { color: #E89CA0; }
+        .stat-card:nth-child(3) .stat-value { color: #70C870; }
+        .stat-card:nth-child(4) .stat-value { color: #C890C8; }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dashboard-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-card {
+            padding: 24px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            height: 180px;
+        }
+
+        .bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bar {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+            background: linear-gradient(180deg, var(--sky-blue), #B8E0F0);
+            box-shadow:
+                inset 2px 2px 4px rgba(255, 255, 255, 0.5),
+                2px 2px 4px var(--shadow-dark);
+        }
+
+        .bar-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .action-card {
+            padding: 20px;
+        }
+
+        .action-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .color-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            box-shadow:
+                4px 4px 8px var(--shadow-dark),
+                -4px -4px 8px var(--shadow-light),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .color-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-value {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .component-card {
+            padding: 32px;
+        }
+
+        .component-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+
+        .soft-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--bg-light);
+            border: none;
+            border-radius: 14px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            box-shadow:
+                inset 3px 3px 6px var(--shadow-dark),
+                inset -3px -3px 6px var(--shadow-light);
+            transition: all 0.2s;
+        }
+
+        .soft-input:focus {
+            outline: none;
+            box-shadow:
+                inset 4px 4px 8px var(--shadow-dark),
+                inset -4px -4px 8px var(--shadow-light);
+        }
+
+        .soft-input::placeholder {
+            color: #A0AEC0;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(163, 177, 198, 0.2);
+        }
+
+        .toggle-row:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+        }
+
+        .soft-toggle {
+            width: 56px;
+            height: 32px;
+            background: var(--bg-light);
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            box-shadow:
+                inset 3px 3px 6px var(--shadow-dark),
+                inset -3px -3px 6px var(--shadow-light);
+            transition: all 0.3s;
+        }
+
+        .soft-toggle::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: var(--bg-light);
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            box-shadow:
+                2px 2px 4px var(--shadow-dark),
+                -2px -2px 4px var(--shadow-light);
+            transition: all 0.3s;
+        }
+
+        .soft-toggle.on {
+            background: linear-gradient(145deg, #98D8F0, #76BED5);
+        }
+
+        .soft-toggle.on::after {
+            left: 27px;
+        }
+
+        .soft-slider {
+            width: 100%;
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            box-shadow:
+                inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light);
+            position: relative;
+            margin: 16px 0;
+        }
+
+        .slider-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sky-blue), var(--pale-green));
+            border-radius: 6px;
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .slider-knob {
+            width: 24px;
+            height: 24px;
+            background: var(--bg-light);
+            border-radius: 50%;
+            position: absolute;
+            top: -6px;
+            box-shadow:
+                3px 3px 6px var(--shadow-dark),
+                -3px -3px 6px var(--shadow-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+        }
+
+        .footer-brand {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #5BAFD8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dashboard-main {
+                grid-template-columns: 1fr;
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .features-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner soft-raised">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">Soft UI Evolution</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#dashboard" class="nav-link">Dashboard</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-card soft-raised">
+                    <h1>Soft UI Evolution<br>柔和界面进化版</h1>
+                    <p>新拟态设计的改进版本，保留柔和的视觉效果同时提升对比度和可用性，创造既美观又实用的界面。</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary">Explore Style</button>
+                        <button class="btn btn-secondary">View Components</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Principles / 核心原则</h2>
+                    <p>Soft aesthetics with improved usability</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card soft-raised">
+                        <div class="feature-icon">&#10024;</div>
+                        <h3>Soft Shadows</h3>
+                        <p>使用双向阴影创造柔和的凸起和凹陷效果，营造舒适的视觉体验。</p>
+                    </div>
+                    <div class="feature-card soft-raised">
+                        <div class="feature-icon">&#128161;</div>
+                        <h3>Better Contrast</h3>
+                        <p>相比原版新拟态，提升了色彩对比度，确保文字和元素的可读性。</p>
+                    </div>
+                    <div class="feature-card soft-raised">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3>Pastel Accents</h3>
+                        <p>柔和的粉彩色调作为点缀，增加视觉层次而不失和谐。</p>
+                    </div>
+                    <div class="feature-card soft-raised">
+                        <div class="feature-icon">&#9728;</div>
+                        <h3>Light Background</h3>
+                        <p>浅色背景是柔和界面的基础，让阴影效果更加自然和明显。</p>
+                    </div>
+                    <div class="feature-card soft-raised">
+                        <div class="feature-icon">&#128073;</div>
+                        <h3>Tactile Feedback</h3>
+                        <p>按压效果让用户感受到交互的反馈，增强操作的确定性。</p>
+                    </div>
+                    <div class="feature-card soft-raised">
+                        <div class="feature-icon">&#9881;</div>
+                        <h3>Functional First</h3>
+                        <p>美观与功能并重，不牺牲可用性追求视觉效果。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard" id="dashboard">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Dashboard Preview / 仪表盘预览</h2>
+                    <p>Soft UI components working together</p>
+                </div>
+                <div class="dashboard-container soft-raised">
+                    <div class="dashboard-header">
+                        <span class="dashboard-title">Overview</span>
+                        <button class="btn btn-secondary" style="padding: 10px 20px; font-size: 12px;">This Week</button>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="stat-card soft-pressed">
+                            <div class="stat-value">12.5K</div>
+                            <div class="stat-label">Users</div>
+                        </div>
+                        <div class="stat-card soft-pressed">
+                            <div class="stat-value">$48.2K</div>
+                            <div class="stat-label">Revenue</div>
+                        </div>
+                        <div class="stat-card soft-pressed">
+                            <div class="stat-value">2.4K</div>
+                            <div class="stat-label">Orders</div>
+                        </div>
+                        <div class="stat-card soft-pressed">
+                            <div class="stat-value">89%</div>
+                            <div class="stat-label">Satisfaction</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-main">
+                        <div class="chart-card soft-pressed">
+                            <div class="chart-title">Weekly Performance</div>
+                            <div class="chart-bars">
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 60%;"></div>
+                                    <span class="bar-label">Mon</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 80%;"></div>
+                                    <span class="bar-label">Tue</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 45%;"></div>
+                                    <span class="bar-label">Wed</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 90%;"></div>
+                                    <span class="bar-label">Thu</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 70%;"></div>
+                                    <span class="bar-label">Fri</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 55%;"></div>
+                                    <span class="bar-label">Sat</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 40%;"></div>
+                                    <span class="bar-label">Sun</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <div class="action-card soft-pressed">
+                                <h4>Quick Actions</h4>
+                                <button class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">New Project</button>
+                                <button class="btn btn-secondary" style="width: 100%;">View Reports</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette / 色彩方案</h2>
+                    <p>Soft pastel colors with improved visibility</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card soft-raised">
+                        <div class="color-preview" style="background: var(--sky-blue);"></div>
+                        <div class="color-name">Sky Blue</div>
+                        <div class="color-value">#87CEEB</div>
+                    </div>
+                    <div class="color-card soft-raised">
+                        <div class="color-preview" style="background: var(--light-pink);"></div>
+                        <div class="color-name">Light Pink</div>
+                        <div class="color-value">#FFB6C1</div>
+                    </div>
+                    <div class="color-card soft-raised">
+                        <div class="color-preview" style="background: var(--pale-green);"></div>
+                        <div class="color-name">Pale Green</div>
+                        <div class="color-value">#90EE90</div>
+                    </div>
+                    <div class="color-card soft-raised">
+                        <div class="color-preview" style="background: var(--plum);"></div>
+                        <div class="color-name">Plum</div>
+                        <div class="color-value">#DDA0DD</div>
+                    </div>
+                    <div class="color-card soft-raised">
+                        <div class="color-preview" style="background: var(--khaki);"></div>
+                        <div class="color-name">Khaki</div>
+                        <div class="color-value">#F0E68C</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Component Examples / 组件示例</h2>
+                    <p>Soft UI form elements and controls</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card soft-raised">
+                        <h4>Form Elements</h4>
+                        <input type="text" class="soft-input" placeholder="Enter your name">
+                        <input type="email" class="soft-input" placeholder="Enter your email">
+                        <button class="btn btn-primary" style="width: 100%;">Submit</button>
+                    </div>
+                    <div class="component-card soft-raised">
+                        <h4>Toggle & Slider</h4>
+                        <div class="toggle-row">
+                            <span class="toggle-label">Dark Mode</span>
+                            <div class="soft-toggle" onclick="this.classList.toggle('on')"></div>
+                        </div>
+                        <div class="toggle-row">
+                            <span class="toggle-label">Notifications</span>
+                            <div class="soft-toggle on" onclick="this.classList.toggle('on')"></div>
+                        </div>
+                        <div style="margin-top: 24px;">
+                            <span class="toggle-label">Volume: 75%</span>
+                            <div class="soft-slider">
+                                <div class="slider-fill" style="width: 75%;"></div>
+                                <div class="slider-knob" style="left: calc(75% - 12px);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner soft-raised">
+                <div class="footer-brand">Soft UI Evolution</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Dashboards, Apps</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">Good</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

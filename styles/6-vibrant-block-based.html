@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibrant & Block-based | 鲜艳色块风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #39FF14;
+            --electric-purple: #BF00FF;
+            --hot-pink: #FF1493;
+            --cyan: #00FFFF;
+            --orange: #FF7F00;
+            --lime: #CCFF00;
+            --text-dark: #000000;
+            --text-light: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            background: #FFFFFF;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: var(--text-dark);
+            border-radius: 0;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--neon-green);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 3px solid var(--neon-green);
+            transition: all 0.2s;
+        }
+
+        .nav-back:hover {
+            background: var(--neon-green);
+            color: var(--text-dark);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: var(--electric-purple);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 140px 0 60px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 500px;
+        }
+
+        .hero-content {
+            background: var(--neon-green);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.0;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-dark);
+            max-width: 400px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .hero-visual {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .hero-block-1 {
+            background: var(--electric-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+        }
+
+        .hero-block-2 {
+            background: var(--hot-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .btn {
+            padding: 18px 36px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .btn-dark {
+            background: var(--text-dark);
+            color: var(--text-light);
+        }
+
+        .btn-dark:hover {
+            background: var(--electric-purple);
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--text-dark);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--cyan);
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .feature-card {
+            padding: 48px 32px;
+            border: 4px solid var(--text-dark);
+            transition: all 0.2s;
+        }
+
+        .feature-card:nth-child(1) { background: var(--lime); }
+        .feature-card:nth-child(2) { background: var(--orange); }
+        .feature-card:nth-child(3) { background: var(--cyan); }
+        .feature-card:nth-child(4) { background: var(--hot-pink); color: var(--text-light); }
+        .feature-card:nth-child(5) { background: var(--electric-purple); color: var(--text-light); }
+        .feature-card:nth-child(6) { background: var(--neon-green); }
+
+        .feature-card:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--text-dark);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Block Showcase */
+        .showcase {
+            padding: 80px 0;
+        }
+
+        .block-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 200px 200px;
+            gap: 0;
+        }
+
+        .block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            border: 4px solid var(--text-dark);
+            transition: all 0.2s;
+        }
+
+        .block:hover {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .block-1 {
+            grid-row: span 2;
+            background: var(--electric-purple);
+            color: var(--text-light);
+            font-size: 36px;
+        }
+        .block-2 { background: var(--neon-green); }
+        .block-3 { background: var(--orange); }
+        .block-4 { background: var(--cyan); }
+        .block-5 { background: var(--hot-pink); color: var(--text-light); }
+
+        /* Colors Section */
+        .colors {
+            padding: 80px 0;
+            background: var(--text-dark);
+        }
+
+        .colors .section-header {
+            background: transparent;
+            color: var(--text-light);
+        }
+
+        .colors .section-header h2 {
+            color: var(--text-light);
+        }
+
+        .colors .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0;
+        }
+
+        .color-card {
+            padding: 40px 20px;
+            text-align: center;
+            border: 4px solid var(--text-light);
+            transition: all 0.2s;
+        }
+
+        .color-card:nth-child(1) { background: var(--neon-green); color: var(--text-dark); }
+        .color-card:nth-child(2) { background: var(--electric-purple); color: var(--text-light); }
+        .color-card:nth-child(3) { background: var(--hot-pink); color: var(--text-light); }
+        .color-card:nth-child(4) { background: var(--cyan); color: var(--text-dark); }
+        .color-card:nth-child(5) { background: var(--orange); color: var(--text-dark); }
+        .color-card:nth-child(6) { background: var(--lime); color: var(--text-dark); }
+
+        .color-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .color-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 0;
+            margin: 0 auto 16px;
+            background: var(--text-dark);
+        }
+
+        .color-card:nth-child(4) .color-preview,
+        .color-card:nth-child(5) .color-preview,
+        .color-card:nth-child(6) .color-preview,
+        .color-card:nth-child(1) .color-preview { background: var(--text-dark); }
+
+        .color-card:nth-child(2) .color-preview,
+        .color-card:nth-child(3) .color-preview { background: var(--text-light); }
+
+        .color-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .color-value {
+            font-size: 14px;
+            font-family: monospace;
+            opacity: 0.8;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+        }
+
+        .component-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            margin-bottom: 0;
+        }
+
+        .component-card {
+            padding: 48px;
+            border: 4px solid var(--text-dark);
+        }
+
+        .component-card:nth-child(1) { background: var(--lime); }
+        .component-card:nth-child(2) { background: var(--hot-pink); }
+
+        .component-card h4 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .btn-vibrant {
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 4px solid var(--text-dark);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-vibrant:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--text-dark);
+        }
+
+        .btn-vibrant.green { background: var(--neon-green); color: var(--text-dark); }
+        .btn-vibrant.purple { background: var(--electric-purple); color: var(--text-light); }
+        .btn-vibrant.cyan { background: var(--cyan); color: var(--text-dark); }
+        .btn-vibrant.orange { background: var(--orange); color: var(--text-dark); }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tag {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--text-dark);
+        }
+
+        .tag.green { background: var(--neon-green); }
+        .tag.purple { background: var(--electric-purple); color: var(--text-light); }
+        .tag.cyan { background: var(--cyan); }
+        .tag.orange { background: var(--orange); }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-top: 60px;
+        }
+
+        .stat-block {
+            padding: 48px 24px;
+            text-align: center;
+            border: 4px solid var(--text-dark);
+        }
+
+        .stat-block:nth-child(1) { background: var(--neon-green); }
+        .stat-block:nth-child(2) { background: var(--electric-purple); color: var(--text-light); }
+        .stat-block:nth-child(3) { background: var(--cyan); }
+        .stat-block:nth-child(4) { background: var(--orange); }
+
+        .stat-value {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            background: var(--text-dark);
+            color: var(--text-light);
+        }
+
+        .footer-brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+        }
+
+        .footer-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .block-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+            .block-1 {
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid,
+            .component-row {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">VIBRANT BLOCKS</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#showcase" class="nav-link">Showcase</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>Vibrant<br>Block-based<br>鲜艳色块</h1>
+                        <p>大胆、充满活力的色块设计，通过几何形状和高饱和度色彩创造视觉冲击力。</p>
+                        <a href="#features" class="btn btn-dark">EXPLORE STYLE</a>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-block-1">&#9632;</div>
+                        <div class="hero-block-2">BOLD</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Principles / 核心原则</h2>
+                    <p>Bold colors meet geometric precision</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3>Bold Colors</h3>
+                        <p>使用高饱和度、高对比度的色彩组合，创造强烈的视觉吸引力。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9635;</div>
+                        <h3>Geometric Shapes</h3>
+                        <p>以方形、矩形为主的几何形状，构建清晰的视觉层次结构。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9618;</div>
+                        <h3>Block Layout</h3>
+                        <p>模块化的色块布局，让内容组织更加清晰和有序。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9733;</div>
+                        <h3>Playful Energy</h3>
+                        <p>充满活力和乐趣的设计语言，适合年轻、创意品牌。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#8856;</div>
+                        <h3>High Contrast</h3>
+                        <p>强烈的明暗对比，确保内容在任何背景上都清晰可读。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9679;</div>
+                        <h3>No Gradients</h3>
+                        <p>纯色块设计，避免渐变，保持设计的纯粹和直接。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase" id="showcase">
+            <div class="container">
+                <div class="section-header" style="background: var(--lime);">
+                    <h2>Block Layouts / 色块布局</h2>
+                    <p>Asymmetric grids create dynamic compositions</p>
+                </div>
+                <div class="block-grid">
+                    <div class="block block-1">FEATURE</div>
+                    <div class="block block-2">01</div>
+                    <div class="block block-3">02</div>
+                    <div class="block block-4">03</div>
+                    <div class="block block-5">04</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette / 色彩方案</h2>
+                    <p>High-saturation colors that demand attention</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Neon Green</div>
+                        <div class="color-value">#39FF14</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Electric Purple</div>
+                        <div class="color-value">#BF00FF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Hot Pink</div>
+                        <div class="color-value">#FF1493</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Electric Cyan</div>
+                        <div class="color-value">#00FFFF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Vivid Orange</div>
+                        <div class="color-value">#FF7F00</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Lime Yellow</div>
+                        <div class="color-value">#CCFF00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header" style="background: var(--orange);">
+                    <h2>Components / 组件示例</h2>
+                    <p>UI elements with bold, blocky aesthetics</p>
+                </div>
+                <div class="component-row">
+                    <div class="component-card">
+                        <h4>Button Styles</h4>
+                        <div class="button-group">
+                            <button class="btn-vibrant green">Primary</button>
+                            <button class="btn-vibrant purple">Secondary</button>
+                            <button class="btn-vibrant cyan">Tertiary</button>
+                            <button class="btn-vibrant orange">Action</button>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <h4 style="color: var(--text-light);">Tag Elements</h4>
+                        <div class="tag-group">
+                            <span class="tag green">Design</span>
+                            <span class="tag purple">Creative</span>
+                            <span class="tag cyan">Modern</span>
+                            <span class="tag orange">Bold</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-block">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Bold</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">Energy</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Gradients</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="stat-value">6+</div>
+                        <div class="stat-label">Colors</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">VIBRANT BLOCKS</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Creative, Youth</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">Excellent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

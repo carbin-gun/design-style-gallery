@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible & Ethical Design | 无障碍与包容性设计</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --blue: #0066CC;
+            --green: #228B22;
+            --focus-color: #0066CC;
+            --text-primary: #000000;
+            --text-secondary: #4A4A4A;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F5;
+            --border-color: #CCCCCC;
+        }
+
+        body {
+            font-family: 'Atkinson Hyperlegible', Arial, sans-serif;
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Skip to main content link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--blue);
+            color: var(--white);
+            padding: 16px 24px;
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 1000;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: 3px solid var(--focus-color);
+            outline-offset: 3px;
+        }
+
+        *:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        *:focus-visible {
+            outline: 3px solid var(--focus-color);
+            outline-offset: 3px;
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--black);
+            padding: 20px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 3px solid var(--white);
+            transition: all 0.2s;
+        }
+
+        .nav-back:hover,
+        .nav-back:focus {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 700;
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            border-color: var(--white);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            border-bottom: 4px solid var(--black);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 3px solid var(--black);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: var(--bg-secondary);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 3px solid var(--black);
+            padding: 32px;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 8px 8px 0 var(--black);
+            transform: translate(-4px, -4px);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* WCAG Guidelines */
+        .wcag {
+            padding: 80px 0;
+            border-top: 4px solid var(--black);
+        }
+
+        .wcag-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .wcag-card {
+            border: 3px solid var(--black);
+            padding: 32px;
+            text-align: center;
+        }
+
+        .wcag-level {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .wcag-card:nth-child(1) .wcag-level { color: var(--green); }
+        .wcag-card:nth-child(2) .wcag-level { color: var(--blue); }
+        .wcag-card:nth-child(3) .wcag-level { color: var(--black); }
+
+        .wcag-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .wcag-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Contrast Demo */
+        .contrast {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .contrast-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .contrast-card {
+            padding: 32px;
+            border: 3px solid var(--black);
+        }
+
+        .contrast-card.pass {
+            background: var(--white);
+        }
+
+        .contrast-card.example {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .contrast-ratio {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .contrast-label {
+            display: inline-block;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contrast-label.pass {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .contrast-label.fail {
+            background: #CC0000;
+            color: var(--white);
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .color-card {
+            border: 3px solid var(--black);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .color-preview {
+            height: 120px;
+        }
+
+        .color-info {
+            padding: 20px;
+            background: var(--white);
+        }
+
+        .color-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .color-value {
+            font-size: 16px;
+            font-family: monospace;
+            color: var(--text-secondary);
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .component-card {
+            background: var(--white);
+            border: 3px solid var(--black);
+            padding: 32px;
+        }
+
+        .component-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 18px;
+            font-family: inherit;
+            border: 3px solid var(--black);
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            border-color: var(--blue);
+        }
+
+        .form-helper {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--black);
+            cursor: pointer;
+        }
+
+        .checkbox:checked {
+            background: var(--black);
+        }
+
+        .checkbox-label {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Alert Examples */
+        .alert {
+            padding: 20px;
+            border: 3px solid;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .alert-success {
+            border-color: var(--green);
+            background: #E8F5E9;
+        }
+
+        .alert-error {
+            border-color: #CC0000;
+            background: #FFEBEE;
+        }
+
+        .alert-info {
+            border-color: var(--blue);
+            background: #E3F2FD;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 48px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+            opacity: 0.7;
+        }
+
+        .footer-value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .wcag-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .features-grid,
+            .contrast-grid,
+            .color-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back" aria-label="Go back to homepage">&#8592; Back</a>
+                <span class="nav-logo">Accessible Design</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#wcag" class="nav-link">WCAG</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <h1 id="hero-title">Accessible & Ethical Design<br>无障碍与包容性设计</h1>
+                <p>遵循WCAG指南，确保所有用户都能平等地访问和使用界面，包括视觉、听觉、运动和认知障碍用户。</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary">Learn Principles</a>
+                    <a href="#wcag" class="btn btn-secondary">WCAG Guidelines</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features" aria-labelledby="features-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="features-title">Core Principles / 核心原则</h2>
+                    <p>Design for everyone, exclude no one</p>
+                </div>
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128065;</div>
+                        <h3>High Contrast</h3>
+                        <p>保持至少4.5:1的文本对比度（大文本3:1），确保视觉障碍用户也能清晰阅读内容。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#9000;</div>
+                        <h3>Keyboard Navigation</h3>
+                        <p>所有交互元素都必须支持键盘操作，提供清晰的焦点指示器，遵循逻辑的Tab顺序。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128483;</div>
+                        <h3>Screen Reader Support</h3>
+                        <p>使用语义化HTML、ARIA标签和替代文本，确保屏幕阅读器用户获得完整信息。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128290;</div>
+                        <h3>Semantic HTML</h3>
+                        <p>正确使用HTML5语义元素，提供清晰的文档结构和导航标志。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128221;</div>
+                        <h3>Clear Labels</h3>
+                        <p>为所有表单元素提供清晰可见的标签，不仅依赖占位符文本传达信息。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">&#128246;</div>
+                        <h3>Error Prevention</h3>
+                        <p>提供清晰的错误信息和恢复建议，帮助用户理解问题并修正错误。</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="wcag" id="wcag" aria-labelledby="wcag-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="wcag-title">WCAG Compliance Levels / WCAG合规级别</h2>
+                    <p>Web Content Accessibility Guidelines standards</p>
+                </div>
+                <div class="wcag-grid">
+                    <article class="wcag-card">
+                        <div class="wcag-level">A</div>
+                        <h3 class="wcag-title">Level A</h3>
+                        <p class="wcag-desc">基础可访问性要求，移除最严重的障碍</p>
+                    </article>
+                    <article class="wcag-card">
+                        <div class="wcag-level">AA</div>
+                        <h3 class="wcag-title">Level AA</h3>
+                        <p class="wcag-desc">推荐标准，大多数法规要求的合规级别</p>
+                    </article>
+                    <article class="wcag-card">
+                        <div class="wcag-level">AAA</div>
+                        <h3 class="wcag-title">Level AAA</h3>
+                        <p class="wcag-desc">最高级别可访问性，为特殊需求用户优化</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="contrast" aria-labelledby="contrast-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="contrast-title">Contrast Examples / 对比度示例</h2>
+                    <p>WCAG requires minimum contrast ratios</p>
+                </div>
+                <div class="contrast-grid">
+                    <div class="contrast-card pass">
+                        <div class="contrast-ratio">21:1</div>
+                        <span class="contrast-label pass">PASS AAA</span>
+                        <p>Black text on white background provides maximum contrast and readability.</p>
+                    </div>
+                    <div class="contrast-card example">
+                        <div class="contrast-ratio">21:1</div>
+                        <span class="contrast-label pass">PASS AAA</span>
+                        <p>White text on black background is equally accessible and often preferred in dark mode.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors" aria-labelledby="colors-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="colors-title">Color Palette / 色彩方案</h2>
+                    <p>High contrast colors that work for everyone</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #000000;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Black</div>
+                            <div class="color-value">#000000</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #FFFFFF; border-bottom: 3px solid #000;"></div>
+                        <div class="color-info">
+                            <div class="color-name">White</div>
+                            <div class="color-value">#FFFFFF</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #0066CC;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Accessible Blue</div>
+                            <div class="color-value">#0066CC</div>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: #228B22;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Success Green</div>
+                            <div class="color-value">#228B22</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components" aria-labelledby="components-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="components-title">Component Examples / 组件示例</h2>
+                    <p>Accessible form elements and feedback patterns</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h4>Accessible Form</h4>
+                        <form>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" id="email" class="form-input" aria-required="true" aria-describedby="email-helper">
+                                <p id="email-helper" class="form-helper">We'll never share your email with anyone.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password *</label>
+                                <input type="password" id="password" class="form-input" aria-required="true">
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="remember" class="checkbox">
+                                <label for="remember" class="checkbox-label">Remember me</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </form>
+                    </div>
+                    <div class="component-card">
+                        <h4>Alert Messages</h4>
+                        <div class="alert alert-success" role="alert">
+                            <span class="alert-icon" aria-hidden="true">&#10004;</span>
+                            <div>
+                                <strong>Success!</strong> Your changes have been saved successfully.
+                            </div>
+                        </div>
+                        <div class="alert alert-error" role="alert">
+                            <span class="alert-icon" aria-hidden="true">&#10006;</span>
+                            <div>
+                                <strong>Error:</strong> Please fill in all required fields.
+                            </div>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            <span class="alert-icon" aria-hidden="true">&#8505;</span>
+                            <div>
+                                <strong>Info:</strong> Your session will expire in 5 minutes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Accessible Design</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">Universal</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">All Projects</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">WCAG Level</div>
+                        <div class="footer-value">AAA Compliant</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

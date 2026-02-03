@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Storytelling | 视差叙事设计</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark: #1F2937;
+            --gold: #F59E0B;
+            --white: #FFFFFF;
+            --primary: #6366F1;
+            --secondary: #10B981;
+            --light-gray: #F3F4F6;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px;
+            transition: background 0.3s;
+        }
+
+        .nav.scrolled {
+            background: rgba(31, 41, 55, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-back:hover {
+            opacity: 1;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        /* Parallax Hero */
+        .parallax-hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.1s ease-out;
+        }
+
+        .layer-back {
+            background: linear-gradient(180deg, #0F172A 0%, var(--dark) 100%);
+        }
+
+        .layer-stars {
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 80% 60%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 70% 40%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(2px 2px at 90% 10%, rgba(255,255,255,0.6), transparent);
+            background-size: 100% 100%;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .layer-mountains {
+            background: linear-gradient(180deg, transparent 60%, #374151 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 24px;
+            border: 1px solid var(--gold);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 10vw, 100px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-title .gold {
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            opacity: 0.7;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounce-down 2s infinite;
+        }
+
+        @keyframes bounce-down {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .scroll-indicator span {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .scroll-indicator .arrow {
+            font-size: 24px;
+            opacity: 0.5;
+        }
+
+        /* Story Sections */
+        .story-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .story-section:nth-child(even) {
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .story-content {
+            max-width: 500px;
+        }
+
+        .story-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--gold);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .story-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .story-text {
+            font-size: 17px;
+            line-height: 1.8;
+            opacity: 0.8;
+            margin-bottom: 32px;
+        }
+
+        .story-visual {
+            position: relative;
+        }
+
+        .visual-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(245, 158, 11, 0.2));
+            border-radius: 20px;
+            padding: 60px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-icon {
+            font-size: 120px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 150px 0;
+            background: var(--dark);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.4s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            opacity: 0.7;
+            line-height: 1.7;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 150px 0;
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .color-card {
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-preview--dark { background: var(--dark); }
+        .color-preview--gold { background: var(--gold); }
+        .color-preview--white { background: var(--white); border: 1px solid #E5E7EB; }
+        .color-preview--primary { background: var(--primary); }
+        .color-preview--secondary { background: var(--secondary); }
+
+        .color-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 13px;
+            opacity: 0.5;
+        }
+
+        /* Components Section */
+        .components {
+            padding: 150px 0;
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .component-demo {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .component-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .btn-gold:hover {
+            background: #D97706;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--gold), var(--primary));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* Chapter Tags */
+        .chapter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .chapter-tag {
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 100px;
+            border: 1px solid #E5E7EB;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .chapter-tag:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .chapter-tag.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 0;
+            background: var(--dark);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav" id="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">← Back</a>
+                <span class="nav-logo">Parallax</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                    <a href="#components" class="nav-link">Components</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="parallax-hero">
+            <div class="parallax-layer layer-back"></div>
+            <div class="parallax-layer layer-stars"></div>
+            <div class="parallax-layer layer-mountains"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <span class="hero-badge">Immersive Design</span>
+                    <h1 class="hero-title">Parallax <span class="gold">Story</span><br>视差叙事</h1>
+                    <p class="hero-subtitle">通过滚动驱动的动画和层叠的视觉效果，创造沉浸式的故事体验。</p>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <span class="arrow">↓</span>
+            </div>
+        </section>
+
+        <section class="story-section">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-content">
+                        <div class="story-number">01</div>
+                        <h2 class="story-title">Scroll-Driven Animation</h2>
+                        <p class="story-text">滚动触发的动画让用户控制叙事节奏，每次滚动都推进故事的发展，创造互动式的阅读体验。</p>
+                        <a href="#features" class="btn btn-gold">Learn More →</a>
+                    </div>
+                    <div class="story-visual">
+                        <div class="visual-card">
+                            <span class="visual-icon">📜</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="story-section">
+            <div class="container">
+                <div class="story-grid" style="direction: rtl;">
+                    <div class="story-content" style="direction: ltr;">
+                        <div class="story-number">02</div>
+                        <h2 class="story-title">Layered Scrolling</h2>
+                        <p class="story-text">不同层次的元素以不同速度滚动，创造深度感和电影般的视觉效果，让平面的网页充满立体感。</p>
+                        <a href="#components" class="btn btn-outline-dark">View Examples →</a>
+                    </div>
+                    <div class="story-visual" style="direction: ltr;">
+                        <div class="visual-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(99, 102, 241, 0.2));">
+                            <span class="visual-icon">🎬</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Design Principles</span>
+                    <h2 class="section-title">Core Features</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎥</div>
+                        <h3 class="feature-title">Cinematic</h3>
+                        <p class="feature-desc">电影般的视觉体验，场景转换流畅自然。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3 class="feature-title">Narrative Flow</h3>
+                        <p class="feature-desc">故事驱动的布局，引导用户顺序浏览内容。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">Visual Depth</h3>
+                        <p class="feature-desc">多层视差创造三维空间感和沉浸体验。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌊</div>
+                        <h3 class="feature-title">Smooth Transitions</h3>
+                        <p class="feature-desc">流畅的过渡动画，消除内容之间的断裂感。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Focus Points</h3>
+                        <p class="feature-desc">引导视线的焦点设计，突出关键信息。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3 class="feature-title">Immersive</h3>
+                        <p class="feature-desc">沉浸式的阅读体验，用户仿佛置身其中。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Color Palette</span>
+                    <h2 class="section-title">Story Colors</h2>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview color-preview--dark"></div>
+                        <div class="color-name">Dark</div>
+                        <div class="color-hex">#1F2937</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--gold"></div>
+                        <div class="color-name">Gold</div>
+                        <div class="color-hex">#F59E0B</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--white"></div>
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--primary"></div>
+                        <div class="color-name">Primary</div>
+                        <div class="color-hex">#6366F1</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--secondary"></div>
+                        <div class="color-name">Secondary</div>
+                        <div class="color-hex">#10B981</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">UI Components</span>
+                    <h2 class="section-title">Component Examples</h2>
+                </div>
+                <div class="components-grid">
+                    <div class="component-demo">
+                        <h4 class="component-title">Timeline</h4>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-title">Chapter 1: Beginning</div>
+                                <div class="timeline-desc">The story starts here</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-title">Chapter 2: Journey</div>
+                                <div class="timeline-desc">The adventure unfolds</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-title">Chapter 3: Climax</div>
+                                <div class="timeline-desc">The turning point</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Chapter Navigation</h4>
+                        <div class="chapter-tags">
+                            <span class="chapter-tag active">Intro</span>
+                            <span class="chapter-tag">Chapter 1</span>
+                            <span class="chapter-tag">Chapter 2</span>
+                            <span class="chapter-tag">Epilogue</span>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Buttons</h4>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <button class="btn btn-gold">Primary</button>
+                            <button class="btn btn-outline-dark">Secondary</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Story Number</h4>
+                        <div class="story-number" style="margin-bottom: 0;">03</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">Parallax Storytelling</div>
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-label">Era</div>
+                    <div class="footer-value">2020s Modern</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Category</div>
+                    <div class="footer-value">General</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Theme</div>
+                    <div class="footer-value">Dark/Light</div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-label">Style ID</div>
+                    <div class="footer-value">#49</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple nav background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D & Hyperrealism | 3D与超写实风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #001F3F;
+            --forest: #228B22;
+            --burgundy: #800020;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --bg-dark: #0a0a0f;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* 3D Scene Background */
+        .scene-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+            perspective: 1000px;
+        }
+
+        .scene-grid {
+            position: absolute;
+            bottom: 0;
+            left: -50%;
+            right: -50%;
+            height: 60%;
+            background:
+                linear-gradient(90deg, rgba(0, 31, 63, 0.3) 1px, transparent 1px),
+                linear-gradient(rgba(0, 31, 63, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg);
+            transform-origin: center bottom;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            inset: 0;
+        }
+
+        .shape-3d {
+            position: absolute;
+            border-radius: 20px;
+            animation: float3d 6s ease-in-out infinite;
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(255, 215, 0, 0.1);
+        }
+
+        .shape-3d:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--gold), #ffa500);
+            top: 15%;
+            right: 10%;
+            animation-delay: 0s;
+            transform: rotateX(20deg) rotateY(-15deg);
+        }
+
+        .shape-3d:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--navy), #003366);
+            top: 40%;
+            left: 8%;
+            animation-delay: -2s;
+            border-radius: 50%;
+        }
+
+        .shape-3d:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--burgundy), #cc0033);
+            bottom: 25%;
+            right: 15%;
+            animation-delay: -4s;
+        }
+
+        @keyframes float3d {
+            0%, 100% { transform: translateY(0) rotateX(20deg) rotateY(-15deg); }
+            50% { transform: translateY(-30px) rotateX(25deg) rotateY(-20deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--gold);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--gold), var(--silver), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 80px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 18px 36px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), #ffa500);
+            color: var(--bg-dark);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--gold);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.9), rgba(10, 10, 15, 0.9));
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* 3D Showcase */
+        .showcase {
+            padding: 100px 0;
+        }
+
+        .showcase-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .showcase-visual {
+            position: relative;
+            height: 500px;
+            perspective: 1000px;
+        }
+
+        .cube-3d {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+            animation: rotateCube 15s linear infinite;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, rgba(0, 31, 63, 0.8), rgba(0, 31, 63, 0.4));
+            backdrop-filter: blur(10px);
+        }
+
+        .cube-face:nth-child(1) { transform: translateZ(100px); }
+        .cube-face:nth-child(2) { transform: rotateY(180deg) translateZ(100px); }
+        .cube-face:nth-child(3) { transform: rotateY(90deg) translateZ(100px); }
+        .cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(100px); }
+        .cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(100px); }
+        .cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(100px); }
+
+        @keyframes rotateCube {
+            0% { transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg); }
+            100% { transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg); }
+        }
+
+        .showcase-content h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .showcase-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+        }
+
+        .color-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .color-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .color-preview {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .color-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .color-value {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 100px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .component-card {
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.9), rgba(10, 10, 15, 0.9));
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .component-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--gold);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold), var(--silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 8px;
+        }
+
+        .progress-3d {
+            height: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 12px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill-3d {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), #ffa500);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transition: width 1s ease;
+        }
+
+        .input-3d {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-3d:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .input-3d::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 24px;
+        }
+
+        .footer-brand {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 60px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+        }
+
+        .footer-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .showcase-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 42px;
+            }
+            .features-grid,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scene-bg">
+        <div class="scene-grid"></div>
+        <div class="floating-shapes">
+            <div class="shape-3d"></div>
+            <div class="shape-3d"></div>
+            <div class="shape-3d"></div>
+        </div>
+    </div>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="../index.html" class="nav-back">&#8592; Back</a>
+                <span class="nav-logo">3D Hyperrealism</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#showcase" class="nav-link">Showcase</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>3D & Hyperrealism<br>3D与超写实风格</h1>
+                <p>通过逼真的3D建模、深度效果和沉浸式视觉体验，创造出超越现实的数字界面设计。</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Explore Depth</button>
+                    <button class="btn btn-secondary">View Components</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Principles / 核心原则</h2>
+                    <p>Creating immersive depth and realistic visual experiences</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127912;</div>
+                        <h3>Depth & Dimension</h3>
+                        <p>使用透视、阴影和3D变换创造真实的空间深度感，让界面元素仿佛从屏幕中浮出。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9728;</div>
+                        <h3>Realistic Lighting</h3>
+                        <p>模拟真实世界的光照效果，包括环境光、高光和软阴影，增强3D元素的真实感。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128302;</div>
+                        <h3>Material Textures</h3>
+                        <p>应用金属、玻璃、木纹等材质纹理，让数字元素具有触手可及的质感。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127916;</div>
+                        <h3>Immersive Animation</h3>
+                        <p>流畅的3D动画效果，如旋转、缩放、位移，创造沉浸式的交互体验。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#128736;</div>
+                        <h3>Perspective Control</h3>
+                        <p>精确控制透视角度和消失点，构建符合人眼视觉习惯的三维空间。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#127775;</div>
+                        <h3>Premium Feel</h3>
+                        <p>高端奢华的视觉效果，适合需要展示产品质感和品牌价值的场景。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase" id="showcase">
+            <div class="container">
+                <div class="showcase-container">
+                    <div class="showcase-visual">
+                        <div class="cube-3d">
+                            <div class="cube-face">FRONT</div>
+                            <div class="cube-face">BACK</div>
+                            <div class="cube-face">RIGHT</div>
+                            <div class="cube-face">LEFT</div>
+                            <div class="cube-face">TOP</div>
+                            <div class="cube-face">BOTTOM</div>
+                        </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Interactive 3D Elements / 交互式3D元素</h3>
+                        <p>3D超写实设计风格将传统平面界面提升到全新维度。通过CSS 3D变换和WebGL技术，可以在网页中实现真正的三维交互体验。</p>
+                        <p>这种风格特别适合产品展示、品牌官网、游戏界面和高端电商平台，能够有效提升用户参与度和品牌印象。</p>
+                        <button class="btn btn-primary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Color Palette / 色彩方案</h2>
+                    <p>Rich, deep colors that enhance 3D depth perception</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card">
+                        <div class="color-preview" style="background: linear-gradient(135deg, #001F3F, #003366);"></div>
+                        <div class="color-name">Navy Deep</div>
+                        <div class="color-value">#001F3F</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: linear-gradient(135deg, #228B22, #32CD32);"></div>
+                        <div class="color-name">Forest Green</div>
+                        <div class="color-value">#228B22</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: linear-gradient(135deg, #800020, #cc0033);"></div>
+                        <div class="color-name">Burgundy</div>
+                        <div class="color-value">#800020</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: linear-gradient(135deg, #FFD700, #ffa500);"></div>
+                        <div class="color-name">Premium Gold</div>
+                        <div class="color-value">#FFD700</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview" style="background: linear-gradient(135deg, #C0C0C0, #e8e8e8);"></div>
+                        <div class="color-name">Chrome Silver</div>
+                        <div class="color-value">#C0C0C0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Component Examples / 组件示例</h2>
+                    <p>3D-enhanced UI components with depth and dimension</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h4>Statistics Dashboard</h4>
+                        <div class="stat-row">
+                            <div class="stat-item">
+                                <div class="stat-value">847K</div>
+                                <div class="stat-label">Active Users</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">$2.4M</div>
+                                <div class="stat-label">Revenue</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">99.9%</div>
+                                <div class="stat-label">Uptime</div>
+                            </div>
+                        </div>
+                        <div class="progress-3d">
+                            <div class="progress-fill-3d" style="width: 78%;"></div>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-secondary); text-align: center;">Project Completion: 78%</p>
+                    </div>
+                    <div class="component-card">
+                        <h4>3D Form Elements</h4>
+                        <input type="text" class="input-3d" placeholder="Enter your name">
+                        <input type="email" class="input-3d" placeholder="Enter your email">
+                        <button class="btn btn-primary" style="width: 100%;">Submit Form</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">3D & Hyperrealism</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">High</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Product Showcase</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Performance</div>
+                        <div class="footer-value">GPU Intensive</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

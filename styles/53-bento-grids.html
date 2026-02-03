@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bento Grids | 便当网格设计</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #F5F5F7;
+            --white: #FFFFFF;
+            --black: #1D1D1F;
+            --gray: #86868B;
+            --primary: #6366F1;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg);
+            color: var(--black);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 24px;
+            background: rgba(245, 245, 247, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-back {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-back:hover {
+            text-decoration: underline;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        /* Bento Grid Hero */
+        .bento-hero {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 200px);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .bento-item {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .bento-item:hover {
+            transform: scale(1.02);
+        }
+
+        .bento-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .bento-item.wide {
+            grid-column: span 2;
+        }
+
+        .bento-item.tall {
+            grid-row: span 2;
+        }
+
+        .bento-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .bento-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .bento-desc {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .bento-item.primary {
+            background: linear-gradient(135deg, var(--primary), #818CF8);
+            color: var(--white);
+        }
+
+        .bento-item.primary .bento-desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .bento-item.dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .bento-item.dark .bento-desc {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .features-bento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+        }
+
+        .color-bento {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .color-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            border-radius: 16px;
+        }
+
+        .color-preview--bg { background: var(--bg); border: 1px solid rgba(0,0,0,0.1); }
+        .color-preview--white { background: var(--white); border: 1px solid rgba(0,0,0,0.1); }
+        .color-preview--black { background: var(--black); }
+        .color-preview--primary { background: var(--primary); }
+        .color-preview--secondary { background: var(--secondary); }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Components Section */
+        .components {
+            padding: 100px 0;
+        }
+
+        .components-bento {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .component-demo {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 32px;
+        }
+
+        .component-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+        }
+
+        /* Mini Bento */
+        .mini-bento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .mini-item {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .mini-item.accent {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            grid-column: span 2;
+        }
+
+        .mini-item .value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .mini-item .label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .mini-item.accent .label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #5558E3;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--black);
+        }
+
+        .btn-secondary:hover {
+            background: #E5E5E7;
+        }
+
+        /* Tags */
+        .bento-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .bento-tag {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--bg);
+            border-radius: 100px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .bento-tag:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .bento-tag.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+            background: var(--white);
+            border-radius: 24px;
+        }
+
+        .footer-brand {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 48px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .bento-hero {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-bento {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-bento {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .bento-hero {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .bento-item.large,
+            .bento-item.wide,
+            .bento-item.tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .features-bento {
+                grid-template-columns: 1fr;
+            }
+
+            .components-bento {
+                grid-template-columns: 1fr;
+            }
+
+            .color-bento {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-back">← Back</a>
+            <span class="nav-logo">Bento</span>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#colors" class="nav-link">Colors</a>
+                <a href="#components" class="nav-link">Components</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <span class="hero-badge">Apple-Inspired</span>
+                <h1><span>Bento</span> Grids<br>便当网格设计</h1>
+                <p class="hero-subtitle">受Apple和Linear启发的模块化网格布局，清晰的层次结构，优雅的卡片组合。</p>
+
+                <div class="bento-hero">
+                    <div class="bento-item large primary">
+                        <div>
+                            <div class="bento-icon">&#9881;</div>
+                            <h3 class="bento-title">Modular Design</h3>
+                        </div>
+                        <p class="bento-desc">灵活的模块化布局系统，可以自由组合不同大小的卡片，创造视觉层次。</p>
+                    </div>
+                    <div class="bento-item">
+                        <div class="bento-icon">&#128202;</div>
+                        <h3 class="bento-title">Data Cards</h3>
+                        <p class="bento-desc">展示关键数据</p>
+                    </div>
+                    <div class="bento-item dark">
+                        <div class="bento-icon">&#127912;</div>
+                        <h3 class="bento-title">Visual Balance</h3>
+                        <p class="bento-desc">和谐的视觉平衡</p>
+                    </div>
+                    <div class="bento-item wide">
+                        <div class="bento-icon">&#128640;</div>
+                        <h3 class="bento-title">Clean Hierarchy</h3>
+                        <p class="bento-desc">通过卡片大小和位置建立清晰的信息层次，引导用户视线。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Design Principles</span>
+                    <h2 class="section-title">Core Features</h2>
+                </div>
+                <div class="features-bento">
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9632;</div>
+                        <h3 class="feature-title">Modular Cards</h3>
+                        <p class="feature-desc">可组合的模块化卡片，灵活适应不同内容需求。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9638;</div>
+                        <h3 class="feature-title">Asymmetric Grid</h3>
+                        <p class="feature-desc">不对称网格布局，创造动态视觉效果。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9634;</div>
+                        <h3 class="feature-title">Apple-Style</h3>
+                        <p class="feature-desc">受Apple设计语言启发，简洁优雅。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9635;</div>
+                        <h3 class="feature-title">Dashboard Tiles</h3>
+                        <p class="feature-desc">适合仪表盘和数据展示的瓷砖式布局。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9636;</div>
+                        <h3 class="feature-title">Rounded Corners</h3>
+                        <p class="feature-desc">大圆角设计，柔和友好的视觉体验。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">&#9637;</div>
+                        <h3 class="feature-title">Subtle Shadows</h3>
+                        <p class="feature-desc">微妙的阴影层次，增加深度感。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Color Palette</span>
+                    <h2 class="section-title">Bento Colors</h2>
+                </div>
+                <div class="color-bento">
+                    <div class="color-card">
+                        <div class="color-preview color-preview--bg"></div>
+                        <div class="color-name">Background</div>
+                        <div class="color-hex">#F5F5F7</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--white"></div>
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--black"></div>
+                        <div class="color-name">Black</div>
+                        <div class="color-hex">#1D1D1F</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--primary"></div>
+                        <div class="color-name">Primary</div>
+                        <div class="color-hex">#6366F1</div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-preview color-preview--secondary"></div>
+                        <div class="color-name">Secondary</div>
+                        <div class="color-hex">#10B981</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">UI Components</span>
+                    <h2 class="section-title">Component Examples</h2>
+                </div>
+                <div class="components-bento">
+                    <div class="component-demo">
+                        <h4 class="component-title">Mini Bento</h4>
+                        <div class="mini-bento">
+                            <div class="mini-item">
+                                <div class="value">42K</div>
+                                <div class="label">Users</div>
+                            </div>
+                            <div class="mini-item accent">
+                                <div class="value">98%</div>
+                                <div class="label">Satisfaction</div>
+                            </div>
+                            <div class="mini-item">
+                                <div class="value">3.2s</div>
+                                <div class="label">Load Time</div>
+                            </div>
+                            <div class="mini-item">
+                                <div class="value">24/7</div>
+                                <div class="label">Support</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Tags</h4>
+                        <div class="bento-tags">
+                            <span class="bento-tag active">Modular</span>
+                            <span class="bento-tag">Apple-style</span>
+                            <span class="bento-tag">Clean</span>
+                            <span class="bento-tag">Cards</span>
+                            <span class="bento-tag">Grid</span>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Buttons</h4>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-secondary">Secondary</button>
+                        </div>
+                    </div>
+                    <div class="component-demo">
+                        <h4 class="component-title">Feature Card</h4>
+                        <div class="bento-item" style="margin: 0; background: var(--bg);">
+                            <div class="bento-icon">&#127775;</div>
+                            <div>
+                                <h3 class="bento-title">Premium Feature</h3>
+                                <p class="bento-desc">Unlock advanced capabilities with our premium tier.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Bento Grids</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Apple/Linear</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Category</div>
+                        <div class="footer-value">General</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Theme</div>
+                        <div class="footer-value">Light</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Style ID</div>
+                        <div class="footer-value">#53</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

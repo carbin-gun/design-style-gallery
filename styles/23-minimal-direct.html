@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal & Direct | Landing Page Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --grey: #6B7280;
+            --grey-light: #F3F4F6;
+            --accent: #2563EB;
+            --font: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation - Ultra minimal */
+        .nav {
+            padding: 32px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-back {
+            font-size: 14px;
+            color: var(--grey);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover {
+            color: var(--black);
+        }
+
+        .nav-logo {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-cta {
+            font-size: 14px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-cta:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero - Centered, text-focused */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--grey);
+            max-width: 480px;
+            margin: 0 auto 40px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #1F2937;
+        }
+
+        /* Simple Divider */
+        .divider {
+            width: 48px;
+            height: 1px;
+            background: var(--grey-light);
+            margin: 80px auto;
+        }
+
+        /* Features - Single column list */
+        .features {
+            padding: 40px 0;
+        }
+
+        .feature-item {
+            padding: 32px 0;
+            border-bottom: 1px solid var(--grey-light);
+        }
+
+        .feature-item:first-child {
+            border-top: 1px solid var(--grey-light);
+        }
+
+        .feature-number {
+            font-size: 12px;
+            color: var(--grey);
+            margin-bottom: 8px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-item p {
+            font-size: 15px;
+            color: var(--grey);
+        }
+
+        /* Quote/Testimonial - Minimal */
+        .quote {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .quote-text {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: var(--grey);
+        }
+
+        /* Color Palette */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--grey);
+            margin-bottom: 32px;
+        }
+
+        .color-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .color-swatch {
+            flex: 1;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+        }
+
+        .color-swatch.light {
+            border: 1px solid var(--grey-light);
+        }
+
+        .color-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .color-hex {
+            font-size: 11px;
+            opacity: 0.7;
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+        }
+
+        .component-section {
+            margin-bottom: 48px;
+        }
+
+        .component-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--grey);
+            margin-bottom: 16px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font);
+        }
+
+        .btn-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-dark:hover {
+            background: #1F2937;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 1px solid var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background: #1D4ED8;
+        }
+
+        .input-field {
+            width: 100%;
+            max-width: 320px;
+            padding: 14px 16px;
+            border: 1px solid var(--grey-light);
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: var(--font);
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--black);
+        }
+
+        /* Typography showcase */
+        .typography {
+            padding: 80px 0;
+            border-top: 1px solid var(--grey-light);
+        }
+
+        .type-sample {
+            margin-bottom: 32px;
+        }
+
+        .type-label {
+            font-size: 11px;
+            color: var(--grey);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .type-h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .type-h2 {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .type-body {
+            font-size: 16px;
+            color: var(--grey);
+        }
+
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            text-align: center;
+            border-top: 1px solid var(--grey-light);
+        }
+
+        .cta h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            color: var(--grey);
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--grey-light);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .footer-meta {
+            display: flex;
+            gap: 32px;
+            font-size: 13px;
+            color: var(--grey);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .color-row {
+                flex-wrap: wrap;
+            }
+
+            .color-swatch {
+                flex: 1 1 calc(50% - 8px);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-back">Back</a>
+            <span class="nav-logo">Minimal</span>
+            <a href="#cta" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Simple tools for focused work.</h1>
+                <p>No clutter. No distractions. Just a clean, minimal interface that lets you focus on what matters most.</p>
+                <a href="#cta" class="btn-primary">Start free trial</a>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature-item">
+                    <div class="feature-number">01</div>
+                    <h3>Intentional simplicity</h3>
+                    <p>Every element serves a purpose. We strip away the unnecessary to leave only what helps you work better.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-number">02</div>
+                    <h3>Fast by design</h3>
+                    <p>Minimal code means maximum speed. Pages load instantly because there's nothing extra to slow them down.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-number">03</div>
+                    <h3>Single focus</h3>
+                    <p>One page. One message. One action. Clear communication that drives results without overwhelming visitors.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-number">04</div>
+                    <h3>Universal accessibility</h3>
+                    <p>High contrast. Readable typography. Semantic markup. Works for everyone, everywhere.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="quote">
+            <div class="container">
+                <p class="quote-text">"The ability to simplify means to eliminate the unnecessary so that the necessary may speak."</p>
+                <p class="quote-author">Hans Hofmann</p>
+            </div>
+        </section>
+
+        <section class="colors">
+            <div class="container">
+                <h2 class="section-title">Color Palette</h2>
+                <div class="color-row">
+                    <div class="color-swatch" style="background: #0A0A0A; color: white;">
+                        <span class="color-name">Black</span>
+                        <span class="color-hex">#0A0A0A</span>
+                    </div>
+                    <div class="color-swatch light" style="background: #FFFFFF;">
+                        <span class="color-name">White</span>
+                        <span class="color-hex">#FFFFFF</span>
+                    </div>
+                    <div class="color-swatch" style="background: #6B7280; color: white;">
+                        <span class="color-name">Grey</span>
+                        <span class="color-hex">#6B7280</span>
+                    </div>
+                    <div class="color-swatch" style="background: #2563EB; color: white;">
+                        <span class="color-name">Accent</span>
+                        <span class="color-hex">#2563EB</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="typography">
+            <div class="container">
+                <h2 class="section-title">Typography</h2>
+                <div class="type-sample">
+                    <div class="type-label">Heading 1 - 48px Bold</div>
+                    <div class="type-h1">Simple & Direct</div>
+                </div>
+                <div class="type-sample">
+                    <div class="type-label">Heading 2 - 32px Semibold</div>
+                    <div class="type-h2">Clear communication</div>
+                </div>
+                <div class="type-sample">
+                    <div class="type-label">Body - 16px Regular</div>
+                    <div class="type-body">Body text should be easy to read with comfortable line height and appropriate contrast. Keep paragraphs short and focused.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components">
+            <div class="container">
+                <h2 class="section-title">Components</h2>
+
+                <div class="component-section">
+                    <div class="component-label">Buttons</div>
+                    <div class="btn-row">
+                        <button class="btn btn-dark">Primary</button>
+                        <button class="btn btn-outline">Outline</button>
+                        <button class="btn btn-accent">Accent</button>
+                    </div>
+                </div>
+
+                <div class="component-section">
+                    <div class="component-label">Input</div>
+                    <input type="text" class="input-field" placeholder="Enter your email">
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" id="cta">
+            <div class="container">
+                <h2>Ready to simplify?</h2>
+                <p>Start your free trial today. No credit card required.</p>
+                <a href="#" class="btn-primary">Get started free</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">Minimal & Direct</div>
+                <div class="footer-meta">
+                    <span>Landing Page</span>
+                    <span>WCAG AAA</span>
+                    <span>High Performance</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

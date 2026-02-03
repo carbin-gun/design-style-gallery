@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neubrutalism | 新野兽派风格</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --yellow: #FFEB3B;
+            --red: #FF5252;
+            --blue: #2196F3;
+            --black: #000000;
+            --white: #FFFFFF;
+            --lavender: #CBA6F7;
+            --mint: #76E0C2;
+            --shadow: 4px 4px 0 var(--black);
+            --shadow-lg: 6px 6px 0 var(--black);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--yellow);
+            color: var(--black);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Neubrutalist Box */
+        .neu-box {
+            background: var(--white);
+            border: 3px solid var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .neu-box-lg {
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Navigation */
+        .nav {
+            padding: 24px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--mint);
+            border: 3px solid var(--black);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 600;
+            transition: all 0.1s;
+        }
+
+        .nav-back:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-link {
+            padding: 12px 20px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.1s;
+        }
+
+        .nav-link:hover {
+            background: var(--lavender);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content {
+            padding: 48px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--red);
+            border: 3px solid var(--black);
+            box-shadow: var(--shadow);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .hero-block {
+            aspect-ratio: 1;
+            border: 3px solid var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-block--red { background: var(--red); }
+        .hero-block--blue { background: var(--blue); }
+        .hero-block--lavender { background: var(--lavender); }
+        .hero-block--mint { background: var(--mint); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 3px solid var(--black);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.1s;
+        }
+
+        .btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background: var(--red);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary:hover {
+            background: var(--lavender);
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+        }
+
+        .feature-card:nth-child(1) { background: var(--red); color: var(--white); }
+        .feature-card:nth-child(2) { background: var(--blue); color: var(--white); }
+        .feature-card:nth-child(3) { background: var(--mint); }
+        .feature-card:nth-child(4) { background: var(--lavender); }
+        .feature-card:nth-child(5) { background: var(--white); }
+        .feature-card:nth-child(6) { background: var(--yellow); }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border: 3px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card:nth-child(1) .feature-icon,
+        .feature-card:nth-child(2) .feature-icon {
+            background: var(--yellow);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .component-panel {
+            padding: 32px;
+        }
+
+        .component-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--black);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 3px solid var(--black);
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: inset 4px 4px 0 var(--black);
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-box {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--black);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .checkbox-item.checked .checkbox-box {
+            background: var(--mint);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-item {
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .card-item:nth-child(1) { background: var(--mint); }
+        .card-item:nth-child(2) { background: var(--lavender); }
+        .card-item:nth-child(3) { background: var(--red); color: var(--white); }
+
+        .card-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .card-item:nth-child(3) .card-avatar {
+            background: var(--white);
+        }
+
+        .card-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .card-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Colors */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .color-swatch {
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        .color-swatch--yellow { background: var(--yellow); }
+        .color-swatch--red { background: var(--red); color: var(--white); }
+        .color-swatch--blue { background: var(--blue); color: var(--white); }
+        .color-swatch--black { background: var(--black); color: var(--white); }
+        .color-swatch--lavender { background: var(--lavender); }
+        .color-swatch--mint { background: var(--mint); }
+
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--black);
+            margin: 0 auto 16px;
+            background: inherit;
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        /* Marquee */
+        .marquee {
+            background: var(--black);
+            color: var(--white);
+            padding: 16px 0;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 48px;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .marquee-item span {
+            color: var(--yellow);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+        }
+
+        .footer-brand {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-item {
+            text-align: center;
+            padding: 16px 24px;
+            background: var(--mint);
+            border: 3px solid var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .footer-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner neu-box">
+                <a href="../index.html" class="nav-back">← Back</a>
+                <span class="nav-logo">NEUBRUTALISM</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#components" class="nav-link">Components</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span class="marquee-item"><span>✦</span> NEUBRUTALISM</span>
+            <span class="marquee-item">BOLD BORDERS</span>
+            <span class="marquee-item"><span>✦</span> 新野兽派风格</span>
+            <span class="marquee-item">HARD SHADOWS</span>
+            <span class="marquee-item"><span>✦</span> GEN Z APPROVED</span>
+            <span class="marquee-item">NO GRADIENTS</span>
+            <span class="marquee-item"><span>✦</span> NEUBRUTALISM</span>
+            <span class="marquee-item">BOLD BORDERS</span>
+            <span class="marquee-item"><span>✦</span> 新野兽派风格</span>
+            <span class="marquee-item">HARD SHADOWS</span>
+            <span class="marquee-item"><span>✦</span> GEN Z APPROVED</span>
+            <span class="marquee-item">NO GRADIENTS</span>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content neu-box neu-box-lg">
+                        <span class="hero-badge">2020s Modern</span>
+                        <h1>
+                            <span>Neubrutalism</span>
+                            <span>新野兽派风格</span>
+                        </h1>
+                        <p>结合野兽派的原始美学与现代设计感性，使用大胆的边框、硬阴影和鲜艳的色彩，深受Z世代喜爱的设计风格。</p>
+                        <div class="hero-buttons">
+                            <a href="#features" class="btn btn-primary">Explore →</a>
+                            <a href="#components" class="btn btn-secondary">Components</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-block hero-block--red"></div>
+                        <div class="hero-block hero-block--blue"></div>
+                        <div class="hero-block hero-block--lavender"></div>
+                        <div class="hero-block hero-block--mint"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Core Principles / 核心原则</h2>
+                    <p class="section-subtitle">Bold, playful, and unapologetically raw design language</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card neu-box">
+                        <div class="feature-icon">▪️</div>
+                        <h3 class="feature-title">Bold Borders</h3>
+                        <p class="feature-desc">使用3-4px的粗黑边框，定义清晰的元素边界，创造强烈的视觉对比。</p>
+                    </div>
+                    <div class="feature-card neu-box">
+                        <div class="feature-icon">◼️</div>
+                        <h3 class="feature-title">Hard Shadows</h3>
+                        <p class="feature-desc">45度方向的硬阴影（4px 4px 0 black），无模糊，创造独特的平面立体感。</p>
+                    </div>
+                    <div class="feature-card neu-box">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">Flat Colors</h3>
+                        <p class="feature-desc">纯色填充，无渐变。黄色、红色、蓝色等鲜艳原色为主色调。</p>
+                    </div>
+                    <div class="feature-card neu-box">
+                        <div class="feature-icon">📐</div>
+                        <h3 class="feature-title">No Gradients</h3>
+                        <p class="feature-desc">完全避免渐变效果，保持设计的纯粹与直接。</p>
+                    </div>
+                    <div class="feature-card neu-box">
+                        <div class="feature-icon">✨</div>
+                        <h3 class="feature-title">Playful</h3>
+                        <p class="feature-desc">活泼有趣的视觉语言，适合创意品牌和年轻受众。</p>
+                    </div>
+                    <div class="feature-card neu-box">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">High Performance</h3>
+                        <p class="feature-desc">纯CSS实现，无需复杂动画或特效，加载速度极快。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Components / 组件</h2>
+                    <p class="section-subtitle">Clean, bold UI elements with distinctive character</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-panel neu-box">
+                        <h3 class="component-title">Form Elements</h3>
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-input" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="hello@example.com">
+                        </div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item checked">
+                                <span class="checkbox-box">✓</span>
+                                <span>Subscribe to newsletter</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <span class="checkbox-box"></span>
+                                <span>Accept terms & conditions</span>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">Submit →</button>
+                    </div>
+                    <div class="component-panel neu-box">
+                        <h3 class="component-title">User Cards</h3>
+                        <div class="card-grid">
+                            <div class="card-item neu-box">
+                                <div class="card-avatar">👩</div>
+                                <div class="card-info">
+                                    <h4>Sarah Chen</h4>
+                                    <p>Product Designer</p>
+                                </div>
+                            </div>
+                            <div class="card-item neu-box">
+                                <div class="card-avatar">👨</div>
+                                <div class="card-info">
+                                    <h4>Mike Johnson</h4>
+                                    <p>Frontend Developer</p>
+                                </div>
+                            </div>
+                            <div class="card-item neu-box">
+                                <div class="card-avatar">🧑</div>
+                                <div class="card-info">
+                                    <h4>Alex Kim</h4>
+                                    <p>UX Researcher</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Color Palette / 色彩方案</h2>
+                    <p class="section-subtitle">Bright, bold, and playful color combinations</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-swatch color-swatch--yellow neu-box">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Pop Yellow</div>
+                        <div class="color-hex">#FFEB3B</div>
+                    </div>
+                    <div class="color-swatch color-swatch--red neu-box">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Bright Red</div>
+                        <div class="color-hex">#FF5252</div>
+                    </div>
+                    <div class="color-swatch color-swatch--blue neu-box">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Electric Blue</div>
+                        <div class="color-hex">#2196F3</div>
+                    </div>
+                    <div class="color-swatch color-swatch--black neu-box">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Pure Black</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                    <div class="color-swatch color-swatch--lavender neu-box">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Lavender</div>
+                        <div class="color-hex">#CBA6F7</div>
+                    </div>
+                    <div class="color-swatch color-swatch--mint neu-box">
+                        <div class="color-preview"></div>
+                        <div class="color-name">Mint</div>
+                        <div class="color-hex">#76E0C2</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner neu-box">
+                <div class="footer-brand">NEUBRUTALISM</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">2020s Modern</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Low</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Gen Z Brands</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Accessibility</div>
+                        <div class="footer-value">WCAG AAA ✓</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

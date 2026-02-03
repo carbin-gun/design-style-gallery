@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K Aesthetic | 千禧年美学</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --hot-pink: #FF69B4;
+            --cyan: #00FFFF;
+            --silver: #C0C0C0;
+            --purple: #9400D3;
+            --white: #FFFFFF;
+            --chrome-gradient: linear-gradient(180deg, #E8E8E8 0%, #C0C0C0 30%, #FFFFFF 50%, #C0C0C0 70%, #A0A0A0 100%);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--hot-pink) 0%, var(--cyan) 50%, var(--purple) 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Chrome/Metallic Effect */
+        .chrome {
+            background: var(--chrome-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+        }
+
+        .chrome-box {
+            background: var(--chrome-gradient);
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2), inset 0 2px 0 rgba(255,255,255,0.8);
+        }
+
+        /* Glossy Button */
+        .glossy-btn {
+            background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%),
+                        linear-gradient(135deg, var(--hot-pink), var(--purple));
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 25px;
+            padding: 14px 32px;
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(255,105,180,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .glossy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255,105,180,0.6), inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .glossy-btn--cyan {
+            background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%),
+                        linear-gradient(135deg, var(--cyan), #00CED1);
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+
+        /* Navigation */
+        .nav {
+            padding: 20px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .nav-logo {
+            font-family: 'Audiowide', cursive;
+            font-size: 24px;
+            background: var(--chrome-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(1px 1px 0 #999);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-orb {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            border-radius: 50%;
+            background: var(--chrome-gradient);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset -20px -20px 60px rgba(0,0,0,0.2), inset 20px 20px 60px rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-orb::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--hot-pink), var(--cyan));
+            opacity: 0.8;
+        }
+
+        .hero-orb::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 40px;
+            height: 20px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            transform: rotate(-30deg);
+        }
+
+        .hero h1 {
+            font-family: 'Audiowide', cursive;
+            font-size: 56px;
+            margin-bottom: 16px;
+            text-shadow: 3px 3px 0 var(--silver), 6px 6px 0 rgba(0,0,0,0.1);
+        }
+
+        .hero h1 span {
+            display: block;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: rgba(0,0,0,0.7);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-family: 'Audiowide', cursive;
+            font-size: 36px;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 0 var(--silver);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: rgba(0,0,0,0.6);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--hot-pink), var(--cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 8px 25px rgba(255,105,180,0.4);
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: rgba(0,0,0,0.6);
+            line-height: 1.6;
+        }
+
+        /* Bubble Shapes */
+        .bubble-section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .bubble-1 { width: 100px; height: 100px; top: 10%; left: 5%; }
+        .bubble-2 { width: 60px; height: 60px; top: 30%; right: 10%; }
+        .bubble-3 { width: 80px; height: 80px; bottom: 20%; left: 15%; }
+
+        /* Colors */
+        .colors {
+            padding: 80px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .color-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .color-orb {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.2), inset 10px 10px 30px rgba(255,255,255,0.5), 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .color-orb--pink { background: var(--hot-pink); }
+        .color-orb--cyan { background: var(--cyan); }
+        .color-orb--silver { background: var(--chrome-gradient); }
+        .color-orb--purple { background: var(--purple); }
+        .color-orb--white { background: var(--white); }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            color: rgba(0,0,0,0.5);
+            font-family: monospace;
+        }
+
+        /* Components */
+        .components {
+            padding: 80px 0;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .component-panel {
+            padding: 32px;
+        }
+
+        .component-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 25px;
+            font-size: 14px;
+            font-family: inherit;
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--hot-pink);
+            background: rgba(255,255,255,0.5);
+        }
+
+        /* Tags */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--hot-pink), var(--purple));
+            color: white;
+            box-shadow: 0 4px 10px rgba(255,105,180,0.3);
+        }
+
+        .tag--cyan {
+            background: linear-gradient(135deg, var(--cyan), #00CED1);
+            color: #333;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+        }
+
+        .footer-brand {
+            font-family: 'Audiowide', cursive;
+            font-size: 20px;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-item {
+            text-align: center;
+        }
+
+        .footer-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 4px;
+        }
+
+        .footer-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero h1 span {
+                font-size: 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .footer-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner chrome-box">
+                <a href="../index.html" class="nav-back">← Back</a>
+                <span class="nav-logo">Y2K</span>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#components" class="nav-link">Components</a>
+                    <a href="#colors" class="nav-link">Colors</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-orb"></div>
+                <h1>
+                    Y2K Aesthetic
+                    <span>千禧年美学</span>
+                </h1>
+                <p>霓虹粉色、金属光泽、泡泡元素、未来复古。千禧年设计风格的数字复兴，融合科技感与怀旧情怀。</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="glossy-btn">Explore Y2K →</a>
+                    <a href="#components" class="glossy-btn glossy-btn--cyan">View Components</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features bubble-section" id="features">
+            <div class="bubble bubble-1"></div>
+            <div class="bubble bubble-2"></div>
+            <div class="bubble bubble-3"></div>
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Core Elements / 核心元素</h2>
+                    <p class="section-subtitle">Defining characteristics of Y2K design</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card chrome-box">
+                        <div class="feature-icon">💿</div>
+                        <h3 class="feature-title">Chrome & Metallic</h3>
+                        <p class="feature-desc">金属质感的渐变效果，模拟CD光盘的反射光泽。</p>
+                    </div>
+                    <div class="feature-card chrome-box">
+                        <div class="feature-icon">🫧</div>
+                        <h3 class="feature-title">Bubble Shapes</h3>
+                        <p class="feature-desc">圆润的泡泡形状和光泽球体，营造梦幻未来感。</p>
+                    </div>
+                    <div class="feature-card chrome-box">
+                        <div class="feature-icon">💗</div>
+                        <h3 class="feature-title">Hot Pink</h3>
+                        <p class="feature-desc">标志性的霓虹粉色，搭配青色创造强烈对比。</p>
+                    </div>
+                    <div class="feature-card chrome-box">
+                        <div class="feature-icon">✨</div>
+                        <h3 class="feature-title">Glossy Effects</h3>
+                        <p class="feature-desc">光泽按钮和高光效果，模拟塑料质感的界面元素。</p>
+                    </div>
+                    <div class="feature-card chrome-box">
+                        <div class="feature-icon">🔮</div>
+                        <h3 class="feature-title">Iridescent</h3>
+                        <p class="feature-desc">虹彩渐变和油膜效果，增添神秘的科幻氛围。</p>
+                    </div>
+                    <div class="feature-card chrome-box">
+                        <div class="feature-icon">🚀</div>
+                        <h3 class="feature-title">Retro-Futurism</h3>
+                        <p class="feature-desc">2000年代对未来的想象，现在看来既怀旧又前卫。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="components" id="components">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Components / 组件</h2>
+                    <p class="section-subtitle">Glossy, bubbly UI elements</p>
+                </div>
+                <div class="component-grid">
+                    <div class="component-panel chrome-box">
+                        <h3 class="component-title">Form Elements</h3>
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-input" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="hello@y2k.com">
+                        </div>
+                        <button class="glossy-btn" style="width: 100%; margin-top: 8px;">Submit ✨</button>
+                    </div>
+                    <div class="component-panel chrome-box">
+                        <h3 class="component-title">Tags & Badges</h3>
+                        <p style="font-size: 14px; margin-bottom: 12px;">Popular categories:</p>
+                        <div class="tag-group">
+                            <span class="tag">Fashion</span>
+                            <span class="tag tag--cyan">Music</span>
+                            <span class="tag">Tech</span>
+                            <span class="tag tag--cyan">Gaming</span>
+                            <span class="tag">Art</span>
+                        </div>
+                        <div style="margin-top: 24px;">
+                            <p style="font-size: 14px; margin-bottom: 12px;">Button styles:</p>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button class="glossy-btn" style="padding: 10px 20px; font-size: 12px;">Primary</button>
+                                <button class="glossy-btn glossy-btn--cyan" style="padding: 10px 20px; font-size: 12px;">Secondary</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors" id="colors">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Color Palette / 色彩方案</h2>
+                    <p class="section-subtitle">Vibrant, metallic, and dreamy</p>
+                </div>
+                <div class="color-grid">
+                    <div class="color-card chrome-box">
+                        <div class="color-orb color-orb--pink"></div>
+                        <div class="color-name">Hot Pink</div>
+                        <div class="color-hex">#FF69B4</div>
+                    </div>
+                    <div class="color-card chrome-box">
+                        <div class="color-orb color-orb--cyan"></div>
+                        <div class="color-name">Cyan</div>
+                        <div class="color-hex">#00FFFF</div>
+                    </div>
+                    <div class="color-card chrome-box">
+                        <div class="color-orb color-orb--silver"></div>
+                        <div class="color-name">Silver</div>
+                        <div class="color-hex">#C0C0C0</div>
+                    </div>
+                    <div class="color-card chrome-box">
+                        <div class="color-orb color-orb--purple"></div>
+                        <div class="color-name">Purple</div>
+                        <div class="color-hex">#9400D3</div>
+                    </div>
+                    <div class="color-card chrome-box">
+                        <div class="color-orb color-orb--white"></div>
+                        <div class="color-name">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner chrome-box">
+                <div class="footer-brand">Y2K Aesthetic</div>
+                <div class="footer-info">
+                    <div class="footer-item">
+                        <div class="footer-label">Era</div>
+                        <div class="footer-value">Y2K 2000s</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Complexity</div>
+                        <div class="footer-value">Medium</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Best For</div>
+                        <div class="footer-value">Fashion, Youth Brands</div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label">Accessibility</div>
+                        <div class="footer-value">⚠️ Check Contrast</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

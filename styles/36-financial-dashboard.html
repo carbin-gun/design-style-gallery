@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard - Style 36</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0D0D0F;
+            --bg-secondary: #141416;
+            --bg-tertiary: #1A1A1D;
+            --bg-elevated: #222225;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A1A1AA;
+            --text-muted: #71717A;
+            --border-color: #27272A;
+            --accent-gold: #D4AF37;
+            --accent-gold-dim: rgba(212, 175, 55, 0.15);
+            --profit: #22C55E;
+            --profit-dim: rgba(34, 197, 94, 0.15);
+            --loss: #EF4444;
+            --loss-dim: rgba(239, 68, 68, 0.15);
+            --chart-up: #22C55E;
+            --chart-down: #EF4444;
+            --chart-neutral: #3B82F6;
+            --divider: #27272A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.875rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--bg-primary);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--accent-gold);
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .nav-item {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-item.active {
+            color: var(--accent-gold);
+            background: var(--accent-gold-dim);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .market-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            background: var(--profit-dim);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: var(--profit);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--profit);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            color: var(--bg-primary);
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1.5rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Top Stats */
+        .top-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card.highlight {
+            border-color: var(--accent-gold);
+            background: linear-gradient(135deg, var(--bg-secondary), rgba(212, 175, 55, 0.05));
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon.gold {
+            background: var(--accent-gold-dim);
+            color: var(--accent-gold);
+        }
+
+        .stat-icon.profit {
+            background: var(--profit-dim);
+            color: var(--profit);
+        }
+
+        .stat-icon.loss {
+            background: var(--loss-dim);
+            color: var(--loss);
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: 'IBM Plex Mono', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8rem;
+        }
+
+        .stat-change.positive {
+            color: var(--profit);
+        }
+
+        .stat-change.negative {
+            color: var(--loss);
+        }
+
+        .change-period {
+            color: var(--text-muted);
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        .time-btn {
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .time-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .time-btn.active {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        /* Revenue Chart */
+        .revenue-chart {
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-value-section {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .chart-metric {
+            text-align: left;
+        }
+
+        .chart-metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .chart-metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .chart-metric-value.profit {
+            color: var(--profit);
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+        }
+
+        .legend-dot.revenue {
+            background: var(--accent-gold);
+        }
+
+        .legend-dot.expenses {
+            background: var(--chart-neutral);
+        }
+
+        .legend-dot.profit {
+            background: var(--profit);
+        }
+
+        .chart-area {
+            height: 200px;
+            position: relative;
+        }
+
+        .chart-grid {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 0;
+            bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-line {
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .grid-label {
+            position: absolute;
+            left: -50px;
+            top: -8px;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .chart-bars {
+            position: absolute;
+            top: 10px;
+            left: 60px;
+            right: 10px;
+            bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            flex: 1;
+        }
+
+        .bars {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+            height: 150px;
+        }
+
+        .bar {
+            width: 12px;
+            border-radius: 2px 2px 0 0;
+            transition: all 0.3s;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+        }
+
+        .bar.revenue {
+            background: linear-gradient(180deg, var(--accent-gold), rgba(212, 175, 55, 0.5));
+        }
+
+        .bar.expenses {
+            background: linear-gradient(180deg, var(--chart-neutral), rgba(59, 130, 246, 0.5));
+        }
+
+        .bar-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .chart-x-axis {
+            position: absolute;
+            bottom: 0;
+            left: 60px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .x-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-align: center;
+            flex: 1;
+        }
+
+        /* P&L Table */
+        .pnl-table {
+            width: 100%;
+        }
+
+        .pnl-row {
+            display: grid;
+            grid-template-columns: 1fr 100px 80px;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+        }
+
+        .pnl-row:last-child {
+            border-bottom: none;
+        }
+
+        .pnl-row.header {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pnl-row.total {
+            background: var(--bg-tertiary);
+            margin: 0 -1.25rem;
+            padding: 0.75rem 1.25rem;
+            font-weight: 600;
+        }
+
+        .pnl-row.profit-row {
+            background: var(--profit-dim);
+            margin: 0 -1.25rem;
+            padding: 0.75rem 1.25rem;
+        }
+
+        .pnl-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .pnl-row.total .pnl-label,
+        .pnl-row.profit-row .pnl-label {
+            color: var(--text-primary);
+        }
+
+        .pnl-value {
+            text-align: right;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        .pnl-row.profit-row .pnl-value {
+            color: var(--profit);
+            font-weight: 600;
+        }
+
+        .pnl-change {
+            text-align: right;
+            font-size: 0.75rem;
+        }
+
+        .pnl-change.positive {
+            color: var(--profit);
+        }
+
+        .pnl-change.negative {
+            color: var(--loss);
+        }
+
+        /* Financial Ratios */
+        .ratios-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .ratio-card {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .ratio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .ratio-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .ratio-status {
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .ratio-status.good {
+            background: var(--profit-dim);
+            color: var(--profit);
+        }
+
+        .ratio-status.warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #F59E0B;
+        }
+
+        .ratio-status.bad {
+            background: var(--loss-dim);
+            color: var(--loss);
+        }
+
+        .ratio-value {
+            font-size: 1.375rem;
+            font-weight: 700;
+            font-family: 'IBM Plex Mono', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        .ratio-bar {
+            height: 4px;
+            background: var(--bg-elevated);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .ratio-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .ratio-bar-fill.good {
+            background: var(--profit);
+        }
+
+        .ratio-bar-fill.warning {
+            background: #F59E0B;
+        }
+
+        .ratio-bar-fill.bad {
+            background: var(--loss);
+        }
+
+        .ratio-benchmark {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Bottom Section */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Cash Flow */
+        .cashflow-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cashflow-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cashflow-label {
+            width: 100px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .cashflow-bar-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cashflow-bar {
+            flex: 1;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cashflow-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: width 0.5s ease;
+        }
+
+        .cashflow-bar-fill.inflow {
+            background: linear-gradient(90deg, var(--profit), rgba(34, 197, 94, 0.7));
+        }
+
+        .cashflow-bar-fill.outflow {
+            background: linear-gradient(90deg, var(--loss), rgba(239, 68, 68, 0.7));
+        }
+
+        .cashflow-value {
+            width: 80px;
+            text-align: right;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .cashflow-value.positive {
+            color: var(--profit);
+        }
+
+        .cashflow-value.negative {
+            color: var(--loss);
+        }
+
+        .cashflow-summary {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cashflow-total {
+            text-align: center;
+        }
+
+        .cashflow-total-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .cashflow-total-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .cashflow-total-value.positive {
+            color: var(--profit);
+        }
+
+        /* Accounts */
+        .accounts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .account-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .account-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .account-icon.bank {
+            background: var(--accent-gold-dim);
+        }
+
+        .account-icon.card {
+            background: var(--chart-neutral);
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .account-icon.investment {
+            background: var(--profit-dim);
+        }
+
+        .account-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.125rem;
+        }
+
+        .account-type {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .account-balance {
+            text-align: right;
+        }
+
+        .account-balance-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+
+        .account-balance-change {
+            font-size: 0.7rem;
+        }
+
+        .account-balance-change.positive {
+            color: var(--profit);
+        }
+
+        .account-balance-change.negative {
+            color: var(--loss);
+        }
+
+        /* Expenses Breakdown */
+        .expenses-donut {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .donut-chart {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .donut-chart svg {
+            transform: rotate(-90deg);
+        }
+
+        .donut-segment {
+            fill: none;
+            stroke-width: 20;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-total {
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .donut-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .expense-legend {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .expense-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .expense-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        .expense-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
+        }
+
+        /* Style Section */
+        .style-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .style-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .style-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-label-text {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .color-value {
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .component-demo {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .component-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 1200px) {
+            .top-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .top-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .ratios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">FD</div>
+            <span class="logo-text">FinanceDash</span>
+        </div>
+
+        <nav class="nav">
+            <a href="#" class="nav-item active">Overview</a>
+            <a href="#" class="nav-item">Income</a>
+            <a href="#" class="nav-item">Expenses</a>
+            <a href="#" class="nav-item">Cash Flow</a>
+            <a href="#" class="nav-item">Reports</a>
+        </nav>
+
+        <div class="header-right">
+            <div class="market-status">
+                <span class="status-dot"></span>
+                Markets Open
+            </div>
+            <button class="btn btn-gold">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Export Report
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Top Stats -->
+        <div class="top-stats">
+            <div class="stat-card highlight">
+                <div class="stat-header">
+                    <span class="stat-label">Total Revenue</span>
+                    <div class="stat-icon gold">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-value">$2,847,520</div>
+                <div class="stat-change positive">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                    </svg>
+                    +12.4%
+                    <span class="change-period">vs last quarter</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Total Expenses</span>
+                    <div class="stat-icon loss">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-value">$1,923,840</div>
+                <div class="stat-change negative">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                    </svg>
+                    +8.2%
+                    <span class="change-period">vs last quarter</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Net Profit</span>
+                    <div class="stat-icon profit">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-value" style="color: var(--profit);">$923,680</div>
+                <div class="stat-change positive">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                    </svg>
+                    +18.7%
+                    <span class="change-period">vs last quarter</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Profit Margin</span>
+                    <div class="stat-icon profit">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="stat-value">32.4%</div>
+                <div class="stat-change positive">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                    </svg>
+                    +4.2%
+                    <span class="change-period">vs last quarter</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Revenue vs Expenses</span>
+                    <div class="card-actions">
+                        <button class="time-btn">1M</button>
+                        <button class="time-btn">3M</button>
+                        <button class="time-btn active">6M</button>
+                        <button class="time-btn">1Y</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="revenue-chart">
+                        <div class="chart-header">
+                            <div class="chart-value-section">
+                                <div class="chart-metric">
+                                    <div class="chart-metric-label">Total Revenue</div>
+                                    <div class="chart-metric-value">$2.84M</div>
+                                </div>
+                                <div class="chart-metric">
+                                    <div class="chart-metric-label">Total Expenses</div>
+                                    <div class="chart-metric-value">$1.92M</div>
+                                </div>
+                                <div class="chart-metric">
+                                    <div class="chart-metric-label">Net Profit</div>
+                                    <div class="chart-metric-value profit">$923K</div>
+                                </div>
+                            </div>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <div class="legend-dot revenue"></div>
+                                    <span>Revenue</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot expenses"></div>
+                                    <span>Expenses</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-area">
+                            <div class="chart-grid">
+                                <div class="grid-line"><span class="grid-label">$600K</span></div>
+                                <div class="grid-line"><span class="grid-label">$450K</span></div>
+                                <div class="grid-line"><span class="grid-label">$300K</span></div>
+                                <div class="grid-line"><span class="grid-label">$150K</span></div>
+                                <div class="grid-line"><span class="grid-label">$0</span></div>
+                            </div>
+                            <div class="chart-bars">
+                                <div class="bar-group">
+                                    <div class="bars">
+                                        <div class="bar revenue" style="height: 65%;"></div>
+                                        <div class="bar expenses" style="height: 48%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bars">
+                                        <div class="bar revenue" style="height: 72%;"></div>
+                                        <div class="bar expenses" style="height: 52%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bars">
+                                        <div class="bar revenue" style="height: 68%;"></div>
+                                        <div class="bar expenses" style="height: 50%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bars">
+                                        <div class="bar revenue" style="height: 78%;"></div>
+                                        <div class="bar expenses" style="height: 54%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bars">
+                                        <div class="bar revenue" style="height: 85%;"></div>
+                                        <div class="bar expenses" style="height: 58%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bars">
+                                        <div class="bar revenue" style="height: 92%;"></div>
+                                        <div class="bar expenses" style="height: 62%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-x-axis">
+                                <span class="x-label">Jul</span>
+                                <span class="x-label">Aug</span>
+                                <span class="x-label">Sep</span>
+                                <span class="x-label">Oct</span>
+                                <span class="x-label">Nov</span>
+                                <span class="x-label">Dec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Profit & Loss Statement</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Q4 2024</span>
+                </div>
+                <div class="card-body">
+                    <div class="pnl-table">
+                        <div class="pnl-row header">
+                            <span>Category</span>
+                            <span style="text-align: right;">Amount</span>
+                            <span style="text-align: right;">Change</span>
+                        </div>
+                        <div class="pnl-row">
+                            <span class="pnl-label">Product Sales</span>
+                            <span class="pnl-value">$1,842,320</span>
+                            <span class="pnl-change positive">+15.2%</span>
+                        </div>
+                        <div class="pnl-row">
+                            <span class="pnl-label">Service Revenue</span>
+                            <span class="pnl-value">$724,480</span>
+                            <span class="pnl-change positive">+8.4%</span>
+                        </div>
+                        <div class="pnl-row">
+                            <span class="pnl-label">Other Income</span>
+                            <span class="pnl-value">$280,720</span>
+                            <span class="pnl-change positive">+4.1%</span>
+                        </div>
+                        <div class="pnl-row total">
+                            <span class="pnl-label">Total Revenue</span>
+                            <span class="pnl-value">$2,847,520</span>
+                            <span class="pnl-change positive">+12.4%</span>
+                        </div>
+                        <div class="pnl-row">
+                            <span class="pnl-label">Cost of Goods</span>
+                            <span class="pnl-value">$1,128,640</span>
+                            <span class="pnl-change negative">+9.8%</span>
+                        </div>
+                        <div class="pnl-row">
+                            <span class="pnl-label">Operating Expenses</span>
+                            <span class="pnl-value">$542,280</span>
+                            <span class="pnl-change negative">+5.2%</span>
+                        </div>
+                        <div class="pnl-row">
+                            <span class="pnl-label">Admin & General</span>
+                            <span class="pnl-value">$252,920</span>
+                            <span class="pnl-change negative">+6.8%</span>
+                        </div>
+                        <div class="pnl-row profit-row">
+                            <span class="pnl-label">Net Profit</span>
+                            <span class="pnl-value">$923,680</span>
+                            <span class="pnl-change positive">+18.7%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Ratios -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+                <span class="card-title">Financial Ratios</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Industry benchmark comparison</span>
+            </div>
+            <div class="card-body">
+                <div class="ratios-grid">
+                    <div class="ratio-card">
+                        <div class="ratio-header">
+                            <span class="ratio-label">Current Ratio</span>
+                            <span class="ratio-status good">Healthy</span>
+                        </div>
+                        <div class="ratio-value">2.4</div>
+                        <div class="ratio-bar">
+                            <div class="ratio-bar-fill good" style="width: 80%;"></div>
+                        </div>
+                        <div class="ratio-benchmark">Industry avg: 1.8</div>
+                    </div>
+                    <div class="ratio-card">
+                        <div class="ratio-header">
+                            <span class="ratio-label">Quick Ratio</span>
+                            <span class="ratio-status good">Healthy</span>
+                        </div>
+                        <div class="ratio-value">1.8</div>
+                        <div class="ratio-bar">
+                            <div class="ratio-bar-fill good" style="width: 72%;"></div>
+                        </div>
+                        <div class="ratio-benchmark">Industry avg: 1.2</div>
+                    </div>
+                    <div class="ratio-card">
+                        <div class="ratio-header">
+                            <span class="ratio-label">Debt to Equity</span>
+                            <span class="ratio-status warning">Monitor</span>
+                        </div>
+                        <div class="ratio-value">0.65</div>
+                        <div class="ratio-bar">
+                            <div class="ratio-bar-fill warning" style="width: 65%;"></div>
+                        </div>
+                        <div class="ratio-benchmark">Industry avg: 0.5</div>
+                    </div>
+                    <div class="ratio-card">
+                        <div class="ratio-header">
+                            <span class="ratio-label">Return on Equity</span>
+                            <span class="ratio-status good">Excellent</span>
+                        </div>
+                        <div class="ratio-value">24.8%</div>
+                        <div class="ratio-bar">
+                            <div class="ratio-bar-fill good" style="width: 88%;"></div>
+                        </div>
+                        <div class="ratio-benchmark">Industry avg: 15%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Grid -->
+        <div class="bottom-grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Cash Flow</span>
+                </div>
+                <div class="card-body">
+                    <div class="cashflow-chart">
+                        <div class="cashflow-item">
+                            <span class="cashflow-label">Operating</span>
+                            <div class="cashflow-bar-wrapper">
+                                <div class="cashflow-bar">
+                                    <div class="cashflow-bar-fill inflow" style="width: 85%;">+$892K</div>
+                                </div>
+                            </div>
+                            <span class="cashflow-value positive">+$892,420</span>
+                        </div>
+                        <div class="cashflow-item">
+                            <span class="cashflow-label">Investing</span>
+                            <div class="cashflow-bar-wrapper">
+                                <div class="cashflow-bar">
+                                    <div class="cashflow-bar-fill outflow" style="width: 45%;">-$245K</div>
+                                </div>
+                            </div>
+                            <span class="cashflow-value negative">-$245,800</span>
+                        </div>
+                        <div class="cashflow-item">
+                            <span class="cashflow-label">Financing</span>
+                            <div class="cashflow-bar-wrapper">
+                                <div class="cashflow-bar">
+                                    <div class="cashflow-bar-fill outflow" style="width: 32%;">-$178K</div>
+                                </div>
+                            </div>
+                            <span class="cashflow-value negative">-$178,240</span>
+                        </div>
+                    </div>
+                    <div class="cashflow-summary">
+                        <div class="cashflow-total">
+                            <div class="cashflow-total-label">Net Cash Flow</div>
+                            <div class="cashflow-total-value positive">+$468,380</div>
+                        </div>
+                        <div class="cashflow-total">
+                            <div class="cashflow-total-label">Cash Balance</div>
+                            <div class="cashflow-total-value">$1,842,640</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Accounts Overview</span>
+                </div>
+                <div class="card-body">
+                    <div class="accounts-list">
+                        <div class="account-item">
+                            <div class="account-info">
+                                <div class="account-icon bank">$</div>
+                                <div>
+                                    <div class="account-name">Operating Account</div>
+                                    <div class="account-type">Chase Business</div>
+                                </div>
+                            </div>
+                            <div class="account-balance">
+                                <div class="account-balance-value">$1,245,820</div>
+                                <div class="account-balance-change positive">+$42,380 today</div>
+                            </div>
+                        </div>
+                        <div class="account-item">
+                            <div class="account-info">
+                                <div class="account-icon card" style="color: var(--chart-neutral);">%</div>
+                                <div>
+                                    <div class="account-name">Savings Reserve</div>
+                                    <div class="account-type">High-Yield Savings</div>
+                                </div>
+                            </div>
+                            <div class="account-balance">
+                                <div class="account-balance-value">$425,640</div>
+                                <div class="account-balance-change positive">+$1,820 interest</div>
+                            </div>
+                        </div>
+                        <div class="account-item">
+                            <div class="account-info">
+                                <div class="account-icon investment" style="color: var(--profit);">^</div>
+                                <div>
+                                    <div class="account-name">Investment Portfolio</div>
+                                    <div class="account-type">Diversified Holdings</div>
+                                </div>
+                            </div>
+                            <div class="account-balance">
+                                <div class="account-balance-value">$171,180</div>
+                                <div class="account-balance-change negative">-$2,420 today</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Expense Breakdown</span>
+                </div>
+                <div class="card-body">
+                    <div class="expenses-donut">
+                        <div class="donut-chart">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" class="donut-segment" stroke="#D4AF37" stroke-dasharray="125 314" stroke-dashoffset="0"/>
+                                <circle cx="60" cy="60" r="50" class="donut-segment" stroke="#3B82F6" stroke-dasharray="95 314" stroke-dashoffset="-125"/>
+                                <circle cx="60" cy="60" r="50" class="donut-segment" stroke="#22C55E" stroke-dasharray="55 314" stroke-dashoffset="-220"/>
+                                <circle cx="60" cy="60" r="50" class="donut-segment" stroke="#A855F7" stroke-dasharray="39 314" stroke-dashoffset="-275"/>
+                            </svg>
+                            <div class="donut-center">
+                                <div class="donut-total">$1.92M</div>
+                                <div class="donut-label">Total</div>
+                            </div>
+                        </div>
+                        <div class="expense-legend">
+                            <div class="expense-item">
+                                <span class="expense-name">
+                                    <span class="expense-color" style="background: #D4AF37;"></span>
+                                    COGS
+                                </span>
+                                <span class="expense-value">$768K</span>
+                            </div>
+                            <div class="expense-item">
+                                <span class="expense-name">
+                                    <span class="expense-color" style="background: #3B82F6;"></span>
+                                    Operations
+                                </span>
+                                <span class="expense-value">$582K</span>
+                            </div>
+                            <div class="expense-item">
+                                <span class="expense-name">
+                                    <span class="expense-color" style="background: #22C55E;"></span>
+                                    Marketing
+                                </span>
+                                <span class="expense-value">$338K</span>
+                            </div>
+                            <div class="expense-item">
+                                <span class="expense-name">
+                                    <span class="expense-color" style="background: #A855F7;"></span>
+                                    Admin
+                                </span>
+                                <span class="expense-value">$236K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Style Section -->
+        <section class="style-section">
+            <h2 class="style-title">Financial Dashboard Style</h2>
+            <p class="style-subtitle">Revenue metrics, profit/loss statements, cash flow, and financial ratios</p>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Color Palette</h3>
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--accent-gold);"></div>
+                    <span class="color-label-text">Gold Accent</span>
+                    <span class="color-value">#D4AF37</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--profit);"></div>
+                    <span class="color-label-text">Profit</span>
+                    <span class="color-value">#22C55E</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--loss);"></div>
+                    <span class="color-label-text">Loss</span>
+                    <span class="color-value">#EF4444</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--chart-neutral);"></div>
+                    <span class="color-label-text">Neutral</span>
+                    <span class="color-value">#3B82F6</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--bg-primary);"></div>
+                    <span class="color-label-text">Background</span>
+                    <span class="color-value">#0D0D0F</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-swatch" style="background: var(--bg-secondary);"></div>
+                    <span class="color-label-text">Card</span>
+                    <span class="color-value">#141416</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Component Examples</h3>
+            <div class="components-grid">
+                <div class="component-demo">
+                    <div class="component-title">Profit Indicator</div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="stat-change positive" style="font-size: 1rem;">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                            </svg>
+                            +18.7%
+                        </div>
+                        <div class="stat-change negative" style="font-size: 1rem;">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                            </svg>
+                            -5.2%
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Ratio Status</div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <span class="ratio-status good">Healthy</span>
+                        <span class="ratio-status warning">Monitor</span>
+                        <span class="ratio-status bad">Critical</span>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Cash Flow Bar</div>
+                    <div class="cashflow-bar" style="height: 28px;">
+                        <div class="cashflow-bar-fill inflow" style="width: 70%;">+$500K</div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <div class="component-title">Gold Accent</div>
+                    <button class="btn btn-gold">Export Report</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span class="footer-text">Financial Dashboard - Style 36</span>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">API Reference</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
